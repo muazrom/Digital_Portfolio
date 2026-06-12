@@ -78,9 +78,9 @@ export const defaultData = {
     },
     {
       id: 'p2', name: 'Archive', status: 'Ongoing',
-      description: 'AI-native unified file system & hybrid search engine. Combines local storage with web intelligence for hyper-personalized information retrieval using vector databases.',
-      stack: ['React', 'Electron', 'Python', 'ChromaDB', 'Brave API'],
-      github: 'https://github.com/muazrom', live: null,
+      description: 'macOS desktop overlay that replaces Finder, Spotlight, and the Dock with a single hotkey-triggered interface. Semantic search over your entire file system — fully local, no internet dependency.',
+      stack: ['Electron', 'React', 'Python', 'FastAPI', 'ChromaDB', 'SQLite FTS5'],
+      github: 'https://github.com/muazrom/Archives', live: null,
     },
     {
       id: 'p3', name: 'VISSCO', status: 'Completed',
