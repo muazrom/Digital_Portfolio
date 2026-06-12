@@ -94,6 +94,17 @@ export const defaultData = {
     },
   ],
 
+  badges: [
+    {
+      id: 'b1',
+      name: 'Pitram Silver Award',
+      issuer: 'Pitram',
+      date: '2024',
+      category: 'Award',
+      credential: null,
+    },
+  ],
+
   experience: [
     {
       id: 'e1', role: 'Vice Secretary', org: 'Warisan Run', period: 'May 2026',

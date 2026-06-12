@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-const links = ['About', 'Skills', 'Projects', 'Experience', 'Contact']
+const links = ['About', 'Skills', 'Projects', 'Experience', 'Badges', 'Contact']
 const SECRET = '#admin'
 
 export default function Navbar() {

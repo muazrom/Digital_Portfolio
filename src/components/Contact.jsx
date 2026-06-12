@@ -11,7 +11,7 @@ export default function Contact() {
       <div className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }} />
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// 06</p>
+        <p className="section-number mb-2">// 07</p>
         <h2 className="section-title mb-4">Contact</h2>
         <p className="text-muted mb-12 max-w-lg">
           Open to internship opportunities, collaborations, and interesting conversations. Currently available from <span className="text-white font-mono text-sm">July 2026</span>.

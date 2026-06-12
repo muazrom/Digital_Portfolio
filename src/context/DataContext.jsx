@@ -135,6 +135,14 @@ export function DataProvider({ children }) {
   const removeExperience = (id) =>
     update(d => ({ ...d, experience: d.experience.filter(e => e.id !== id) }))
 
+  // Badges
+  const addBadge = (badge) =>
+    update(d => ({ ...d, badges: [...(d.badges || []), { ...badge, id: `b${Date.now()}` }] }))
+  const updateBadge = (id, field, value) =>
+    update(d => ({ ...d, badges: d.badges.map(b => b.id === id ? { ...b, [field]: value } : b) }))
+  const removeBadge = (id) =>
+    update(d => ({ ...d, badges: d.badges.filter(b => b.id !== id) }))
+
   const resetToDefaults = () => {
     saveData(defaultData)
     setData(defaultData)
@@ -150,6 +158,7 @@ export function DataProvider({ children }) {
       addTool, removeTool, updateToolLevel,
       addProject, updateProject, removeProject, reorderProjects,
       addExperience, updateExperience, removeExperience,
+      addBadge, updateBadge, removeBadge,
       resetToDefaults,
     }}>
       {children}
