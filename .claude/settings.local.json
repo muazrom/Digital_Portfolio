@@ -15,7 +15,10 @@
       "Bash(pkill -f \"vite\")",
       "Bash(npm run *)",
       "Bash(curl -s http://localhost:5174)",
-      "Bash(cp \"/Users/muazarief/Desktop/Important!!/Resume \\(2\\).pdf\" /Users/muazarief/Workshop/public/resume.pdf)"
+      "Bash(cp \"/Users/muazarief/Desktop/Important!!/Resume \\(2\\).pdf\" /Users/muazarief/Workshop/public/resume.pdf)",
+      "WebFetch(domain:pin.it)",
+      "WebFetch(domain:api.pinterest.com)",
+      "WebFetch(domain:www.pinterest.com)"
     ]
   }
 }
