@@ -32,7 +32,6 @@ export default function HeroEditor() {
         <Field label="STATUS CARD" value={h.status} onChange={v => updateHero('status', v)} />
         <Field label="LOCATION" value={h.location} onChange={v => updateHero('location', v)} />
         <Field label="UNIVERSITY" value={h.university} onChange={v => updateHero('university', v)} />
-        <Field label="CGPA" value={h.cgpa} onChange={v => updateHero('cgpa', v)} />
       </div>
     </div>
   )

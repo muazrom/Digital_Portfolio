@@ -22,7 +22,6 @@ export const defaultData = {
       { label: 'UNIVERSITY', value: 'University Malaya' },
       { label: 'LOCATION', value: 'Kajang, Selangor' },
       { label: 'EMAIL', value: 'zaumarief08@gmail.com' },
-      { label: 'INTERNSHIP', value: 'Aug 2026 – Feb 2027' },
     ],
   },
 
