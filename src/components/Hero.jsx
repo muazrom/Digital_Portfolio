@@ -5,64 +5,114 @@ export default function Hero() {
   const h = data.hero
 
   return (
-    <section className="relative min-h-screen flex items-center pt-14 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center pt-14 overflow-hidden">
+      {/* Subtle radial glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%)' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)' }} />
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-24 w-full relative z-10">
-        <p className="section-number mb-6 fade-up fade-up-delay-1 flex items-center gap-2">
-          <span className="text-muted">~/workshop</span>
-          <span className="text-accent">$</span>
-          <span>init_sequence</span>
-          <span className="cursor-blink text-accent">▋</span>
+      {/* Horizontal rule lines — top and bottom of content */}
+      <div className="absolute left-0 right-0 pointer-events-none"
+        style={{ top: '50%', transform: 'translateY(-220px)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
+      <div className="absolute left-0 right-0 pointer-events-none"
+        style={{ top: '50%', transform: 'translateY(220px)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
+
+      <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto">
+
+        {/* Label */}
+        <p className="font-mono text-xs text-muted mb-10 tracking-[0.3em] uppercase fade-up fade-up-delay-1">
+          Personal Digital Workshop
         </p>
 
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-4 fade-up fade-up-delay-2">
-          <span className="glow-text">{h.name}</span>
+        {/* Name — the monolith */}
+        <h1 className="font-bold tracking-tight mb-6 fade-up fade-up-delay-2"
+          style={{
+            fontSize: 'clamp(52px, 10vw, 96px)',
+            lineHeight: 1,
+            letterSpacing: '-0.04em',
+            background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.55) 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>
+          {h.name}
         </h1>
 
-        <h2 className="text-lg md:text-xl font-mono text-muted mb-6 fade-up fade-up-delay-3">
-          <span className="text-accent">{'>'}</span> {h.title}
-        </h2>
+        {/* Divider with accent */}
+        <div className="flex items-center justify-center gap-4 mb-6 fade-up fade-up-delay-3">
+          <div style={{ height: 1, width: 48, background: '#2a2a2a' }} />
+          <span style={{ width: 4, height: 4, borderRadius: '50%', background: '#2563eb', boxShadow: '0 0 8px rgba(37,99,235,0.9)', display: 'inline-block' }} />
+          <div style={{ height: 1, width: 48, background: '#2a2a2a' }} />
+        </div>
 
-        <p className="max-w-lg text-muted leading-relaxed mb-10 fade-up fade-up-delay-4">
+        {/* Title */}
+        <p className="font-mono text-sm text-muted mb-8 fade-up fade-up-delay-3">
+          {h.title}
+        </p>
+
+        {/* Bio */}
+        <p className="text-muted leading-relaxed max-w-lg mx-auto mb-12 fade-up fade-up-delay-4"
+          style={{ fontSize: 14 }}>
           {h.bio}
         </p>
 
-        <div className="flex flex-wrap gap-4 fade-up fade-up-delay-5">
+        {/* CTAs */}
+        <div className="flex items-center justify-center gap-4 mb-16 fade-up fade-up-delay-5">
           <a href="#projects"
-            className="relative bg-accent text-white font-mono text-sm px-6 py-3 hover:bg-blue-600 transition-all duration-200 overflow-hidden group">
-            <span className="relative z-10">View Projects →</span>
-            <span className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-200" />
+            className="bg-accent text-white font-mono text-xs px-6 py-3 hover:bg-blue-600 transition-colors duration-200"
+            style={{ letterSpacing: '0.08em' }}>
+            VIEW PROJECTS
           </a>
           <a href="#contact"
-            className="border border-border text-muted font-mono text-sm px-6 py-3 hover:border-accent hover:text-white transition-all duration-200">
-            Get in Touch
+            className="font-mono text-xs text-muted px-6 py-3 border border-border hover:border-accent hover:text-white transition-all duration-200"
+            style={{ letterSpacing: '0.08em' }}>
+            CONTACT
           </a>
         </div>
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 gap-3 fade-up fade-up-delay-5">
+        {/* Stat strip */}
+        <div className="flex items-center justify-center gap-0 fade-up fade-up-delay-5">
           {[
-            { label: 'STATUS', value: h.status, dot: true },
+            { label: 'STATUS', value: h.status },
             { label: 'LOCATION', value: h.location },
             { label: 'UNIVERSITY', value: h.university },
-          ].map((item) => (
-            <div key={item.label} className="card p-4">
-              <p className="font-mono text-xs text-muted mb-2 flex items-center gap-1.5">
-                {item.dot && <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block"
-                  style={{ boxShadow: '0 0 6px rgba(74,222,128,0.8)' }} />}
-                {item.label}
-              </p>
-              <p className="text-sm text-white font-medium">{item.value}</p>
+          ].map((item, i, arr) => (
+            <div key={item.label} style={{
+              padding: '12px 28px',
+              borderLeft: i === 0 ? '1px solid #2a2a2a' : 'none',
+              borderRight: '1px solid #2a2a2a',
+              borderTop: '1px solid #2a2a2a',
+              borderBottom: '1px solid #2a2a2a',
+            }}>
+              <p className="font-mono mb-1" style={{ fontSize: 8, color: '#444', letterSpacing: '0.15em' }}>{item.label}</p>
+              <p className="font-mono" style={{ fontSize: 11, color: '#aaa' }}>{item.value}</p>
             </div>
           ))}
         </div>
+
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{ background: 'linear-gradient(to top, #0a0a0a, transparent)' }} />
+      {/* Corner markers */}
+      {[
+        { top: 80, left: 24 }, { top: 80, right: 24 },
+        { bottom: 24, left: 24 }, { bottom: 24, right: 24 },
+      ].map((pos, i) => (
+        <div key={i} style={{
+          position: 'absolute',
+          width: 10, height: 10,
+          borderColor: 'rgba(37,99,235,0.25)',
+          borderStyle: 'solid',
+          borderWidth: i === 0 ? '1px 0 0 1px' : i === 1 ? '1px 1px 0 0' : i === 2 ? '0 0 1px 1px' : '0 1px 1px 0',
+          ...pos,
+        }} />
+      ))}
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 fade-up fade-up-delay-5">
+        <span className="font-mono text-xs" style={{ color: '#2a2a2a', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
+        <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #2563eb, transparent)' }} />
+      </div>
     </section>
   )
 }
