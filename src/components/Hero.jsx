@@ -43,12 +43,11 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 fade-up fade-up-delay-5">
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 gap-3 fade-up fade-up-delay-5">
           {[
             { label: 'STATUS', value: h.status, dot: true },
             { label: 'LOCATION', value: h.location },
             { label: 'UNIVERSITY', value: h.university },
-            { label: 'CGPA', value: h.cgpa },
           ].map((item) => (
             <div key={item.label} className="card p-4">
               <p className="font-mono text-xs text-muted mb-2 flex items-center gap-1.5">

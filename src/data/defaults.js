@@ -6,7 +6,6 @@ export const defaultData = {
     status: 'Seeking Internship',
     location: 'Kajang, Selangor',
     university: 'University Malaya',
-    cgpa: '3.21 / 4.00',
   },
 
   about: {
@@ -18,12 +17,12 @@ export const defaultData = {
     modules: ['Operating Systems', 'Data Structures', 'Information Retrieval', 'Algorithm Design', 'Network Technology', 'Machine Learning'],
     info: [
       { label: 'NAME', value: "Mu'az Arief bin Mohamad Rom" },
+      { label: 'STATUS', value: 'Student' },
       { label: 'DEGREE', value: 'B.CS (Information Systems)' },
       { label: 'UNIVERSITY', value: 'University Malaya' },
-      { label: 'CGPA', value: '3.21' },
       { label: 'LOCATION', value: 'Kajang, Selangor' },
       { label: 'EMAIL', value: 'zaumarief08@gmail.com' },
-      { label: 'INTERNSHIP', value: 'July 2026 – Jan 2027' },
+      { label: 'INTERNSHIP', value: 'Aug 2026 – Feb 2027' },
     ],
   },
 

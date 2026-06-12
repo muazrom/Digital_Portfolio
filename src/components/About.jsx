@@ -172,7 +172,7 @@ export default function About() {
                     INTERNSHIP_WINDOW
                   </p>
                   <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>
-                    July 2026 → Jan 2027
+                    Aug 2026 → Feb 2027
                   </p>
                   <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#333', marginTop: 4 }}>
                     min. 6 months · open to opportunities
@@ -191,7 +191,7 @@ export default function About() {
               {[
                 { label: 'UTF-8', color: '#333' },
                 { label: 'LF', color: '#333' },
-                { label: 'CGPA 3.21', color: '#2563eb' },
+                { label: 'STUDENT', color: '#2563eb' },
                 { label: 'B.CS (IS)', color: '#888' },
                 { label: 'University Malaya', color: '#888' },
               ].map(item => (
