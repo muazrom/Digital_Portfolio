@@ -138,3 +138,8 @@
   .fade-up-delay-4 { animation-delay: 0.5s; opacity: 0; }
   .fade-up-delay-5 { animation-delay: 0.65s; opacity: 0; }
 }
+
+/* Hide carousel scrollbar */
+.snap-x::-webkit-scrollbar {
+  display: none;
+}
