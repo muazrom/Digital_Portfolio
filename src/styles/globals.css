@@ -18,6 +18,10 @@
     color: #ffffff;
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
   ::selection {
@@ -49,6 +53,7 @@
     font-size: 0.75rem;
     color: #2563eb;
     letter-spacing: 0.1em;
+    text-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
   }
 
   .section-title {
@@ -59,23 +64,77 @@
   }
 
   .card {
-    background-color: #1a1a1a;
+    background-color: #111111;
     border: 1px solid #2a2a2a;
     border-radius: 0.5rem;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(37, 99, 235, 0.04), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover::before {
+    opacity: 1;
   }
 
   .card:hover {
-    border-color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.08), 0 4px 24px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
   }
 
   .tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    background-color: #0a0a0a;
-    border: 1px solid #2a2a2a;
+    background-color: rgba(37, 99, 235, 0.06);
+    border: 1px solid rgba(37, 99, 235, 0.15);
     color: #888888;
     padding: 0.2rem 0.6rem;
     border-radius: 0.25rem;
+    transition: color 0.2s, border-color 0.2s;
   }
+
+  .tag:hover {
+    color: #a0b4ff;
+    border-color: rgba(37, 99, 235, 0.4);
+  }
+
+  .glow-text {
+    background: linear-gradient(135deg, #ffffff 0%, #a0b4ff 50%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fade-up 0.6s ease forwards;
+  }
+
+  .fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .fade-up-delay-3 { animation-delay: 0.35s; opacity: 0; }
+  .fade-up-delay-4 { animation-delay: 0.5s; opacity: 0; }
+  .fade-up-delay-5 { animation-delay: 0.65s; opacity: 0; }
 }

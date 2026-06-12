@@ -11,7 +11,11 @@
       "Bash(npm create *)",
       "Bash(npx create-vite@latest . --template react -- --overwrite)",
       "Bash(npm install *)",
-      "Bash(curl -s http://localhost:5173)"
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:5174)",
+      "Bash(cp \"/Users/muazarief/Desktop/Important!!/Resume \\(2\\).pdf\" /Users/muazarief/Workshop/public/resume.pdf)"
     ]
   }
 }
