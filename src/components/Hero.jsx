@@ -31,7 +31,7 @@ export default function Hero() {
             fontSize: 'clamp(52px, 10vw, 96px)',
             lineHeight: 1,
             letterSpacing: '-0.04em',
-            background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.55) 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #a0b4ff 50%, #2563eb 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
