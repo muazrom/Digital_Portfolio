@@ -75,7 +75,7 @@ export default function Experience() {
                   {isActive ? (
                     <div style={{ background: '#111', border: '1px solid rgba(37,99,235,0.55)', borderRadius: 8, padding: '10px 14px', width: 150, textAlign: 'center', boxShadow: '0 0 24px rgba(37,99,235,0.18)', pointerEvents: 'none' }}>
                       <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#2563eb', marginBottom: 4 }}>{e.period}</p>
-                      <p style={{ fontSize: 12, fontWeight: 600, color: '#fff', lineHeight: 1.4 }}>{e.role}</p>
+                      <p style={{ fontSize: 12, fontWeight: 600, color: '#fff', lineHeight: 1.4, fontFamily: 'Space Grotesk, sans-serif' }}>{e.role}</p>
                       <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#666', marginTop: 4, lineHeight: 1.3 }}>{e.org}</p>
                     </div>
                   ) : (
@@ -108,7 +108,7 @@ export default function Experience() {
         <div className="flex-1 w-full">
           <div className="card p-6" key={safeActive} style={{ animation: 'fade-up 0.35s ease forwards' }}>
             <p className="font-mono text-xs text-accent mb-1">{exp.period}</p>
-            <h3 className="text-white font-semibold text-xl mb-1">{exp.role}</h3>
+            <h3 className="text-white font-semibold text-xl mb-1 font-display">{exp.role}</h3>
             <p className="font-mono text-xs text-muted mb-5">{exp.org}</p>
             <p className="text-muted text-sm leading-relaxed">{exp.summary}</p>
           </div>

@@ -91,7 +91,7 @@ export default function Projects() {
                   <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 10 }}>{proj.name}</h3>
+                  <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 10, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
                   <p style={{ fontSize: 12.5, color: '#666', lineHeight: 1.65 }}>{proj.description}</p>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>

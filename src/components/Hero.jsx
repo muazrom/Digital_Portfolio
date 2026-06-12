@@ -31,7 +31,7 @@ export default function Hero() {
         </div>
 
         {/* Name — the monolith */}
-        <h1 className="font-bold tracking-tight mb-6 fade-up fade-up-delay-2"
+        <h1 className="font-bold tracking-tight mb-6 fade-up fade-up-delay-2 font-display"
           style={{
             fontSize: 'clamp(52px, 10vw, 96px)',
             lineHeight: 1,
