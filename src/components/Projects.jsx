@@ -1,97 +1,40 @@
 import { useState, useRef, useCallback } from 'react'
-
-const projects = [
-  {
-    name: 'Noctua',
-    description: 'AI-driven personal assistant & life management dashboard. Features natural language journaling, proactive data tracking, and intelligent goal planning with LangGraph-powered contextual AI workflows.',
-    stack: ['React', 'Python', 'SQLite', 'LangGraph', 'Tailwind CSS'],
-    github: 'https://github.com/muazrom',
-    live: null,
-    status: 'In Development',
-  },
-  {
-    name: 'Archive',
-    description: 'AI-native unified file system & hybrid search engine. Combines local storage with web intelligence for hyper-personalized information retrieval using vector databases.',
-    stack: ['React', 'Electron', 'Python', 'ChromaDB', 'Brave API'],
-    github: 'https://github.com/muazrom',
-    live: null,
-    status: 'Ongoing',
-  },
-  {
-    name: 'VISSCO',
-    description: 'Web-based attendance management system for students and lecturers. Built for the Pre-University Innovation Competition with CRUD operations, secure login, and password encryption.',
-    stack: ['HTML', 'CSS', 'JavaScript', 'SQLite'],
-    github: 'https://github.com/muazrom',
-    live: null,
-    status: 'Completed',
-  },
-  {
-    name: 'Digital Portfolio',
-    description: 'This site — a personal dashboard-style portfolio themed as a digital workshop. Built with React + Vite, deployed on Cloudflare Pages with a custom domain.',
-    stack: ['React', 'Vite', 'Tailwind CSS', 'Cloudflare'],
-    github: 'https://github.com/muazrom/Digital_Portfolio',
-    live: 'https://muazrom.my',
-    status: 'Live',
-  },
-]
+import { useData } from '../context/DataContext'
 
 const statusColor = {
-  Live: '#4ade80',
-  'In Development': '#facc15',
-  Ongoing: '#60a5fa',
-  Completed: '#888',
+  Live: '#4ade80', 'In Development': '#facc15', Ongoing: '#60a5fa', Completed: '#888',
 }
 
 const CARD_W = 280
 const CARD_H = 380
 
-// Returns transform values based on how far a card is from the active index
 function getCardStyle(rel) {
   const abs = Math.abs(rel)
   const sign = rel >= 0 ? 1 : -1
-
-  if (abs === 0) {
-    return {
-      transform: `translateX(0px) rotateY(0deg) scale(1)`,
-      opacity: 1,
-      zIndex: 10,
-      pointerEvents: 'auto',
-    }
-  }
-  if (abs === 1) {
-    return {
-      transform: `translateX(${sign * 220}px) rotateY(${sign * -42}deg) scale(0.82)`,
-      opacity: 0.55,
-      zIndex: 5,
-      pointerEvents: 'auto',
-    }
-  }
-  // abs >= 2 — hidden off the sides
-  return {
-    transform: `translateX(${sign * 340}px) rotateY(${sign * -55}deg) scale(0.68)`,
-    opacity: 0,
-    zIndex: 1,
-    pointerEvents: 'none',
-  }
+  if (abs === 0) return { transform: 'translateX(0px) rotateY(0deg) scale(1)', opacity: 1, zIndex: 10, pointerEvents: 'auto' }
+  if (abs === 1) return { transform: `translateX(${sign * 220}px) rotateY(${sign * -42}deg) scale(0.82)`, opacity: 0.55, zIndex: 5, pointerEvents: 'auto' }
+  return { transform: `translateX(${sign * 340}px) rotateY(${sign * -55}deg) scale(0.68)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
 export default function Projects() {
+  const { data } = useData()
+  const projects = data.projects
   const [index, setIndex] = useState(0)
   const total = projects.length
+
+  const safeIndex = Math.min(index, total - 1)
 
   const prev = () => setIndex(i => (i - 1 + total) % total)
   const next = () => setIndex(i => (i + 1) % total)
 
-  // Scroll wheel
   const wheelAccum = useRef(0)
   const onWheel = useCallback((e) => {
     e.preventDefault()
     wheelAccum.current += e.deltaY
     if (wheelAccum.current > 60) { next(); wheelAccum.current = 0 }
     else if (wheelAccum.current < -60) { prev(); wheelAccum.current = 0 }
-  }, [index])
+  }, [total])
 
-  // Touch swipe
   const touchX = useRef(null)
   const onTouchStart = (e) => { touchX.current = e.touches[0].clientX }
   const onTouchEnd = (e) => {
@@ -102,153 +45,63 @@ export default function Projects() {
     touchX.current = null
   }
 
+  if (total === 0) return null
+
   return (
     <section id="projects" className="py-24 relative">
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }}
-      />
-
+      <div className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }} />
       <div className="max-w-5xl mx-auto px-6 mb-14">
         <p className="section-number mb-2">// 04</p>
         <div className="flex items-end justify-between">
           <h2 className="section-title">Projects</h2>
           <span className="font-mono text-xs text-muted">
-            {String(index + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
+            {String(safeIndex + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
           </span>
         </div>
       </div>
 
-      {/* Coverflow scene */}
-      <div
-        className="relative mx-auto"
-        style={{
-          width: CARD_W,
-          height: CARD_H,
-          perspective: 1200,
-          perspectiveOrigin: '50% 40%',
-        }}
-        onWheel={onWheel}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
+      <div className="relative mx-auto" style={{ width: CARD_W, height: CARD_H, perspective: 1200, perspectiveOrigin: '50% 40%' }}
+        onWheel={onWheel} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {projects.map((proj, i) => {
-          // Relative index — shortest path around the ring
-          let rel = i - index
+          let rel = i - safeIndex
           if (rel > total / 2) rel -= total
           if (rel < -total / 2) rel += total
-
           const style = getCardStyle(rel)
           const isActive = rel === 0
 
           return (
-            <div
-              key={proj.name}
-              onClick={() => !isActive && setIndex(i)}
-              style={{
-                position: 'absolute',
-                width: CARD_W,
-                height: CARD_H,
-                transformStyle: 'preserve-3d',
-                transformOrigin: 'center center',
-                transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease',
-                cursor: isActive ? 'default' : 'pointer',
-                ...style,
-              }}
-            >
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  background: isActive
-                    ? 'linear-gradient(160deg, #161616 0%, #111 100%)'
-                    : '#0f0f0f',
-                  border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
-                  borderRadius: 12,
-                  padding: 24,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 12,
-                  boxShadow: isActive
-                    ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)'
-                    : '0 8px 24px rgba(0,0,0,0.5)',
-                  overflow: 'hidden',
-                  position: 'relative',
-                }}
-              >
-                {/* Top accent line on active */}
-                {isActive && (
-                  <div style={{
-                    position: 'absolute',
-                    top: 0, left: 0, right: 0, height: 2,
-                    background: 'linear-gradient(90deg, transparent, #2563eb, transparent)',
-                  }} />
-                )}
-
-                {/* Status */}
+            <div key={proj.id} onClick={() => !isActive && setIndex(i)} style={{
+              position: 'absolute', width: CARD_W, height: CARD_H,
+              transformStyle: 'preserve-3d', transformOrigin: 'center center',
+              transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease',
+              cursor: isActive ? 'default' : 'pointer', ...style,
+            }}>
+              <div style={{
+                width: '100%', height: '100%',
+                background: isActive ? 'linear-gradient(160deg, #161616 0%, #111 100%)' : '#0f0f0f',
+                border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
+                borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 12,
+                boxShadow: isActive ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)' : '0 8px 24px rgba(0,0,0,0.5)',
+                overflow: 'hidden', position: 'relative',
+              }}>
+                {isActive && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #2563eb, transparent)' }} />}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{
-                    width: 6, height: 6, borderRadius: '50%',
-                    background: statusColor[proj.status],
-                    boxShadow: `0 0 6px ${statusColor[proj.status]}`,
-                    flexShrink: 0,
-                  }} />
-                  <span style={{
-                    fontFamily: 'JetBrains Mono', fontSize: 10,
-                    color: statusColor[proj.status],
-                  }}>
-                    {proj.status}
-                  </span>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor[proj.status], boxShadow: `0 0 6px ${statusColor[proj.status]}`, flexShrink: 0 }} />
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
                 </div>
-
-                {/* Name + description */}
                 <div style={{ flex: 1 }}>
-                  <h3 style={{
-                    fontSize: 22, fontWeight: 700, color: '#fff',
-                    letterSpacing: '-0.02em', marginBottom: 10,
-                  }}>
-                    {proj.name}
-                  </h3>
-                  <p style={{ fontSize: 12.5, color: '#666', lineHeight: 1.65 }}>
-                    {proj.description}
-                  </p>
+                  <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 10 }}>{proj.name}</h3>
+                  <p style={{ fontSize: 12.5, color: '#666', lineHeight: 1.65 }}>{proj.description}</p>
                 </div>
-
-                {/* Stack tags */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {proj.stack.map(tech => (
-                    <span key={tech} style={{
-                      fontFamily: 'JetBrains Mono', fontSize: 9.5,
-                      background: 'rgba(37,99,235,0.07)',
-                      border: '1px solid rgba(37,99,235,0.15)',
-                      color: '#666', padding: '2px 8px', borderRadius: 3,
-                    }}>
-                      {tech}
-                    </span>
+                    <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#666', padding: '2px 8px', borderRadius: 3 }}>{tech}</span>
                   ))}
                 </div>
-
-                {/* Links */}
-                <div style={{
-                  display: 'flex', gap: 16,
-                  paddingTop: 12, borderTop: '1px solid #1e1e1e',
-                }}>
-                  {proj.github && (
-                    <a href={proj.github} target="_blank" rel="noopener noreferrer"
-                      style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}
-                      onMouseEnter={e => e.currentTarget.style.color = '#2563eb'}
-                      onMouseLeave={e => e.currentTarget.style.color = '#555'}>
-                      GitHub ↗
-                    </a>
-                  )}
-                  {proj.live && (
-                    <a href={proj.live} target="_blank" rel="noopener noreferrer"
-                      style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}
-                      onMouseEnter={e => e.currentTarget.style.color = '#2563eb'}
-                      onMouseLeave={e => e.currentTarget.style.color = '#555'}>
-                      Live ↗
-                    </a>
-                  )}
+                <div style={{ display: 'flex', gap: 16, paddingTop: 12, borderTop: '1px solid #1e1e1e' }}>
+                  {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>GitHub ↗</a>}
+                  {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Live ↗</a>}
                 </div>
               </div>
             </div>
@@ -256,29 +109,14 @@ export default function Projects() {
         })}
       </div>
 
-      {/* Nav */}
       <div className="flex items-center justify-center gap-6 mt-16">
-        <button onClick={prev}
-          className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">
-          ←
-        </button>
+        <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">←</button>
         <div className="flex items-center gap-2">
           {projects.map((_, i) => (
-            <button key={i} onClick={() => setIndex(i)}
-              style={{
-                height: 5,
-                width: index === i ? 20 : 5,
-                borderRadius: index === i ? 3 : '50%',
-                background: index === i ? '#2563eb' : '#2a2a2a',
-                transition: 'all 0.25s ease',
-              }}
-            />
+            <button key={i} onClick={() => setIndex(i)} style={{ height: 5, width: safeIndex === i ? 20 : 5, borderRadius: safeIndex === i ? 3 : '50%', background: safeIndex === i ? '#2563eb' : '#2a2a2a', transition: 'all 0.25s ease' }} />
           ))}
         </div>
-        <button onClick={next}
-          className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">
-          →
-        </button>
+        <button onClick={next} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">→</button>
       </div>
     </section>
   )
