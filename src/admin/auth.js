@@ -23,7 +23,8 @@ export async function changePassword(oldPassword, newPassword) {
 }
 
 export function isAuthenticated() {
-  return sessionStorage.getItem(SESSION_KEY) === 'true'
+  // Never auto-authenticate on page load — always prompt on fresh visit
+  return false
 }
 
 export function setAuthenticated(val) {

@@ -21,7 +21,15 @@ export default function App() {
   const [authed, setAuthed] = useState(isAuthenticated)
 
   useEffect(() => {
-    const onHashChange = () => setView(getView())
+    const onHashChange = () => {
+      const next = getView()
+      // Always require login fresh when navigating to admin
+      if (next === 'admin') {
+        setAuthenticated(false)
+        setAuthed(false)
+      }
+      setView(next)
+    }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
