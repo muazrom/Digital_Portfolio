@@ -23,7 +23,8 @@ export default function Hero() {
         {/* Label */}
         <div className="flex items-center gap-4 mb-10 fade-up fade-up-delay-1">
           <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, #2a2a2a)' }} />
-          <span className="font-mono text-xs text-muted tracking-[0.3em] uppercase shrink-0">
+          <span className="font-mono text-xs text-muted tracking-[0.3em] uppercase shrink-0"
+            style={{ background: '#0a0a0a', padding: '0 12px' }}>
             Personal Digital Workshop
           </span>
           <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, #2a2a2a)' }} />
