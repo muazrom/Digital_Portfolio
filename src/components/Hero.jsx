@@ -71,22 +71,43 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Stat strip */}
-        <div className="flex items-center justify-center gap-0 fade-up fade-up-delay-5">
+        {/* Stat pills */}
+        <div className="flex items-center justify-center flex-wrap gap-3 fade-up fade-up-delay-5">
           {[
-            { label: 'STATUS', value: h.status },
-            { label: 'LOCATION', value: h.location },
-            { label: 'UNIVERSITY', value: h.university },
-          ].map((item, i, arr) => (
-            <div key={item.label} style={{
-              padding: '12px 28px',
-              borderLeft: i === 0 ? '1px solid #2a2a2a' : 'none',
-              borderRight: '1px solid #2a2a2a',
-              borderTop: '1px solid #2a2a2a',
-              borderBottom: '1px solid #2a2a2a',
-            }}>
-              <p className="font-mono mb-1" style={{ fontSize: 8, color: '#444', letterSpacing: '0.15em' }}>{item.label}</p>
-              <p className="font-mono" style={{ fontSize: 11, color: '#aaa' }}>{item.value}</p>
+            { label: 'STATUS', value: h.status, dot: '#4ade80', offset: 0 },
+            { label: 'LOCATION', value: h.location, dot: null, offset: 6 },
+            { label: 'UNIVERSITY', value: h.university, dot: null, offset: -4 },
+          ].map((item) => (
+            <div key={item.label}
+              className="group"
+              style={{
+                display: 'flex', alignItems: 'center', gap: 10,
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid #222',
+                borderRadius: 999,
+                padding: '8px 18px',
+                transform: `translateY(${item.offset}px)`,
+                transition: 'border-color 0.3s, transform 0.3s',
+                cursor: 'default',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.4)'; e.currentTarget.style.transform = `translateY(${item.offset - 2}px)` }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.transform = `translateY(${item.offset}px)` }}
+            >
+              {item.dot && (
+                <span style={{
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: item.dot,
+                  boxShadow: `0 0 8px ${item.dot}`,
+                  animation: 'pulse 2s ease-in-out infinite',
+                  flexShrink: 0,
+                }} />
+              )}
+              <span className="font-mono" style={{ fontSize: 9, color: '#444', letterSpacing: '0.12em', marginRight: 6 }}>
+                {item.label}
+              </span>
+              <span className="font-mono" style={{ fontSize: 11, color: '#999' }}>
+                {item.value}
+              </span>
             </div>
           ))}
         </div>

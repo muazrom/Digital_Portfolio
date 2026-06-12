@@ -137,6 +137,11 @@
   .fade-up-delay-3 { animation-delay: 0.35s; opacity: 0; }
   .fade-up-delay-4 { animation-delay: 0.5s; opacity: 0; }
   .fade-up-delay-5 { animation-delay: 0.65s; opacity: 0; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px #4ade80; }
+    50% { opacity: 0.5; box-shadow: 0 0 2px #4ade80; }
+  }
 }
 
 /* Hide carousel scrollbar */
