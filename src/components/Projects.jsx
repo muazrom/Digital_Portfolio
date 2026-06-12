@@ -43,29 +43,53 @@ const statusColor = {
 }
 
 const CARD_W = 280
-const CARD_H = 360
-const RADIUS = 340
-const PERSPECTIVE = 1000
+const CARD_H = 380
+
+// Returns transform values based on how far a card is from the active index
+function getCardStyle(rel) {
+  const abs = Math.abs(rel)
+  const sign = rel >= 0 ? 1 : -1
+
+  if (abs === 0) {
+    return {
+      transform: `translateX(0px) rotateY(0deg) scale(1)`,
+      opacity: 1,
+      zIndex: 10,
+      pointerEvents: 'auto',
+    }
+  }
+  if (abs === 1) {
+    return {
+      transform: `translateX(${sign * 220}px) rotateY(${sign * -42}deg) scale(0.82)`,
+      opacity: 0.55,
+      zIndex: 5,
+      pointerEvents: 'auto',
+    }
+  }
+  // abs >= 2 — hidden off the sides
+  return {
+    transform: `translateX(${sign * 340}px) rotateY(${sign * -55}deg) scale(0.68)`,
+    opacity: 0,
+    zIndex: 1,
+    pointerEvents: 'none',
+  }
+}
 
 export default function Projects() {
   const [index, setIndex] = useState(0)
   const total = projects.length
-  const angleStep = 360 / total
-
-  // rotation in degrees so card `index` faces front (0 = front)
-  const rotation = -index * angleStep
 
   const prev = () => setIndex(i => (i - 1 + total) % total)
   const next = () => setIndex(i => (i + 1) % total)
 
-  // Scroll-wheel over carousel rotates it
+  // Scroll wheel
   const wheelAccum = useRef(0)
   const onWheel = useCallback((e) => {
     e.preventDefault()
     wheelAccum.current += e.deltaY
     if (wheelAccum.current > 60) { next(); wheelAccum.current = 0 }
     else if (wheelAccum.current < -60) { prev(); wheelAccum.current = 0 }
-  }, [])
+  }, [index])
 
   // Touch swipe
   const touchX = useRef(null)
@@ -78,16 +102,14 @@ export default function Projects() {
     touchX.current = null
   }
 
-  const p = projects[index]
-
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
+    <section id="projects" className="py-24 relative">
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }}
       />
 
-      <div className="max-w-5xl mx-auto px-6 mb-10">
+      <div className="max-w-5xl mx-auto px-6 mb-14">
         <p className="section-number mb-2">// 04</p>
         <div className="flex items-end justify-between">
           <h2 className="section-title">Projects</h2>
@@ -97,163 +119,152 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* 3D scene */}
+      {/* Coverflow scene */}
       <div
         className="relative mx-auto"
-        style={{ width: CARD_W, height: CARD_H, perspective: PERSPECTIVE }}
+        style={{
+          width: CARD_W,
+          height: CARD_H,
+          perspective: 1200,
+          perspectiveOrigin: '50% 40%',
+        }}
         onWheel={onWheel}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            transformStyle: 'preserve-3d',
-            transform: `rotateY(${rotation}deg)`,
-            transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-            position: 'relative',
-          }}
-        >
-          {projects.map((proj, i) => {
-            const cardAngle = angleStep * i
-            const distFromFront = Math.min(
-              Math.abs(i - index),
-              total - Math.abs(i - index)
-            )
+        {projects.map((proj, i) => {
+          // Relative index — shortest path around the ring
+          let rel = i - index
+          if (rel > total / 2) rel -= total
+          if (rel < -total / 2) rel += total
 
-            return (
+          const style = getCardStyle(rel)
+          const isActive = rel === 0
+
+          return (
+            <div
+              key={proj.name}
+              onClick={() => !isActive && setIndex(i)}
+              style={{
+                position: 'absolute',
+                width: CARD_W,
+                height: CARD_H,
+                transformStyle: 'preserve-3d',
+                transformOrigin: 'center center',
+                transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease',
+                cursor: isActive ? 'default' : 'pointer',
+                ...style,
+              }}
+            >
               <div
-                key={proj.name}
-                onClick={() => setIndex(i)}
                 style={{
-                  position: 'absolute',
-                  width: CARD_W,
-                  height: CARD_H,
-                  transform: `rotateY(${cardAngle}deg) translateZ(${RADIUS}px)`,
-                  backfaceVisibility: 'hidden',
-                  cursor: distFromFront === 0 ? 'default' : 'pointer',
+                  width: '100%',
+                  height: '100%',
+                  background: isActive
+                    ? 'linear-gradient(160deg, #161616 0%, #111 100%)'
+                    : '#0f0f0f',
+                  border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
+                  borderRadius: 12,
+                  padding: 24,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 12,
+                  boxShadow: isActive
+                    ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)'
+                    : '0 8px 24px rgba(0,0,0,0.5)',
+                  overflow: 'hidden',
+                  position: 'relative',
                 }}
               >
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    background: distFromFront === 0
-                      ? 'linear-gradient(160deg, #161616 0%, #111 100%)'
-                      : '#0f0f0f',
-                    border: `1px solid ${distFromFront === 0 ? 'rgba(37,99,235,0.5)' : '#1e1e1e'}`,
-                    borderRadius: 12,
-                    padding: 24,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 12,
-                    boxShadow: distFromFront === 0
-                      ? '0 0 40px rgba(37,99,235,0.15), 0 20px 60px rgba(0,0,0,0.6)'
-                      : '0 8px 32px rgba(0,0,0,0.4)',
-                    transition: 'border-color 0.3s, box-shadow 0.3s',
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}
-                >
-                  {/* Top glow on active */}
-                  {distFromFront === 0 && (
-                    <div style={{
-                      position: 'absolute',
-                      top: 0, left: 0, right: 0,
-                      height: 2,
-                      background: 'linear-gradient(90deg, transparent, #2563eb, transparent)',
-                    }} />
-                  )}
+                {/* Top accent line on active */}
+                {isActive && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 0, left: 0, right: 0, height: 2,
+                    background: 'linear-gradient(90deg, transparent, #2563eb, transparent)',
+                  }} />
+                )}
 
-                  {/* Status */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{
-                      width: 6, height: 6, borderRadius: '50%',
-                      background: statusColor[proj.status],
-                      boxShadow: `0 0 6px ${statusColor[proj.status]}`,
-                      flexShrink: 0,
-                    }} />
-                    <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>
-                      {proj.status}
+                {/* Status */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: statusColor[proj.status],
+                    boxShadow: `0 0 6px ${statusColor[proj.status]}`,
+                    flexShrink: 0,
+                  }} />
+                  <span style={{
+                    fontFamily: 'JetBrains Mono', fontSize: 10,
+                    color: statusColor[proj.status],
+                  }}>
+                    {proj.status}
+                  </span>
+                </div>
+
+                {/* Name + description */}
+                <div style={{ flex: 1 }}>
+                  <h3 style={{
+                    fontSize: 22, fontWeight: 700, color: '#fff',
+                    letterSpacing: '-0.02em', marginBottom: 10,
+                  }}>
+                    {proj.name}
+                  </h3>
+                  <p style={{ fontSize: 12.5, color: '#666', lineHeight: 1.65 }}>
+                    {proj.description}
+                  </p>
+                </div>
+
+                {/* Stack tags */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {proj.stack.map(tech => (
+                    <span key={tech} style={{
+                      fontFamily: 'JetBrains Mono', fontSize: 9.5,
+                      background: 'rgba(37,99,235,0.07)',
+                      border: '1px solid rgba(37,99,235,0.15)',
+                      color: '#666', padding: '2px 8px', borderRadius: 3,
+                    }}>
+                      {tech}
                     </span>
-                  </div>
+                  ))}
+                </div>
 
-                  {/* Name */}
-                  <div>
-                    <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 8 }}>
-                      {proj.name}
-                    </h3>
-                    <p style={{ fontSize: 12.5, color: '#666', lineHeight: 1.6 }}>
-                      {proj.description}
-                    </p>
-                  </div>
-
-                  {/* Stack */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 'auto' }}>
-                    {proj.stack.map(tech => (
-                      <span key={tech} style={{
-                        fontFamily: 'JetBrains Mono',
-                        fontSize: 9.5,
-                        background: 'rgba(37,99,235,0.07)',
-                        border: '1px solid rgba(37,99,235,0.15)',
-                        color: '#666',
-                        padding: '2px 8px',
-                        borderRadius: 3,
-                      }}>
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Links */}
-                  <div style={{ display: 'flex', gap: 16, paddingTop: 12, borderTop: '1px solid #1e1e1e' }}>
-                    {proj.github && (
-                      <a
-                        href={proj.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}
-                        onMouseEnter={e => e.target.style.color = '#2563eb'}
-                        onMouseLeave={e => e.target.style.color = '#555'}
-                      >
-                        GitHub ↗
-                      </a>
-                    )}
-                    {proj.live && (
-                      <a
-                        href={proj.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}
-                        onMouseEnter={e => e.target.style.color = '#2563eb'}
-                        onMouseLeave={e => e.target.style.color = '#555'}
-                      >
-                        Live ↗
-                      </a>
-                    )}
-                  </div>
+                {/* Links */}
+                <div style={{
+                  display: 'flex', gap: 16,
+                  paddingTop: 12, borderTop: '1px solid #1e1e1e',
+                }}>
+                  {proj.github && (
+                    <a href={proj.github} target="_blank" rel="noopener noreferrer"
+                      style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#2563eb'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#555'}>
+                      GitHub ↗
+                    </a>
+                  )}
+                  {proj.live && (
+                    <a href={proj.live} target="_blank" rel="noopener noreferrer"
+                      style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#2563eb'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#555'}>
+                      Live ↗
+                    </a>
+                  )}
                 </div>
               </div>
-            )
-          })}
-        </div>
+            </div>
+          )
+        })}
       </div>
 
-      {/* Navigation */}
-      <div className="flex items-center justify-center gap-6 mt-10">
-        <button
-          onClick={prev}
-          className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs"
-        >
+      {/* Nav */}
+      <div className="flex items-center justify-center gap-6 mt-16">
+        <button onClick={prev}
+          className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">
           ←
         </button>
-
         <div className="flex items-center gap-2">
           {projects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
+            <button key={i} onClick={() => setIndex(i)}
               style={{
                 height: 5,
                 width: index === i ? 20 : 5,
@@ -264,11 +275,8 @@ export default function Projects() {
             />
           ))}
         </div>
-
-        <button
-          onClick={next}
-          className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs"
-        >
+        <button onClick={next}
+          className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">
           →
         </button>
       </div>
