@@ -1,5 +1,6 @@
 const links = [
   { label: 'EMAIL', value: 'zaumarief08@gmail.com', href: 'mailto:zaumarief08@gmail.com' },
+  { label: 'WHATSAPP', value: '+60 17-897 2218', href: 'https://wa.me/60178972218' },
   { label: 'GITHUB', value: 'github.com/muazrom', href: 'https://github.com/muazrom' },
   { label: 'LINKEDIN', value: 'linkedin.com/in/muazrom', href: 'https://linkedin.com/in/muazrom' },
 ]
@@ -15,7 +16,7 @@ export default function Contact() {
         <p className="text-muted mb-12 max-w-lg">
           Open to internship opportunities, collaborations, and interesting conversations. Currently available from <span className="text-white font-mono text-sm">July 2026</span>.
         </p>
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {links.map((link) => (
             <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
               className="card p-5 group">

@@ -1,6 +1,26 @@
+import { useEffect, useRef } from 'react'
+
 const links = ['About', 'Skills', 'Projects', 'Experience', 'Contact']
+const SECRET = '#admin'
 
 export default function Navbar() {
+  const buffer = useRef('')
+
+  useEffect(() => {
+    const onKey = (e) => {
+      // Ignore if user is typing in an input/textarea
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return
+
+      buffer.current = (buffer.current + e.key).slice(-SECRET.length)
+      if (buffer.current === SECRET) {
+        buffer.current = ''
+        window.location.hash = 'admin'
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border"
       style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)' }}>
