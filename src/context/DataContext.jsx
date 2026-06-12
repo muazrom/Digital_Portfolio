@@ -6,7 +6,12 @@ const STORAGE_KEY = 'portfolio_data'
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) return JSON.parse(raw)
+    if (raw) {
+      const stored = JSON.parse(raw)
+      // Merge in any top-level keys from defaults that are missing in stored data
+      const merged = { ...defaultData, ...stored }
+      return merged
+    }
   } catch {}
   return defaultData
 }
