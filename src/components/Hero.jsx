@@ -21,9 +21,13 @@ export default function Hero() {
       <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto">
 
         {/* Label */}
-        <p className="font-mono text-xs text-muted mb-10 tracking-[0.3em] uppercase fade-up fade-up-delay-1">
-          Personal Digital Workshop
-        </p>
+        <div className="flex items-center gap-4 mb-10 fade-up fade-up-delay-1">
+          <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, #2a2a2a)' }} />
+          <span className="font-mono text-xs text-muted tracking-[0.3em] uppercase shrink-0">
+            Personal Digital Workshop
+          </span>
+          <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, #2a2a2a)' }} />
+        </div>
 
         {/* Name — the monolith */}
         <h1 className="font-bold tracking-tight mb-6 fade-up fade-up-delay-2"
