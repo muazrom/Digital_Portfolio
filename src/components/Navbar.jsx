@@ -23,8 +23,8 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border"
-      style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)' }}>
-      <nav className="max-w-5xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between gap-4">
+      style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)', maxWidth: '100vw', overflow: 'hidden' }}>
+      <nav className="max-w-5xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between gap-4" style={{ minWidth: 0 }}>
         <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0">
           <span className="text-muted">muaz</span>
           <span className="text-white font-semibold">rom</span>
