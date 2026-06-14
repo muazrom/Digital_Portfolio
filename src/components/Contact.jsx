@@ -26,27 +26,30 @@ function FreqChannel({ ch }) {
       <div
         style={{
           background: '#0d0d0d', border: '1px solid #1e1e1e', borderRadius: 8,
-          padding: '14px 20px', display: 'grid',
-          gridTemplateColumns: '90px 1fr auto', alignItems: 'center', gap: 20,
+          padding: '14px 16px',
           transition: 'border-color 0.2s, background 0.2s', cursor: 'pointer',
         }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.4)'; e.currentTarget.style.background = 'rgba(37,99,235,0.03)' }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = '#1e1e1e'; e.currentTarget.style.background = '#0d0d0d' }}
       >
-        <div>
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#444', marginBottom: 3, letterSpacing: '0.1em' }}>FREQ (MHz)</p>
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 14, color: '#2563eb', fontWeight: 500 }}>{ch.freq}</p>
-        </div>
-        <div>
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#444', marginBottom: 3, letterSpacing: '0.1em' }}>{ch.label}</p>
-          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, color: '#ccc', fontWeight: 500 }}>{ch.value}</p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 6px #4ade80', animation: 'pulse 2s ease-in-out infinite' }} />
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#4ade80' }}>{ch.status}</span>
+        {/* Top row: freq + live indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+          <div>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555', marginBottom: 2, letterSpacing: '0.1em' }}>FREQ (MHz)</p>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 14, color: '#2563eb', fontWeight: 500 }}>{ch.freq}</p>
           </div>
-          <SignalBars />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+              <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 6px #4ade80', animation: 'pulse 2s ease-in-out infinite' }} />
+              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#4ade80' }}>{ch.status}</span>
+            </div>
+            <SignalBars />
+          </div>
+        </div>
+        {/* Bottom row: label + value */}
+        <div>
+          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555', marginBottom: 3, letterSpacing: '0.1em' }}>{ch.label}</p>
+          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, color: '#ccc', fontWeight: 500, wordBreak: 'break-all' }}>{ch.value}</p>
         </div>
       </div>
     </a>
