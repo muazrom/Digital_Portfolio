@@ -22,8 +22,8 @@ export default function Projects() {
   const total = projects.length
   const safeIndex = Math.min(index, total - 1)
 
-  // Fluid card sizing — card takes ~72% of viewport, capped at 280px
-  const CARD_W = Math.min(Math.floor(w * 0.72), 280)
+  // Fluid card sizing — 58vw on mobile, capped at 280px on desktop
+  const CARD_W = Math.min(Math.floor(w * 0.58), 280)
   const CARD_H = Math.round(CARD_W * 1.36)
   // Side card offset scales with card width
   const SIDE_OFFSET = Math.round(CARD_W * 0.72)

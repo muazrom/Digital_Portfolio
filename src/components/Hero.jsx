@@ -80,7 +80,7 @@ export default function Hero() {
         </div>
 
         {/* Stat pills */}
-        <div className="flex items-center justify-center flex-wrap gap-3 fade-up fade-up-delay-5">
+        <div className="flex items-center justify-center flex-wrap gap-3 fade-up fade-up-delay-5" style={{ paddingBottom: 'clamp(3rem, 8vh, 5rem)' }}>
           {[
             { label: 'STATUS', value: h.status, dot: '#4ade80' },
             { label: 'LOCATION', value: h.location, dot: null },
@@ -122,8 +122,8 @@ export default function Hero() {
         style={{ top: '50%', transform: 'translateY(24vh)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
 
       {/* Scroll hint */}
-      <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 fade-up fade-up-delay-5 pointer-events-none"
-        style={{ bottom: 'clamp(1rem, 3vh, 2rem)' }}>
+      <div className="absolute flex flex-col items-center gap-2 fade-up fade-up-delay-5 pointer-events-none"
+        style={{ bottom: 'clamp(1rem, 3vh, 2rem)', left: '50%', transform: 'translateX(-50%)' }}>
         <span className="font-mono" style={{ color: '#555', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
         <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #2563eb, transparent)' }} />
       </div>
