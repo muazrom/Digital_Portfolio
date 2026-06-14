@@ -15,13 +15,13 @@ export default function Hero() {
       <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ transform: 'translateY(-5vh)' }}>
 
         {/* Label with flanking blue lines */}
-        <div className="flex items-center gap-0 mb-10 fade-up fade-up-delay-1">
+        <div className="flex items-center gap-0 mb-10 fade-up fade-up-delay-1" style={{ width: '100%' }}>
           <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.55))' }} />
           <span style={{
-            fontFamily: 'JetBrains Mono', fontSize: 8,
-            color: '#666', letterSpacing: '0.2em',
+            fontFamily: 'JetBrains Mono', fontSize: 11,
+            color: '#777', letterSpacing: '0.18em',
             textTransform: 'uppercase',
-            padding: '4px 14px',
+            padding: '6px 18px',
             border: '1px solid rgba(37,99,235,0.25)',
             borderRadius: 3,
             background: '#0a0a0a',
