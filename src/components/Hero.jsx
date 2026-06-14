@@ -115,14 +115,8 @@ export default function Hero() {
 
       </div>
 
-      {/* Horizontal rules — vh-based so they scale with any screen height */}
-      <div className="absolute left-0 right-0 pointer-events-none"
-        style={{ top: '50%', transform: 'translateY(-24vh)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
-      <div className="absolute left-0 right-0 pointer-events-none"
-        style={{ top: '50%', transform: 'translateY(24vh)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
-
-      {/* Scroll hint */}
-      <div className="absolute flex flex-col items-center gap-2 fade-up fade-up-delay-5 pointer-events-none"
+      {/* Scroll hint — desktop only */}
+      <div className="hidden md:flex absolute flex-col items-center gap-2 fade-up fade-up-delay-5 pointer-events-none"
         style={{ bottom: 'clamp(1rem, 3vh, 2rem)', left: '50%', transform: 'translateX(-50%)' }}>
         <span className="font-mono" style={{ color: '#555', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
         <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #2563eb, transparent)' }} />
