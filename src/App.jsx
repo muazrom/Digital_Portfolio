@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { DataProvider } from './context/DataContext'
+import BootIntro from './components/BootIntro'
 import { isAuthenticated, setAuthenticated } from './admin/auth'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
@@ -32,6 +33,7 @@ function getView() {
 }
 
 export default function App() {
+  const [booting, setBooting] = useState(() => !window.location.hash.startsWith('#admin'))
   const [view, setView] = useState(getView)
   const [authed, setAuthed] = useState(isAuthenticated)
 
@@ -56,6 +58,7 @@ export default function App() {
 
   return (
     <DataProvider>
+      {booting && <BootIntro onDone={() => setBooting(false)} />}
       {view === 'admin' ? (
         authed
           ? <AdminDashboard onLogout={handleLogout} />
