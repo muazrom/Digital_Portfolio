@@ -8,8 +8,8 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center pt-14 overflow-hidden">
       {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 40%, transparent 70%)' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.10) 35%, rgba(37,99,235,0.03) 60%, transparent 75%)' }} />
       </div>
 
       <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ transform: 'translateY(-5vh)' }}>
