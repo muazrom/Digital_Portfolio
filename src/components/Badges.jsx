@@ -143,8 +143,6 @@ export default function Badges() {
 
   return (
     <section id="badges" className="py-24 relative">
-      <div className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }} />
 
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// 06</p>

@@ -35,8 +35,6 @@ export default function Experience() {
 
   return (
     <section id="experience" className="py-24 relative">
-      <div className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }} />
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <p className="section-number mb-2">// 05</p>
         <div className="flex items-end justify-between">

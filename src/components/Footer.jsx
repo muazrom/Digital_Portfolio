@@ -1,8 +1,6 @@
 export default function Footer() {
   return (
     <footer className="relative border-t border-border py-10">
-      <div className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.4), transparent)' }} />
       <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <span className="font-mono text-xs text-muted flex items-center gap-2">
           <span className="text-accent">©</span> 2026 Muaz Arief
