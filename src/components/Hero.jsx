@@ -12,22 +12,14 @@ export default function Hero() {
           style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 40%, transparent 70%)' }} />
       </div>
 
-      {/* Horizontal rule lines */}
-      <div className="absolute left-0 right-0 pointer-events-none"
-        style={{ top: '50%', transform: 'translateY(-220px)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
-      <div className="absolute left-0 right-0 pointer-events-none"
-        style={{ top: '50%', transform: 'translateY(220px)', height: 1, background: 'linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent)' }} />
-
       <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ paddingTop: '2rem' }}>
 
-        {/* Label */}
-        <div className="flex items-center gap-4 mb-10 fade-up fade-up-delay-1">
-          <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, #2a2a2a)' }} />
-          <span className="font-mono text-xs tracking-[0.3em] uppercase shrink-0"
-            style={{ color: '#aaa', background: '#0a0a0a', padding: '0 12px' }}>
+        {/* Label — no side lines */}
+        <div className="mb-10 fade-up fade-up-delay-1">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase"
+            style={{ color: '#666' }}>
             Personal Digital Workshop
           </span>
-          <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, #2a2a2a)' }} />
         </div>
 
         {/* Name */}
@@ -44,7 +36,7 @@ export default function Hero() {
           {h.name}
         </h1>
 
-        {/* Divider */}
+        {/* Divider dot */}
         <div className="flex items-center justify-center gap-4 mb-6 fade-up fade-up-delay-3">
           <div style={{ height: 1, width: 48, background: '#2a2a2a' }} />
           <span style={{ width: 4, height: 4, borderRadius: '50%', background: '#2563eb', boxShadow: '0 0 8px rgba(37,99,235,0.9)', display: 'inline-block' }} />
@@ -76,12 +68,12 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Stat pills — no Y offset on mobile */}
+        {/* Stat pills */}
         <div className="flex items-center justify-center flex-wrap gap-3 fade-up fade-up-delay-5">
           {[
-            { label: 'STATUS', value: h.status, dot: '#4ade80', offset: 0 },
-            { label: 'LOCATION', value: h.location, dot: null, offset: 6 },
-            { label: 'UNIVERSITY', value: h.university, dot: null, offset: -4 },
+            { label: 'STATUS', value: h.status, dot: '#4ade80' },
+            { label: 'LOCATION', value: h.location, dot: null },
+            { label: 'UNIVERSITY', value: h.university, dot: null },
           ].map((item) => (
             <div key={item.label}
               style={{
@@ -124,12 +116,6 @@ export default function Hero() {
           ...pos,
         }} />
       ))}
-
-      {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 fade-up fade-up-delay-5">
-        <span className="font-mono" style={{ color: '#555', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
-        <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #2563eb, transparent)' }} />
-      </div>
     </section>
   )
 }
