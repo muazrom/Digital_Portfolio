@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import { useData } from '../context/DataContext'
-
-const SIZE = 340, CENTER = SIZE / 2, RADIUS = 124
+import { useWindowSize } from '../hooks/useWindowSize'
 
 export default function Experience() {
   const { data } = useData()
@@ -9,6 +8,12 @@ export default function Experience() {
   const [active, setActive] = useState(0)
   const touchStartX = useRef(null)
   const total = experiences.length
+
+  const { w } = useWindowSize()
+  // Ring scales fluidly: full size 340px on desktop, shrinks to ~85vw on mobile, min 240px
+  const SIZE = Math.min(Math.max(Math.floor(w * 0.85), 240), 340)
+  const CENTER = SIZE / 2
+  const RADIUS = Math.round(SIZE * 0.365)
 
   const safeActive = Math.min(active, total - 1)
   const ringRotation = -(360 / total) * safeActive

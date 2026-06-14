@@ -61,7 +61,7 @@
 
   .section-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.25rem;
+    font-size: clamp(1.6rem, 5vw, 2.25rem);
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.02em;
@@ -176,9 +176,10 @@
   }
 }
 
-/* Section padding tighter on mobile */
-@media (max-width: 768px) {
-  .py-24 { padding-top: 4rem; padding-bottom: 4rem; }
+/* Fluid section padding */
+.py-24 {
+  padding-top: clamp(3rem, 8vw, 6rem) !important;
+  padding-bottom: clamp(3rem, 8vw, 6rem) !important;
 }
 
 /* Scroll reveal */

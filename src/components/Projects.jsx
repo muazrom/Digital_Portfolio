@@ -1,18 +1,16 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { useData } from '../context/DataContext'
+import { useWindowSize } from '../hooks/useWindowSize'
 
 const statusColor = {
   Live: '#4ade80', 'In Development': '#facc15', Ongoing: '#60a5fa', Completed: '#888',
 }
 
-function getCardStyle(rel, isMobile) {
+function getCardStyle(rel, offset, farOffset) {
   const abs = Math.abs(rel)
   const sign = rel >= 0 ? 1 : -1
-  const offset = isMobile ? 140 : 220
-  const farOffset = isMobile ? 220 : 340
-  const scale1 = isMobile ? 0.78 : 0.82
   if (abs === 0) return { transform: 'translateX(0px) rotateY(0deg) scale(1)', opacity: 1, zIndex: 10, pointerEvents: 'auto' }
-  if (abs === 1) return { transform: `translateX(${sign * offset}px) rotateY(${sign * -42}deg) scale(${scale1})`, opacity: 0.45, zIndex: 5, pointerEvents: 'auto' }
+  if (abs === 1) return { transform: `translateX(${sign * offset}px) rotateY(${sign * -42}deg) scale(0.82)`, opacity: 0.45, zIndex: 5, pointerEvents: 'auto' }
   return { transform: `translateX(${sign * farOffset}px) rotateY(${sign * -55}deg) scale(0.68)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
@@ -20,19 +18,16 @@ export default function Projects() {
   const { data } = useData()
   const projects = data.projects
   const [index, setIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const { w } = useWindowSize()
   const total = projects.length
   const safeIndex = Math.min(index, total - 1)
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  const CARD_W = isMobile ? 220 : 280
-  const CARD_H = isMobile ? 320 : 380
+  // Fluid card sizing — card takes ~72% of viewport, capped at 280px
+  const CARD_W = Math.min(Math.floor(w * 0.72), 280)
+  const CARD_H = Math.round(CARD_W * 1.36)
+  // Side card offset scales with card width
+  const SIDE_OFFSET = Math.round(CARD_W * 0.72)
+  const FAR_OFFSET = Math.round(CARD_W * 1.1)
 
   const prev = () => setIndex(i => (i - 1 + total) % total)
   const next = () => setIndex(i => (i + 1) % total)
@@ -77,7 +72,7 @@ export default function Projects() {
           let rel = i - safeIndex
           if (rel > total / 2) rel -= total
           if (rel < -total / 2) rel += total
-          const style = getCardStyle(rel, isMobile)
+          const style = getCardStyle(rel, SIDE_OFFSET, FAR_OFFSET)
           const isActive = rel === 0
 
           return (
@@ -91,8 +86,8 @@ export default function Projects() {
                 width: '100%', height: '100%',
                 background: isActive ? 'linear-gradient(160deg, #161616 0%, #111 100%)' : '#0f0f0f',
                 border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
-                borderRadius: 12, padding: isMobile ? 16 : 24,
-                display: 'flex', flexDirection: 'column', gap: isMobile ? 8 : 12,
+                borderRadius: 12, padding: Math.round(CARD_W * 0.08),
+                display: 'flex', flexDirection: 'column', gap: Math.round(CARD_W * 0.04),
                 boxShadow: isActive ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)' : '0 8px 24px rgba(0,0,0,0.5)',
                 overflow: 'hidden', position: 'relative',
               }}>
@@ -102,8 +97,8 @@ export default function Projects() {
                   <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
                 </div>
                 <div style={{ flex: 1, overflow: 'hidden' }}>
-                  <h3 style={{ fontSize: isMobile ? 18 : 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
-                  <p style={{ fontSize: isMobile ? 11 : 12.5, color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
+                  <h3 style={{ fontSize: Math.round(CARD_W * 0.078), fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
+                  <p style={{ fontSize: Math.round(CARD_W * 0.044), color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                   {proj.stack.map(tech => (
