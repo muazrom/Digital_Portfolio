@@ -12,7 +12,7 @@ export default function Hero() {
           style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 40%, transparent 70%)' }} />
       </div>
 
-      <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ paddingTop: '2rem' }}>
+      <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ transform: 'translateY(-5vh)' }}>
 
         {/* Label with flanking blue lines */}
         <div className="flex items-center gap-0 mb-10 fade-up fade-up-delay-1">
