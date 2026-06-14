@@ -10,11 +10,11 @@ function ToolTag({ name, level }) {
   return (
     <div className="group relative" style={{ cursor: 'default' }}>
       <div style={{
-        width: 6, height: 6, borderRadius: '50%', background: '#1a1a1a',
-        border: '1px solid #333', margin: '0 auto 6px', transition: 'border-color 0.2s',
+        width: 6, height: 6, borderRadius: '50%', background: '#222',
+        border: '1px solid #444', margin: '0 auto 6px', transition: 'border-color 0.2s',
       }} className="group-hover:border-accent" />
       <div className="group-hover:-translate-y-1" style={{
-        background: '#111', border: '1px solid #2a2a2a', borderRadius: 6,
+        background: '#1a1a1a', border: '1px solid #333', borderRadius: 6,
         padding: '10px 14px', textAlign: 'center',
         transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
         position: 'relative', minWidth: 90,
@@ -49,12 +49,12 @@ export default function Skills() {
         <p className="font-mono text-xs text-muted mb-14">WORKSHOP_INVENTORY // tools available at each station</p>
 
         <div style={{
-          background: '#0d0d0d', border: '1px solid #1e1e1e', borderRadius: 12, padding: '40px 32px',
+          background: '#111', border: '1px solid #2e2e2e', borderRadius: 12, padding: '40px 32px',
           position: 'relative',
-          backgroundImage: 'radial-gradient(circle, #1e1e1e 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, #2a2a2a 1px, transparent 1px)',
           backgroundSize: '20px 20px',
         }}>
-          <div style={{ position: 'absolute', top: 14, right: 20, fontFamily: 'JetBrains Mono', fontSize: 9, color: '#333', letterSpacing: '0.1em' }}>
+          <div style={{ position: 'absolute', top: 14, right: 20, fontFamily: 'JetBrains Mono', fontSize: 9, color: '#444', letterSpacing: '0.1em' }}>
             BOARD_A // WORKSHOP
           </div>
 
@@ -71,7 +71,7 @@ export default function Skills() {
                     {station.label}
                   </span>
                   <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#444' }}>— {station.desc}</span>
-                  <div style={{ flex: 1, height: 1, background: '#1e1e1e' }} />
+                  <div style={{ flex: 1, height: 1, background: '#2e2e2e' }} />
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', paddingLeft: 12 }}>
                   {station.tools.map(tool => (
@@ -83,7 +83,7 @@ export default function Skills() {
           </div>
 
           <div style={{
-            marginTop: 40, paddingTop: 20, borderTop: '1px solid #1a1a1a',
+            marginTop: 40, paddingTop: 20, borderTop: '1px solid #2e2e2e',
             display: 'flex', alignItems: 'center', gap: 20,
           }}>
             <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#333' }}>PROFICIENCY</span>

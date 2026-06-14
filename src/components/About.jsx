@@ -60,18 +60,18 @@ export default function About() {
 
           {/* Main panel */}
           <div style={{
-            background: '#0a0a0a',
-            border: '1px solid #1e1e1e',
+            background: '#0f0f0f',
+            border: '1px solid #2e2e2e',
             borderRadius: 8,
             overflow: 'hidden',
-            backgroundImage: 'radial-gradient(circle, rgba(37,99,235,0.04) 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, rgba(37,99,235,0.06) 1px, transparent 1px)',
             backgroundSize: '24px 24px',
           }}>
 
             {/* Terminal title bar */}
             <div style={{
-              background: '#111',
-              borderBottom: '1px solid #1e1e1e',
+              background: '#161616',
+              borderBottom: '1px solid #2e2e2e',
               padding: '10px 16px',
               display: 'flex',
               alignItems: 'center',
@@ -92,7 +92,7 @@ export default function About() {
             <div className="terminal-grid" style={{ gap: 0 }}>
 
               {/* Left — commands */}
-              <div className="terminal-left" style={{ padding: '28px 28px', borderRight: '1px solid #1a1a1a' }}>
+              <div className="terminal-left" style={{ padding: '28px 28px', borderRight: '1px solid #2a2a2a' }}>
                 <TerminalLine
                   cmd="whoami"
                   output={a.info[0]?.value}
@@ -143,7 +143,7 @@ export default function About() {
                   {a.info.map((row, i) => (
                     <div key={row.label} style={{
                       display: 'flex', gap: 0,
-                      borderBottom: i < a.info.length - 1 ? '1px solid #111' : 'none',
+                      borderBottom: i < a.info.length - 1 ? '1px solid #222' : 'none',
                       padding: '9px 0',
                     }}>
                       <span style={{
@@ -181,8 +181,8 @@ export default function About() {
 
             {/* Status bar */}
             <div style={{
-              borderTop: '1px solid #1a1a1a',
-              background: '#0d0d0d',
+              borderTop: '1px solid #2a2a2a',
+              background: '#141414',
               padding: '6px 16px',
               display: 'flex', alignItems: 'center', gap: 16,
             }}>

@@ -25,12 +25,12 @@ function FreqChannel({ ch }) {
     <a href={ch.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
       <div
         style={{
-          background: '#0d0d0d', border: '1px solid #1e1e1e', borderRadius: 8,
+          background: '#111', border: '1px solid #2e2e2e', borderRadius: 8,
           padding: '14px 16px',
           transition: 'border-color 0.2s, background 0.2s', cursor: 'pointer',
         }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.4)'; e.currentTarget.style.background = 'rgba(37,99,235,0.03)' }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = '#1e1e1e'; e.currentTarget.style.background = '#0d0d0d' }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = '#2e2e2e'; e.currentTarget.style.background = '#111' }}
       >
         {/* Top row: freq + live indicator */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
