@@ -15,8 +15,10 @@
 
   body {
     background-color: #0a0a0a;
-    color: #ffffff;
+    color: #e0e0e0;
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     background-image:
       linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
@@ -58,7 +60,7 @@
 
   .section-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.02em;
@@ -148,4 +150,56 @@
 /* Hide carousel scrollbar */
 .snap-x::-webkit-scrollbar {
   display: none;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  will-change: opacity, transform;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Divider line draw animation */
+.divider-line-left,
+.divider-line-right {
+  transform-origin: right center;
+  transform: scaleX(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.divider-line-right {
+  transform-origin: left center;
+}
+.divider-pill {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+}
+.divider-visible .divider-line-left,
+.divider-visible .divider-line-right {
+  transform: scaleX(1);
+}
+.divider-visible .divider-pill {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Scan flash on divider badge */
+@keyframes scan-flash {
+  0%   { opacity: 0; left: -100%; }
+  40%  { opacity: 1; }
+  100% { opacity: 0; left: 100%; }
+}
+.divider-scan::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: -100%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.35), transparent);
+  animation: scan-flash 1.2s ease 0.5s forwards;
 }

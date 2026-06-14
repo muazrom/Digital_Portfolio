@@ -8,8 +8,8 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center pt-14 overflow-hidden">
       {/* Subtle radial glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 40%, transparent 70%)' }} />
       </div>
 
       {/* Horizontal rule lines — top and bottom of content */}
@@ -23,7 +23,7 @@ export default function Hero() {
         {/* Label */}
         <div className="flex items-center gap-4 mb-10 fade-up fade-up-delay-1">
           <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, #2a2a2a)' }} />
-          <span className="font-mono text-xs text-muted tracking-[0.3em] uppercase shrink-0"
+          <span className="font-mono text-xs tracking-[0.3em] uppercase shrink-0" style={{ color: '#aaa' }}
             style={{ background: '#0a0a0a', padding: '0 12px' }}>
             Personal Digital Workshop
           </span>
@@ -33,10 +33,10 @@ export default function Hero() {
         {/* Name — the monolith */}
         <h1 className="font-bold tracking-tight mb-6 fade-up fade-up-delay-2 font-display"
           style={{
-            fontSize: 'clamp(52px, 10vw, 96px)',
+            fontSize: 'clamp(64px, 11vw, 112px)',
             lineHeight: 1,
             letterSpacing: '-0.04em',
-            background: 'linear-gradient(135deg, #ffffff 0%, #a0b4ff 50%, #2563eb 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #c0d0ff 40%, #4d7fff 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -52,13 +52,13 @@ export default function Hero() {
         </div>
 
         {/* Title */}
-        <p className="font-mono text-sm text-muted mb-8 fade-up fade-up-delay-3">
+        <p className="font-mono mb-8 fade-up fade-up-delay-3" style={{ fontSize: 15, color: '#c0c0c0' }}>
           {h.title}
         </p>
 
         {/* Bio */}
-        <p className="text-muted leading-relaxed max-w-lg mx-auto mb-12 fade-up fade-up-delay-4"
-          style={{ fontSize: 14 }}>
+        <p className="leading-relaxed max-w-lg mx-auto mb-12 fade-up fade-up-delay-4"
+          style={{ fontSize: 16, color: '#b8b8b8' }}>
           {h.bio}
         </p>
 
@@ -107,10 +107,10 @@ export default function Hero() {
                   flexShrink: 0,
                 }} />
               )}
-              <span className="font-mono" style={{ fontSize: 9, color: '#444', letterSpacing: '0.12em', marginRight: 6 }}>
+              <span className="font-mono" style={{ fontSize: 9, color: '#888', letterSpacing: '0.12em', marginRight: 6 }}>
                 {item.label}
               </span>
-              <span className="font-mono" style={{ fontSize: 11, color: '#999' }}>
+              <span className="font-mono" style={{ fontSize: 12, color: '#e0e0e0' }}>
                 {item.value}
               </span>
             </div>
@@ -136,7 +136,7 @@ export default function Hero() {
 
       {/* Scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 fade-up fade-up-delay-5">
-        <span className="font-mono text-xs" style={{ color: '#2a2a2a', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
+        <span className="font-mono text-xs" style={{ color: '#555', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
         <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #2563eb, transparent)' }} />
       </div>
     </section>

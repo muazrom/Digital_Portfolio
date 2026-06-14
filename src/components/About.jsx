@@ -24,12 +24,12 @@ function TerminalLine({ cmd, output, delay = 0 }) {
         <div style={{ paddingLeft: 20, borderLeft: '1px solid #1e1e1e' }}>
           {Array.isArray(output)
             ? output.map((line, i) => (
-                <p key={i} style={{ fontFamily: 'JetBrains Mono', fontSize: 11.5, color: '#888', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>
-                  <span style={{ color: '#2a2a2a', marginRight: 8 }}>›</span>{line}
+                <p key={i} style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#bbb', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>
+                  <span style={{ color: '#555', marginRight: 8 }}>›</span>{line}
                 </p>
               ))
-            : <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11.5, color: '#888', lineHeight: 1.8 }}>
-                <span style={{ color: '#2a2a2a', marginRight: 8 }}>›</span>{output}
+            : <p style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#bbb', lineHeight: 1.8 }}>
+                <span style={{ color: '#555', marginRight: 8 }}>›</span>{output}
               </p>
           }
         </div>
@@ -84,10 +84,10 @@ export default function About() {
                   <span key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c, opacity: 0.7 }} />
                 ))}
               </div>
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#444', flex: 1, textAlign: 'center' }}>
+              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888', flex: 1, textAlign: 'center' }}>
                 muazrom@workshop: ~/about
               </span>
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#2a2a2a' }}>bash</span>
+              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#555' }}>bash</span>
             </div>
 
             {/* Terminal body */}
@@ -114,7 +114,7 @@ export default function About() {
                       fontFamily: 'JetBrains Mono', fontSize: 10,
                       background: 'rgba(37,99,235,0.06)',
                       border: '1px solid rgba(37,99,235,0.15)',
-                      color: '#666', padding: '3px 8px', borderRadius: 3,
+                      color: '#aaa', padding: '3px 8px', borderRadius: 3,
                     }}>{m}</span>
                   ))}
                 </div>
@@ -171,10 +171,10 @@ export default function About() {
                   <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#2563eb', marginBottom: 4 }}>
                     INTERNSHIP_WINDOW
                   </p>
-                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>
+                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#ccc' }}>
                     Aug 2026 → Feb 2027
                   </p>
-                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#333', marginTop: 4 }}>
+                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777', marginTop: 4 }}>
                     min. 6 months · open to opportunities
                   </p>
                 </div>
@@ -189,8 +189,8 @@ export default function About() {
               display: 'flex', alignItems: 'center', gap: 16,
             }}>
               {[
-                { label: 'UTF-8', color: '#333' },
-                { label: 'LF', color: '#333' },
+                { label: 'UTF-8', color: '#666' },
+                { label: 'LF', color: '#666' },
                 { label: 'STUDENT', color: '#2563eb' },
                 { label: 'B.CS (IS)', color: '#888' },
                 { label: 'University Malaya', color: '#888' },
@@ -200,7 +200,7 @@ export default function About() {
                   color: item.color,
                 }}>{item.label}</span>
               ))}
-              <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono', fontSize: 9, color: '#2a2a2a' }}>
+              <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono', fontSize: 9, color: '#555' }}>
                 Ln 1, Col 1
               </span>
             </div>

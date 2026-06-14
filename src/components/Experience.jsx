@@ -76,14 +76,14 @@ export default function Experience() {
                     <div style={{ background: '#111', border: '1px solid rgba(37,99,235,0.55)', borderRadius: 8, padding: '10px 14px', width: 150, textAlign: 'center', boxShadow: '0 0 24px rgba(37,99,235,0.18)', pointerEvents: 'none' }}>
                       <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#2563eb', marginBottom: 4 }}>{e.period}</p>
                       <p style={{ fontSize: 12, fontWeight: 600, color: '#fff', lineHeight: 1.4, fontFamily: 'Space Grotesk, sans-serif' }}>{e.role}</p>
-                      <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#666', marginTop: 4, lineHeight: 1.3 }}>{e.org}</p>
+                      <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#aaa', marginTop: 4, lineHeight: 1.3 }}>{e.org}</p>
                     </div>
                   ) : (
                     <div style={{ textAlign: 'center', width: 80 }}>
-                      <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#141414', border: '1px solid #2a2a2a', margin: '0 auto 6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'JetBrains Mono', fontSize: 9, color: '#444' }}>
+                      <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#141414', border: '1px solid #2a2a2a', margin: '0 auto 6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'JetBrains Mono', fontSize: 9, color: '#888' }}>
                         {String(i + 1).padStart(2, '0')}
                       </div>
-                      <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8.5, color: '#555', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8.5, color: '#888', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {e.role}
                       </p>
                     </div>
@@ -94,7 +94,7 @@ export default function Experience() {
           </div>
 
           <div style={{ position: 'absolute', left: CENTER, top: CENTER, transform: 'translate(-50%, -50%)', textAlign: 'center', pointerEvents: 'none' }}>
-            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#333' }}>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777' }}>
               {String(safeActive + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
             </p>
           </div>
@@ -109,8 +109,8 @@ export default function Experience() {
           <div className="card p-6" key={safeActive} style={{ animation: 'fade-up 0.35s ease forwards' }}>
             <p className="font-mono text-xs text-accent mb-1">{exp.period}</p>
             <h3 className="text-white font-semibold text-xl mb-1 font-display">{exp.role}</h3>
-            <p className="font-mono text-xs text-muted mb-5">{exp.org}</p>
-            <p className="text-muted text-sm leading-relaxed">{exp.summary}</p>
+            <p className="font-mono text-xs mb-5" style={{ color: '#aaa' }}>{exp.org}</p>
+            <p className="text-sm leading-relaxed" style={{ color: '#c0c0c0' }}>{exp.summary}</p>
           </div>
           <div className="flex items-center gap-2 mt-5">
             {experiences.map((_, i) => (

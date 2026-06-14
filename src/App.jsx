@@ -12,6 +12,20 @@ import Experience from './components/Experience'
 import Badges from './components/Badges'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import SectionDivider from './components/SectionDivider'
+import { useScrollReveal } from './hooks/useScrollReveal'
+
+function Section({ index, label, children }) {
+  const ref = useScrollReveal()
+  return (
+    <>
+      <SectionDivider index={index} label={label} />
+      <div ref={ref} className="reveal">
+        {children}
+      </div>
+    </>
+  )
+}
 
 function getView() {
   return window.location.hash.startsWith('#admin') ? 'admin' : 'public'
@@ -24,7 +38,6 @@ export default function App() {
   useEffect(() => {
     const onHashChange = () => {
       const next = getView()
-      // Always require login fresh when navigating to admin
       if (next === 'admin') {
         setAuthenticated(false)
         setAuthed(false)
@@ -52,12 +65,24 @@ export default function App() {
           <Navbar />
           <main>
             <Hero />
-            <About />
-            <Skills />
-            <Projects />
-            <Experience />
-            <Badges />
-            <Contact />
+            <Section index={2} label="About">
+              <About />
+            </Section>
+            <Section index={3} label="Skills">
+              <Skills />
+            </Section>
+            <Section index={4} label="Projects">
+              <Projects />
+            </Section>
+            <Section index={5} label="Experience">
+              <Experience />
+            </Section>
+            <Section index={6} label="Badges">
+              <Badges />
+            </Section>
+            <Section index={7} label="Contact">
+              <Contact />
+            </Section>
           </main>
           <Footer />
         </div>

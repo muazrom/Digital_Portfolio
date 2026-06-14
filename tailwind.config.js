@@ -8,7 +8,7 @@ export default {
         surface: '#1a1a1a',
         border: '#2a2a2a',
         accent: '#2563eb',
-        muted: '#888888',
+        muted: '#a0a0a0',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

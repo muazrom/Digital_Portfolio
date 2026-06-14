@@ -87,6 +87,12 @@ export const defaultData = {
       github: 'https://github.com/muazrom', live: null,
     },
     {
+      id: 'p5', name: 'Internships Tracker', status: 'Completed',
+      description: 'A personal web app to track and manage internship applications through the recruitment process. Separated client-server architecture with a Python backend and vanilla JS/HTML/CSS frontend.',
+      stack: ['Python', 'JavaScript', 'HTML', 'CSS'],
+      github: 'https://github.com/muazrom/Internships-Tracker', live: null,
+    },
+    {
       id: 'p4', name: 'Digital Portfolio', status: 'Live',
       description: 'This site — a personal dashboard-style portfolio themed as a digital workshop. Built with React + Vite, deployed on Cloudflare Pages with a custom domain.',
       stack: ['React', 'Vite', 'Tailwind CSS', 'Cloudflare'],
@@ -121,6 +127,14 @@ export const defaultData = {
     {
       id: 'e4', role: 'Head of Department', org: 'Minggu Haluan Siswa KK10', period: 'Oct 2025',
       summary: 'Managed technical setup and equipment for the university orientation programme serving 300 new students and 50 committee members. Ensured seamless execution of all technical operations.',
+    },
+    {
+      id: 'e7', role: 'Director', org: 'Dayasari Goes Green', period: 'Feb 2024',
+      summary: 'Directed a recycling awareness programme organised by one of the residential colleges at University Malaya. Led the committee in planning and executing activities centred around sustainability and environmental responsibility.',
+    },
+    {
+      id: 'e6', role: 'Head of Logistics & Technical', org: 'Tazcup', period: '2025',
+      summary: 'Managed logistics and technical operations for Tazcup, a futsal tournament open to University Malaya students and the surrounding community. Coordinated equipment, venue setup, and ensured smooth technical execution throughout the event.',
     },
     {
       id: 'e5', role: 'Assistant', org: 'Perisian Huda Sdn Bhd', period: 'Apr 2023',
