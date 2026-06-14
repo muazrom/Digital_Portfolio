@@ -70,7 +70,7 @@ export default function Skills() {
                   <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#fff', fontWeight: 500 }}>
                     {station.label}
                   </span>
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#444' }}>— {station.desc}</span>
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#666' }}>— {station.desc}</span>
                   <div style={{ flex: 1, height: 1, background: '#2e2e2e' }} />
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', paddingLeft: 12 }}>
@@ -86,9 +86,9 @@ export default function Skills() {
             marginTop: 40, paddingTop: 20, borderTop: '1px solid #2e2e2e',
             display: 'flex', alignItems: 'center', gap: 20,
           }}>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#333' }}>PROFICIENCY</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#666' }}>PROFICIENCY</span>
             {[['Basic', 1], ['Proficient', 2], ['Strong', 3]].map(([label, l]) => (
-              <span key={l} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#444', display: 'flex', alignItems: 'center', gap: 5 }}>
+              <span key={l} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#888', display: 'flex', alignItems: 'center', gap: 5 }}>
                 <span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: levelColor[l] }} />
                 {label.toUpperCase()}
               </span>

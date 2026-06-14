@@ -7,7 +7,7 @@ export default function Footer() {
           <span className="text-border">—</span>
           <span className="text-accent">muazrom.my</span>
         </span>
-        <span className="font-mono text-xs text-muted/50">
+        <span className="font-mono text-xs text-muted">
           React + Vite · Cloudflare Pages · v1.0.0
         </span>
       </div>

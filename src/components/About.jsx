@@ -25,7 +25,7 @@ function TerminalLine({ cmd, output, delay = 0 }) {
           {Array.isArray(output)
             ? output.map((line, i) => (
                 <p key={i} style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#bbb', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>
-                  <span style={{ color: '#555', marginRight: 8 }}>›</span>{line}
+                  <span style={{ color: '#777', marginRight: 8 }}>›</span>{line}
                 </p>
               ))
             : <p style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#bbb', lineHeight: 1.8 }}>
@@ -85,7 +85,7 @@ export default function About() {
               <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888', flex: 1, textAlign: 'center' }}>
                 muazrom@workshop: ~/about
               </span>
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#555' }}>bash</span>
+              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777' }}>bash</span>
             </div>
 
             {/* Terminal body */}
@@ -172,7 +172,7 @@ export default function About() {
                   <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#ccc' }}>
                     Aug 2026 → Feb 2027
                   </p>
-                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777', marginTop: 4 }}>
+                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#999', marginTop: 4 }}>
                     min. 6 months · open to opportunities
                   </p>
                 </div>
@@ -198,7 +198,7 @@ export default function About() {
                   color: item.color,
                 }}>{item.label}</span>
               ))}
-              <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono', fontSize: 9, color: '#555' }}>
+              <span style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777' }}>
                 Ln 1, Col 1
               </span>
             </div>

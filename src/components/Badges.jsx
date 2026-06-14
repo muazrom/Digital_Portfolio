@@ -14,7 +14,7 @@ function BadgeCard({ badge }) {
     <div style={{
       position: 'relative',
       background: '#0f0f0f',
-      border: '1px solid #1e1e1e',
+      border: '1px solid #2e2e2e',
       borderRadius: 10,
       overflow: 'hidden',
       transition: 'border-color 0.25s, transform 0.25s, box-shadow 0.25s',
@@ -27,7 +27,7 @@ function BadgeCard({ badge }) {
         e.currentTarget.style.boxShadow = `0 8px 32px ${colors.glow}`
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.borderColor = '#1e1e1e'
+        e.currentTarget.style.borderColor = '#2e2e2e'
         e.currentTarget.style.transform = 'translateY(0)'
         e.currentTarget.style.boxShadow = 'none'
       }}
@@ -81,13 +81,13 @@ function BadgeCard({ badge }) {
         </p>
         <p style={{
           fontFamily: 'JetBrains Mono', fontSize: 10,
-          color: '#555', marginBottom: 4,
+          color: '#888', marginBottom: 4,
         }}>
           {badge.issuer}
         </p>
         <p style={{
           fontFamily: 'JetBrains Mono', fontSize: 9,
-          color: '#333',
+          color: '#666',
         }}>
           {badge.date}
         </p>
