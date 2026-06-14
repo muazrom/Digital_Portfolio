@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { DataProvider } from './context/DataContext'
 import BootIntro from './components/BootIntro'
 import ParticleBackground from './components/ParticleBackground'
-import CursorGlow from './components/CursorGlow'
+import CustomCursor from './components/CustomCursor'
 import { isAuthenticated, setAuthenticated } from './admin/auth'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
@@ -68,7 +68,7 @@ export default function App() {
       ) : (
         <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
           <ParticleBackground />
-          <CursorGlow />
+          <CustomCursor />
           <Navbar />
           <main>
             <Hero />
