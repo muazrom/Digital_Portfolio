@@ -5,7 +5,7 @@ export default function Hero() {
   const h = data.hero
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-14 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ paddingTop: '5.5rem' }}>
       {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"

@@ -22,9 +22,9 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border"
+    <header className="fixed top-0 left-0 right-0 z-50"
       style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)' }}>
-      <nav className="max-w-5xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between gap-4">
+      <nav className="max-w-5xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between gap-4 border-b border-border">
         <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0">
           <span className="text-muted">muaz</span>
           <span className="text-white font-semibold">rom</span>
@@ -53,6 +53,29 @@ export default function Navbar() {
           Resume ↗
         </a>
       </nav>
+
+      {/* Workshop banner divider */}
+      <div style={{
+        display: 'flex', alignItems: 'center',
+        padding: '0 24px', gap: 0,
+        borderBottom: '1px solid rgba(37,99,235,0.08)',
+      }}>
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.5))' }} />
+        <span style={{
+          fontFamily: 'JetBrains Mono', fontSize: 8,
+          color: '#555', letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          padding: '4px 14px',
+          border: '1px solid rgba(37,99,235,0.2)',
+          borderRadius: 3,
+          background: '#0a0a0a',
+          boxShadow: '0 0 10px rgba(37,99,235,0.1)',
+          flexShrink: 0,
+        }}>
+          Personal Digital Workshop
+        </span>
+        <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(37,99,235,0.5), transparent)' }} />
+      </div>
     </header>
   )
 }
