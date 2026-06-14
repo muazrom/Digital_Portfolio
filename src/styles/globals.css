@@ -152,6 +152,34 @@
   display: none;
 }
 
+/* About terminal — stack on mobile */
+.terminal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 768px) {
+  .terminal-grid {
+    grid-template-columns: 1fr;
+  }
+  .terminal-left {
+    border-right: none !important;
+    border-bottom: 1px solid #1a1a1a;
+  }
+}
+
+/* Contact frequency channel rows */
+@media (max-width: 480px) {
+  .freq-channel {
+    grid-template-columns: 70px 1fr auto !important;
+    gap: 10px !important;
+  }
+}
+
+/* Section padding tighter on mobile */
+@media (max-width: 768px) {
+  .py-24 { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
 /* Scroll reveal */
 .reveal {
   opacity: 0;

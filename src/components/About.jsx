@@ -91,10 +91,10 @@ export default function About() {
             </div>
 
             {/* Terminal body */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
+            <div className="terminal-grid" style={{ gap: 0 }}>
 
               {/* Left — commands */}
-              <div style={{ padding: '28px 28px', borderRight: '1px solid #1a1a1a' }}>
+              <div className="terminal-left" style={{ padding: '28px 28px', borderRight: '1px solid #1a1a1a' }}>
                 <TerminalLine
                   cmd="whoami"
                   output={a.info[0]?.value}
