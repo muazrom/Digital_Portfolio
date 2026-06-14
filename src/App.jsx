@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { DataProvider } from './context/DataContext'
 import BootIntro from './components/BootIntro'
+import ParticleBackground from './components/ParticleBackground'
 import { isAuthenticated, setAuthenticated } from './admin/auth'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
@@ -64,7 +65,8 @@ export default function App() {
           ? <AdminDashboard onLogout={handleLogout} />
           : <AdminLogin onSuccess={() => setAuthed(true)} />
       ) : (
-        <div className="bg-bg text-white min-h-screen">
+        <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
+          <ParticleBackground />
           <Navbar />
           <main>
             <Hero />
