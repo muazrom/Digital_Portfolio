@@ -5,7 +5,7 @@ export default function Hero() {
   const h = data.hero
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ paddingTop: '5.5rem' }}>
+    <section className="relative min-h-screen flex items-center justify-center pt-14 overflow-hidden">
       {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
@@ -14,12 +14,23 @@ export default function Hero() {
 
       <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ paddingTop: '2rem' }}>
 
-        {/* Label — no side lines */}
-        <div className="mb-10 fade-up fade-up-delay-1">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase"
-            style={{ color: '#666' }}>
+        {/* Label with flanking blue lines */}
+        <div className="flex items-center gap-0 mb-10 fade-up fade-up-delay-1">
+          <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.55))' }} />
+          <span style={{
+            fontFamily: 'JetBrains Mono', fontSize: 8,
+            color: '#666', letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            padding: '4px 14px',
+            border: '1px solid rgba(37,99,235,0.25)',
+            borderRadius: 3,
+            background: '#0a0a0a',
+            boxShadow: '0 0 10px rgba(37,99,235,0.12)',
+            flexShrink: 0,
+          }}>
             Personal Digital Workshop
           </span>
+          <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(37,99,235,0.55), transparent)' }} />
         </div>
 
         {/* Name */}
