@@ -29,40 +29,40 @@ export const defaultData = {
     {
       id: 'S01', label: 'Languages', desc: 'Core syntax',
       tools: [
-        { name: 'Python', level: 3 }, { name: 'JavaScript', level: 3 },
-        { name: 'HTML', level: 3 }, { name: 'CSS', level: 3 },
-        { name: 'SQL', level: 2 }, { name: 'Java', level: 2 },
+        { name: 'Python', level: 2 }, { name: 'JavaScript', level: 2 },
+        { name: 'HTML', level: 2 }, { name: 'CSS', level: 2 },
+        { name: 'SQL', level: 2 }, { name: 'Java', level: 1 },
       ],
     },
     {
       id: 'S02', label: 'Frameworks & Libraries', desc: 'Build stack',
       tools: [
-        { name: 'React', level: 3 }, { name: 'Tailwind CSS', level: 3 },
-        { name: 'Node.js', level: 2 }, { name: 'Express', level: 2 },
-        { name: 'Vite', level: 3 }, { name: 'Electron', level: 1 },
+        { name: 'React', level: 2 }, { name: 'Tailwind CSS', level: 2 },
+        { name: 'Node.js', level: 2 }, { name: 'Express', level: 1 },
+        { name: 'Vite', level: 2 }, { name: 'Electron', level: 1 },
       ],
     },
     {
       id: 'S03', label: 'AI & Prompting', desc: 'Intelligence layer',
       tools: [
-        { name: 'Prompt Engineering', level: 3 }, { name: 'LangGraph', level: 2 },
-        { name: 'API Integration', level: 3 }, { name: 'ChromaDB', level: 1 },
-        { name: 'AI-assisted Dev', level: 3 },
+        { name: 'Prompt Engineering', level: 2 }, { name: 'LangGraph', level: 1 },
+        { name: 'API Integration', level: 2 }, { name: 'ChromaDB', level: 1 },
+        { name: 'AI-assisted Dev', level: 2 },
       ],
     },
     {
       id: 'S04', label: 'Cybersecurity', desc: 'Security bench',
       tools: [
-        { name: 'Secure Auth', level: 2 }, { name: 'Password Encryption', level: 2 },
+        { name: 'Secure Auth', level: 2 }, { name: 'Password Encryption', level: 1 },
         { name: 'Network Fundamentals', level: 1 },
       ],
     },
     {
       id: 'S05', label: 'Tools & Platforms', desc: 'Workshop gear',
       tools: [
-        { name: 'Git / GitHub', level: 3 }, { name: 'Linux', level: 1 },
-        { name: 'Figma', level: 2 }, { name: 'Excel', level: 2 },
-        { name: 'Cloudflare', level: 2 }, { name: 'SQLite', level: 2 },
+        { name: 'Git / GitHub', level: 2 }, { name: 'Linux', level: 1 },
+        { name: 'Figma', level: 2 }, { name: 'Excel', level: 1 },
+        { name: 'Cloudflare', level: 2 }, { name: 'SQLite', level: 1 },
       ],
     },
   ],

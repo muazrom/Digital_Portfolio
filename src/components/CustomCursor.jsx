@@ -7,7 +7,14 @@ export default function CustomCursor() {
   const ring = useRef({ x: -100, y: -100 })
   const hovering = useRef(false)
 
+  // Touch devices have no pointer to track — skip the cursor entirely.
+  const isTouch =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(hover: none), (pointer: coarse)').matches
+
   useEffect(() => {
+    if (isTouch) return
+
     const onMove = (e) => {
       target.current = { x: e.clientX, y: e.clientY }
       hovering.current = !!e.target.closest('a, button, [role="button"]')
@@ -47,7 +54,9 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', onMove)
       cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [isTouch])
+
+  if (isTouch) return null
 
   return (
     <>

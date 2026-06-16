@@ -7,7 +7,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none !important;
+  }
+
+  /* Hide the native cursor only where a real pointer exists (custom cursor renders there). */
+  @media (hover: hover) and (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
   }
 
   html {

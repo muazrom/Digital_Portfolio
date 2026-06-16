@@ -60,6 +60,7 @@ export default function App() {
 
   return (
     <DataProvider>
+      <CustomCursor />
       {booting && <BootIntro onDone={() => setBooting(false)} />}
       {view === 'admin' ? (
         authed
@@ -68,7 +69,6 @@ export default function App() {
       ) : (
         <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
           <ParticleBackground />
-          <CustomCursor />
           <Navbar />
           <main>
             <Hero />

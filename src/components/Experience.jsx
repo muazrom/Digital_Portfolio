@@ -6,10 +6,12 @@ export default function Experience() {
   const { data } = useData()
   const experiences = data.experience
   const [active, setActive] = useState(0)
+  const [showAll, setShowAll] = useState(false)
   const touchStartX = useRef(null)
   const total = experiences.length
 
   const { w } = useWindowSize()
+  const isMobile = w < 768
   // Ring scales fluidly: full size 340px on desktop, shrinks to ~85vw on mobile, min 240px
   const SIZE = Math.min(Math.max(Math.floor(w * 0.85), 240), 340)
   const CENTER = SIZE / 2
@@ -33,6 +35,37 @@ export default function Experience() {
   if (total === 0) return null
   const exp = experiences[safeActive]
 
+  // A single role card used by both the mobile list and the desktop "expand all" grid.
+  const RoleCard = ({ e, i }) => (
+    <div className="card p-5" style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div className="flex items-center justify-between">
+        <p className="font-mono text-xs text-accent">{e.period}</p>
+        <span className="font-mono text-[10px] text-muted">{String(i + 1).padStart(2, '0')}</span>
+      </div>
+      <h3 className="text-white font-semibold text-base font-display">{e.role}</h3>
+      <p className="font-mono text-xs mb-1" style={{ color: '#aaa' }}>{e.org}</p>
+      <p className="text-sm leading-relaxed" style={{ color: '#c0c0c0' }}>{e.summary}</p>
+    </div>
+  )
+
+  // Mobile: the rotating ring is fiddly on touch — show all roles as a scannable list.
+  if (isMobile) {
+    return (
+      <section id="experience" className="py-24 relative">
+        <div className="max-w-5xl mx-auto px-6 mb-8">
+          <p className="section-number mb-2">// 05</p>
+          <div className="flex items-end justify-between">
+            <h2 className="section-title">Experience &amp; Activities</h2>
+            <span className="font-mono text-xs text-muted">{total} roles</span>
+          </div>
+        </div>
+        <div className="max-w-5xl mx-auto px-6 flex flex-col gap-4">
+          {experiences.map((e, i) => <RoleCard key={e.id} e={e} i={i} />)}
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section id="experience" className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6 mb-8">
@@ -40,6 +73,12 @@ export default function Experience() {
         <div className="flex items-end justify-between">
           <h2 className="section-title">Experience &amp; Activities</h2>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowAll(v => !v)}
+              className="font-mono text-xs px-3 h-8 border border-border text-muted hover:border-accent hover:text-accent transition-all duration-200"
+            >
+              {showAll ? 'Collapse ↑' : `Show all ${total} ↓`}
+            </button>
             <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent disabled:opacity-20 transition-all duration-200">←</button>
             <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
             <button onClick={next} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent disabled:opacity-20 transition-all duration-200">→</button>
@@ -122,6 +161,13 @@ export default function Experience() {
           </div>
         </div>
       </div>
+
+      {showAll && (
+        <div className="max-w-5xl mx-auto px-6 mt-12 grid grid-cols-1 md:grid-cols-2 gap-4"
+          style={{ animation: 'fade-up 0.35s ease forwards' }}>
+          {experiences.map((e, i) => <RoleCard key={e.id} e={e} i={i} />)}
+        </div>
+      )}
     </section>
   )
 }

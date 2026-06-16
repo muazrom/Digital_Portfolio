@@ -52,6 +52,50 @@ export default function Projects() {
 
   if (total === 0) return null
 
+  // Carousel is hard to scan on small screens — show a plain grid instead.
+  const isMobile = w < 768
+
+  if (isMobile) {
+    return (
+      <section id="projects" className="py-24 relative">
+        <div className="max-w-5xl mx-auto px-6 mb-10">
+          <p className="section-number mb-2">// 04</p>
+          <div className="flex items-end justify-between">
+            <h2 className="section-title">Projects</h2>
+            <span className="font-mono text-xs text-muted">{String(total).padStart(2, '0')} total</span>
+          </div>
+        </div>
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {projects.map((proj) => (
+            <div key={proj.id} style={{
+              background: 'linear-gradient(160deg, #161616 0%, #111 100%)',
+              border: '1px solid #1a1a1a', borderRadius: 12, padding: 18,
+              display: 'flex', flexDirection: 'column', gap: 10,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor[proj.status], boxShadow: `0 0 6px ${statusColor[proj.status]}`, flexShrink: 0 }} />
+                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
+              </div>
+              <div>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 6, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
+                <p style={{ fontSize: 12.5, color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                {proj.stack.map(tech => (
+                  <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#777', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 16, paddingTop: 10, marginTop: 'auto', borderTop: '1px solid #1e1e1e' }}>
+                {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>GitHub ↗</a>}
+                {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb' }}>Live demo ↗</a>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section id="projects" className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6 mb-14">
@@ -105,7 +149,7 @@ export default function Projects() {
                 </div>
                 <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
                   {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>GitHub ↗</a>}
-                  {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Live ↗</a>}
+                  {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb' }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>Live demo ↗</a>}
                 </div>
               </div>
             </div>
