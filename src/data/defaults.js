@@ -75,6 +75,12 @@ export const defaultData = {
       github: 'https://github.com/muazrom', live: null,
     },
     {
+      id: 'p6', name: 'Manga Tracker', status: 'In Development',
+      description: 'Cross-platform Flutter app to track manga, manhwa & manhua reading progress, with an in-app reader powered by the comick.io API.',
+      stack: ['Flutter', 'Dart', 'comick.io API'],
+      github: 'https://github.com/muazrom/manga-tracker', live: null,
+    },
+    {
       id: 'p2', name: 'Archive', status: 'Ongoing',
       description: 'macOS desktop overlay that replaces Finder, Spotlight, and the Dock with a single hotkey-triggered interface. Semantic search over your entire file system — fully local, no internet dependency.',
       stack: ['Electron', 'React', 'Python', 'FastAPI', 'ChromaDB', 'SQLite FTS5'],
