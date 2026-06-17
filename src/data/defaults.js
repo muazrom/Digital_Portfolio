@@ -108,6 +108,14 @@ export const defaultData = {
 
   badges: [
     {
+      id: 'b2',
+      name: 'Introduction to Cybersecurity',
+      issuer: 'Cisco Networking Academy',
+      date: '2026',
+      category: 'Course',
+      credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
+    },
+    {
       id: 'b1',
       name: 'Pitram Silver Award',
       issuer: 'Pitram',

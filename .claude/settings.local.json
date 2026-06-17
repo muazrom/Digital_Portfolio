@@ -21,7 +21,8 @@
       "WebFetch(domain:www.pinterest.com)",
       "Bash(gh repo *)",
       "Bash(gh api *)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(/opt/homebrew/bin/gh --version)"
     ]
   }
 }
