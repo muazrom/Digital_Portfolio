@@ -14,10 +14,18 @@ const orderOf = (tier) => (tier === 'award' ? 4 : (tier || 2))
 
 const SIZE = 224
 
-// Hexagonal medal — colour + symbol signal the tier (roman numeral for certs, ★ for awards).
-function Medal({ tier, size = 66 }) {
+// Medal shape signals tier: T1 heptagon (7), T2 hexagon (6), T3 pentagon (5), award circle.
+const shapes = {
+  1: 'M50 3 L86.75 20.7 L95.82 60.46 L70.39 92.35 L29.61 92.35 L4.18 60.46 L13.25 20.7 Z',
+  2: 'M50 3 L90.7 26.5 L90.7 73.5 L50 97 L9.3 73.5 L9.3 26.5 Z',
+  3: 'M50 3 L94.7 35.48 L77.63 88.02 L22.37 88.02 L5.3 35.48 Z',
+}
+
+// Colour + shape + symbol signal the tier (roman numeral for certs, ★ for awards).
+function Medal({ tier, size = 88 }) {
   const t = tierMeta[tier] || tierMeta[2]
   const gid = `medal-grad-${tier}`
+  const isAward = tier === 'award'
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: `drop-shadow(0 0 10px ${t.glow})` }}>
       <defs>
@@ -26,10 +34,12 @@ function Medal({ tier, size = 66 }) {
           <stop offset="100%" stopColor={t.dark} />
         </linearGradient>
       </defs>
-      <path d="M50 3 L91 26 L91 74 L50 97 L9 74 L9 26 Z" fill={`url(#${gid})`} stroke={t.light} strokeWidth="2.5" strokeLinejoin="round" />
-      <path d="M50 16 L80 33 L80 67 L50 84 L20 67 L20 33 Z" fill="none" stroke={t.light} strokeWidth="1" strokeDasharray="3 4" opacity="0.45" />
+      {isAward
+        ? <circle cx="50" cy="50" r="47" fill={`url(#${gid})`} stroke={t.light} strokeWidth="2.5" />
+        : <path d={shapes[tier] || shapes[2]} fill={`url(#${gid})`} stroke={t.light} strokeWidth="2.5" strokeLinejoin="round" />}
+      <circle cx="50" cy="50" r="30" fill="none" stroke={t.light} strokeWidth="1" strokeDasharray="3 4" opacity="0.45" />
       <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
-        fontFamily="Space Grotesk, sans-serif" fontSize={tier === 'award' ? 34 : 30} fontWeight="700" fill="#fff" letterSpacing="-1">
+        fontFamily="Space Grotesk, sans-serif" fontSize={isAward ? 36 : 32} fontWeight="700" fill="#fff" letterSpacing="-1">
         {t.roman}
       </text>
     </svg>
@@ -68,9 +78,9 @@ function BadgeCard({ badge, isTouch }) {
           {/* Tier colour strip */}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: t.main, opacity: 0.9 }} />
 
-          <div style={{ marginTop: 8 }}><Medal tier={badge.tier} /></div>
+          <div style={{ marginTop: 2 }}><Medal tier={badge.tier} /></div>
 
-          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 13.5, fontWeight: 600, color: '#eaeaea', lineHeight: 1.3, marginTop: 12,
+          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 13.5, fontWeight: 600, color: '#eaeaea', lineHeight: 1.3, marginTop: 8,
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {badge.name}
           </p>
@@ -99,7 +109,7 @@ function BadgeCard({ badge, isTouch }) {
             </div>
           ) : (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, background: `radial-gradient(circle at 50% 40%, ${t.glow}, #0a0a0a 70%)` }}>
-              <Medal tier={badge.tier} size={52} />
+              <Medal tier={badge.tier} size={68} />
               <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777', textAlign: 'center', padding: '0 18px' }}>
                 Image coming soon
               </p>
