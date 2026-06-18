@@ -106,7 +106,7 @@ export const defaultData = {
     },
   ],
 
-  // tier: 1 = exam-based professional cert · 2 = course-completion badge · 3 = learning badge
+  // tier: 1 = exam-based professional cert · 2 = course-completion badge · 3 = learning badge · 'award' = award (no rank)
   // image: path under /public for the back-of-card picture (e.g. '/badges/cisco.png'), or null
   badges: [
     {
@@ -125,7 +125,7 @@ export const defaultData = {
       issuer: 'Pitram',
       date: '2024',
       category: 'Award',
-      tier: 2,
+      tier: 'award',
       image: null,
       credential: null,
     },

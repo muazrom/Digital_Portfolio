@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import { useData } from '../context/DataContext'
 
-// Tier defines the medal design + colour. 1 = professional exam cert, 2 = course, 3 = learning.
+// Tier defines the medal design + colour. 1 = professional exam cert, 2 = course, 3 = learning, 'award' = award (no rank).
 const tierMeta = {
-  1: { label: 'Professional', roman: 'I',   main: '#2563eb', light: '#93b4ff', dark: '#0e1f4d', glow: 'rgba(37,99,235,0.35)' },
-  2: { label: 'Course',       roman: 'II',  main: '#22c55e', light: '#86efac', dark: '#0f3d23', glow: 'rgba(34,197,94,0.30)' },
-  3: { label: 'Learning',     roman: 'III', main: '#9ca3af', light: '#d4d8df', dark: '#2a2d33', glow: 'rgba(156,163,175,0.28)' },
+  1:       { label: 'Professional', roman: 'I',   main: '#2563eb', light: '#93b4ff', dark: '#0e1f4d', glow: 'rgba(37,99,235,0.35)' },
+  2:       { label: 'Course',       roman: 'II',  main: '#22c55e', light: '#86efac', dark: '#0f3d23', glow: 'rgba(34,197,94,0.30)' },
+  3:       { label: 'Learning',     roman: 'III', main: '#9ca3af', light: '#d4d8df', dark: '#2a2d33', glow: 'rgba(156,163,175,0.28)' },
+  award:   { label: 'Award',        roman: '★',   main: '#f59e0b', light: '#fcd34d', dark: '#5a3a0a', glow: 'rgba(245,158,11,0.32)' },
 }
+
+// Sort order: certs by tier (1→3), then awards last.
+const orderOf = (tier) => (tier === 'award' ? 4 : (tier || 2))
 
 const SIZE = 224
 
-// Hexagonal tier medal — colour + roman numeral signal the tier.
+// Hexagonal medal — colour + symbol signal the tier (roman numeral for certs, ★ for awards).
 function Medal({ tier, size = 66 }) {
   const t = tierMeta[tier] || tierMeta[2]
   const gid = `medal-grad-${tier}`
@@ -25,7 +29,7 @@ function Medal({ tier, size = 66 }) {
       <path d="M50 3 L91 26 L91 74 L50 97 L9 74 L9 26 Z" fill={`url(#${gid})`} stroke={t.light} strokeWidth="2.5" strokeLinejoin="round" />
       <path d="M50 16 L80 33 L80 67 L50 84 L20 67 L20 33 Z" fill="none" stroke={t.light} strokeWidth="1" strokeDasharray="3 4" opacity="0.45" />
       <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
-        fontFamily="Space Grotesk, sans-serif" fontSize="30" fontWeight="700" fill="#fff" letterSpacing="-1">
+        fontFamily="Space Grotesk, sans-serif" fontSize={tier === 'award' ? 34 : 30} fontWeight="700" fill="#fff" letterSpacing="-1">
         {t.roman}
       </text>
     </svg>
@@ -76,7 +80,7 @@ function BadgeCard({ badge, isTouch }) {
           <div style={{ marginTop: 'auto', paddingTop: 10 }}>
             <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em', color: t.light,
               background: t.glow, border: `1px solid ${t.main}`, padding: '3px 9px', borderRadius: 99, opacity: 0.9 }}>
-              TIER {t.roman} · {t.label.toUpperCase()}
+              {badge.tier === 'award' ? 'AWARD' : `TIER ${t.roman} · ${t.label.toUpperCase()}`}
             </span>
           </div>
 
@@ -128,8 +132,8 @@ export default function Badges() {
   const isTouch = typeof window !== 'undefined' &&
     window.matchMedia('(hover: none), (pointer: coarse)').matches
 
-  // Sort by tier (1 → 3); keep insertion order within a tier.
-  const sorted = [...badges].sort((a, b) => (a.tier || 2) - (b.tier || 2))
+  // Sort by tier (1 → 3, then awards); keep insertion order within a group.
+  const sorted = [...badges].sort((a, b) => orderOf(a.tier) - orderOf(b.tier))
 
   return (
     <section id="badges" className="py-24 relative">

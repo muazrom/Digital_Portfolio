@@ -6,6 +6,7 @@ const TIERS = [
   { value: 1, label: '1 · Professional (exam-based cert)' },
   { value: 2, label: '2 · Course completion' },
   { value: 3, label: '3 · Learning badge' },
+  { value: 'award', label: 'Award (no tier)' },
 ]
 const blank = { name: '', issuer: '', date: '', category: 'Certificate', tier: 2, image: '', credential: '' }
 
@@ -40,7 +41,7 @@ function BadgeRow({ badge, onUpdate, onRemove }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
         <div>
           <label style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555', display: 'block', marginBottom: 5 }}>TIER</label>
-          <select value={badge.tier || 2} onChange={e => onUpdate('tier', Number(e.target.value))}
+          <select value={badge.tier || 2} onChange={e => onUpdate('tier', e.target.value === 'award' ? 'award' : Number(e.target.value))}
             style={{ width: '100%', background: '#111', border: '1px solid #2a2a2a', borderRadius: 4, padding: '8px 12px', color: '#aaa', fontSize: 12, fontFamily: 'JetBrains Mono', outline: 'none' }}>
             {TIERS.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
           </select>
