@@ -106,6 +106,8 @@ export const defaultData = {
     },
   ],
 
+  // tier: 1 = exam-based professional cert · 2 = course-completion badge · 3 = learning badge
+  // image: path under /public for the back-of-card picture (e.g. '/badges/cisco.png'), or null
   badges: [
     {
       id: 'b2',
@@ -113,6 +115,8 @@ export const defaultData = {
       issuer: 'Cisco Networking Academy',
       date: '2026',
       category: 'Course',
+      tier: 2,
+      image: '/badges/cisco-intro-cybersecurity.png',
       credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
     },
     {
@@ -121,6 +125,8 @@ export const defaultData = {
       issuer: 'Pitram',
       date: '2024',
       category: 'Award',
+      tier: 2,
+      image: null,
       credential: null,
     },
   ],
