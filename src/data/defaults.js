@@ -123,7 +123,7 @@ export const defaultData = {
       issuer: 'TryHackMe',
       date: 'Jun 2026',
       category: 'Certificate',
-      tier: 3,
+      tier: 2,
       image: '/badges/tryhackme-pre-security.png',
       credential: '/badges/tryhackme-pre-security.pdf',
     },
