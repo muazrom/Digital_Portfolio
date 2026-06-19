@@ -118,6 +118,16 @@ export const defaultData = {
       credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
     },
     {
+      id: 'b3',
+      name: 'Pre Security Learning Path',
+      issuer: 'TryHackMe',
+      date: 'Jun 2026',
+      category: 'Certificate',
+      tier: 3,
+      image: '/badges/tryhackme-pre-security.png',
+      credential: '/badges/tryhackme-pre-security.pdf',
+    },
+    {
       id: 'b1',
       name: 'Pitram Silver Award',
       issuer: 'Pitram',
