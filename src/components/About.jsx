@@ -158,24 +158,6 @@ export default function About() {
                   ))}
                 </div>
 
-                {/* Uptime / build line */}
-                <div style={{
-                  marginTop: 24,
-                  padding: '12px',
-                  background: 'rgba(37,99,235,0.04)',
-                  border: '1px solid rgba(37,99,235,0.1)',
-                  borderRadius: 4,
-                }}>
-                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#2563eb', marginBottom: 4 }}>
-                    INTERNSHIP_WINDOW
-                  </p>
-                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#ccc' }}>
-                    Aug 2026 → Feb 2027
-                  </p>
-                  <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#999', marginTop: 4 }}>
-                    min. 6 months · open to opportunities
-                  </p>
-                </div>
               </div>
             </div>
 
