@@ -85,6 +85,12 @@ export const defaultData = {
       github: 'https://github.com/muazrom', live: null,
     },
     {
+      id: 'p5', name: 'Internships Tracker', status: 'Completed',
+      description: 'A personal web app to track and manage internship applications through the recruitment process. Separated client-server architecture with a Python backend and vanilla JS/HTML/CSS frontend.',
+      stack: ['Python', 'JavaScript', 'HTML', 'CSS'],
+      github: 'https://github.com/muazrom/Internships-Tracker', live: null,
+    },
+    {
       id: 'p4', name: 'Digital Portfolio', status: 'Live',
       description: 'This site — a personal dashboard-style portfolio themed as a digital workshop. Built with React + Vite, deployed on Cloudflare Pages with a custom domain.',
       stack: ['React', 'Vite', 'Tailwind CSS', 'Cloudflare'],
