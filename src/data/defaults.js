@@ -79,12 +79,6 @@ export const defaultData = {
       github: 'https://github.com/muazrom/manga-tracker', live: null,
     },
     {
-      id: 'p2', name: 'Archive', status: 'Ongoing',
-      description: 'macOS desktop overlay that replaces Finder, Spotlight, and the Dock with a single hotkey-triggered interface. Semantic search over your entire file system — fully local, no internet dependency.',
-      stack: ['Electron', 'React', 'Python', 'FastAPI', 'ChromaDB', 'SQLite FTS5'],
-      github: 'https://github.com/muazrom/Archives', live: null,
-    },
-    {
       id: 'p3', name: 'VISSCO', status: 'Completed',
       description: 'Web-based attendance management system for students and lecturers. Built for the Pre-University Innovation Competition with CRUD operations, secure login, and password encryption.',
       stack: ['HTML', 'CSS', 'JavaScript', 'SQLite'],
