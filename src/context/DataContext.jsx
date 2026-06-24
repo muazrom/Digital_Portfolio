@@ -3,14 +3,31 @@ import { defaultData } from '../data/defaults'
 
 const STORAGE_KEY = 'portfolio_data'
 
+function mergeArray(defaultArr, storedArr) {
+  const defaultIds = new Set(defaultArr.map(i => i.id))
+  const storedMap = new Map(storedArr.map(i => [i.id, i]))
+  // Default items in default order, with stored edits applied; deleted defaults are dropped
+  const result = defaultArr.map(item => storedMap.get(item.id) || item)
+  // Append user-created items (not present in defaults)
+  for (const item of storedArr) {
+    if (!defaultIds.has(item.id)) result.push(item)
+  }
+  return result
+}
+
 function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const stored = JSON.parse(raw)
-      // Merge in any top-level keys from defaults that are missing in stored data
-      const merged = { ...defaultData, ...stored }
-      return merged
+      return {
+        ...defaultData,
+        ...stored,
+        skills:     mergeArray(defaultData.skills,     stored.skills     || []),
+        projects:   mergeArray(defaultData.projects,   stored.projects   || []),
+        badges:     mergeArray(defaultData.badges,     stored.badges     || []),
+        experience: mergeArray(defaultData.experience, stored.experience || []),
+      }
     }
   } catch {}
   return defaultData
