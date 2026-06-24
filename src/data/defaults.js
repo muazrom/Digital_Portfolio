@@ -135,7 +135,7 @@ export const defaultData = {
 
   experience: [
     {
-      id: 'e8', role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jun 2026 – Present',
+      id: 'e8', role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
       summary: 'Providing desktop support for internal users at iFast Global Hub AI, covering hardware and software troubleshooting, system maintenance, and IT assistance across the organisation.',
     },
     {
