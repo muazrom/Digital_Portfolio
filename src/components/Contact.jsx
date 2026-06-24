@@ -63,7 +63,7 @@ export default function Contact() {
         <p className="section-number mb-2">// 07</p>
         <h2 className="section-title mb-2">Contact</h2>
         <p className="font-mono text-xs text-muted mb-10">
-          TRANSMISSION_PANEL // all channels live · internship open from <span className="text-white">Aug 2026</span>
+          TRANSMISSION_PANEL // all channels live · interning at <span className="text-white">iFast Global Hub AI</span> from Jul 2026
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 640 }}>
           {channels.map(ch => <FreqChannel key={ch.label} ch={ch} />)}

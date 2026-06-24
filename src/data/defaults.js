@@ -3,7 +3,7 @@ export const defaultData = {
     name: "Mu'az Arief",
     title: 'CS Student · Cybersecurity & AI · University Malaya',
     bio: "Passionate about cybersecurity and building AI-powered systems. Proven leader with hands-on experience developing full-stack applications — from secure auth to intelligent workflows.",
-    status: 'Seeking Internship',
+    status: 'Desktop Support Intern · iFast',
     location: 'Kajang, Selangor',
     university: 'University Malaya',
   },
@@ -11,13 +11,13 @@ export const defaultData = {
   about: {
     paragraphs: [
       "Computer Science student at University Malaya, majoring in Information Systems. Passionate about cybersecurity and leveraging AI to develop secure, intelligent systems.",
-      "I build full-stack applications with a focus on security and AI integration — from secure authentication systems to LangGraph-powered AI workflows. Currently seeking a Cybersecurity Analyst internship.",
+      "I build full-stack applications with a focus on security and AI integration — from secure authentication systems to LangGraph-powered AI workflows. Currently interning as a Desktop Support at iFast Global Hub AI Sdn Bhd.",
       "Beyond code, I've led teams in multiple Head of Department roles across university events, managing budgets, logistics, and cross-functional coordination for hundreds of participants.",
     ],
     modules: ['Operating Systems', 'Data Structures', 'Information Retrieval', 'Algorithm Design', 'Network Technology', 'Machine Learning'],
     info: [
       { label: 'NAME', value: "Mu'az Arief bin Mohamad Rom" },
-      { label: 'STATUS', value: 'Student' },
+      { label: 'STATUS', value: 'Student · Intern' },
       { label: 'DEGREE', value: 'B.CS (Information Systems)' },
       { label: 'UNIVERSITY', value: 'University Malaya' },
       { label: 'LOCATION', value: 'Kajang, Selangor' },
