@@ -7,7 +7,7 @@ export default function App() {
   const [phase, setPhase] = useState('boot')
 
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#050505' }}>
+    <div style={{ width: '100vw', height: '100vh', background: '#050505' }}>
       {phase !== 'inside' && (
         <BootScene phase={phase} onEnter={() => setPhase('entering')} onInside={() => setPhase('inside')} />
       )}

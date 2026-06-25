@@ -44,29 +44,16 @@ export default function BootScene({ phase, onEnter, onInside }) {
     setDoorsOpen(true)
     onEnter()
 
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({ onComplete: onInside })
 
-    // Doors swing open
-    tl.to(leftDoorRef.current, {
-      x: '-100%',
-      duration: 1.6,
-      ease: 'power3.inOut',
-      delay: 0.4,
-    }, 0)
-    tl.to(rightDoorRef.current, {
-      x: '100%',
-      duration: 1.6,
-      ease: 'power3.inOut',
-      delay: 0.4,
-    }, 0)
+    // Doors slide open (xPercent = translateX as % of own width)
+    tl.to(leftDoorRef.current,  { xPercent: -100, duration: 1.4, ease: 'power3.inOut' }, 0.3)
+    tl.to(rightDoorRef.current, { xPercent:  100, duration: 1.4, ease: 'power3.inOut' }, 0.3)
 
-    // Fade the entire boot scene out after doors open
-    tl.to(overlayRef.current, {
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.in',
-      onComplete: onInside,
-    }, '+=0.2')
+    // Fade entire boot scene after doors clear
+    tl.to(overlayRef.current, { opacity: 0, duration: 0.7, ease: 'power2.in' }, '+=0.15')
+
+    return () => tl.kill()
   }, [bootDone])
 
   return (
