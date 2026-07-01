@@ -133,7 +133,7 @@ export default function Hero() {
               boxShadow: '0 0 10px rgba(37,99,235,0.12)',
               flexShrink: 0,
             }}>
-              Personal Digital Workshop
+              Personal Digital Portfolio
             </span>
             <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(37,99,235,0.55), transparent)' }} />
           </div>

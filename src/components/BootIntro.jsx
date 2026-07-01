@@ -158,7 +158,7 @@ export default function BootIntro({ onDone }) {
             animation: 'pulse 1.5s ease-in-out infinite',
           }} />
           <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb', letterSpacing: '0.25em' }}>
-            MUAZROM · PERSONAL DIGITAL WORKSHOP
+            MUAZROM · PERSONAL DIGITAL PORTFOLIO
           </span>
         </div>
 
