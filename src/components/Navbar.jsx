@@ -69,21 +69,21 @@ export default function Navbar() {
           className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-accent/30"
           style={GLASS}
         >
-          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-7 pr-4">
+          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-10 pr-6">
             <span className="text-muted">muaz</span>
             <span className="text-white font-semibold">rom</span>
             <span className="text-accent font-semibold">.my</span>
           </span>
 
           {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1.5">
+          <ul className="hidden md:flex items-center gap-2.5 pr-3">
             {links.map((link) => {
               const isActive = active === link.toLowerCase()
               return (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className={`block font-mono text-xs tracking-wide px-4 py-2.5 rounded-full transition-colors duration-200 ${
+                    className={`block font-mono text-xs tracking-wide px-6 py-2.5 rounded-full transition-colors duration-200 ${
                       isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
@@ -94,23 +94,13 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Resume — visible on desktop; lives inside the mobile menu otherwise */}
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-block font-mono text-xs bg-accent text-white rounded-full px-5 py-2.5 ml-1 mr-1.5 hover:bg-accent/80 transition-colors duration-200"
-          >
-            Resume ↗
-          </a>
-
           {/* Hamburger — mobile only */}
           <button
             type="button"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden flex flex-col items-center justify-center gap-[5px] w-10 h-10 mr-1 rounded-full hover:bg-white/10 transition-colors duration-200"
+            className="md:hidden flex flex-col items-center justify-center gap-[5px] w-10 h-10 mr-2 rounded-full hover:bg-white/10 transition-colors duration-200"
           >
             <span style={barStyle(open, 0)} />
             <span style={barStyle(open, 1)} />
@@ -149,17 +139,6 @@ export default function Navbar() {
               )
             })}
           </ul>
-          <div className="p-2 pt-0">
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-              className="block text-center font-mono text-sm bg-accent text-white rounded-2xl px-4 py-3 hover:bg-accent/80 transition-colors duration-200"
-            >
-              Resume ↗
-            </a>
-          </div>
         </div>
       </div>
     </>
