@@ -14,7 +14,7 @@ export const defaultData = {
       "I build full-stack applications with a focus on security and AI integration — from secure authentication systems to LangGraph-powered AI workflows. Currently interning as a Desktop Support at iFast Global Hub AI Sdn Bhd.",
       "Beyond code, I've led teams in multiple Head of Department roles across university events, managing budgets, logistics, and cross-functional coordination for hundreds of participants.",
     ],
-    modules: ['Operating Systems', 'Data Structures', 'Information Retrieval', 'Algorithm Design', 'Network Technology', 'Machine Learning'],
+    focus: ['Cybersecurity', 'LLM Systems', 'Agentic Workflows', 'Automation'],
     info: [
       { label: 'NAME', value: "Mu'az Arief bin Mohamad Rom" },
       { label: 'STATUS', value: 'Student · Intern' },

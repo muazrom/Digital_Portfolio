@@ -73,16 +73,16 @@ export function DataProvider({ children }) {
       const info = d.about.info.map((row, i) => i === index ? { ...row, [field]: value } : row)
       return { ...d, about: { ...d.about, info } }
     })
-  const updateModule = (index, value) =>
+  const updateFocus = (index, value) =>
     update(d => {
-      const modules = [...d.about.modules]
-      modules[index] = value
-      return { ...d, about: { ...d.about, modules } }
+      const focus = [...d.about.focus]
+      focus[index] = value
+      return { ...d, about: { ...d.about, focus } }
     })
-  const addModule = () =>
-    update(d => ({ ...d, about: { ...d.about, modules: [...d.about.modules, ''] } }))
-  const removeModule = (index) =>
-    update(d => ({ ...d, about: { ...d.about, modules: d.about.modules.filter((_, i) => i !== index) } }))
+  const addFocus = () =>
+    update(d => ({ ...d, about: { ...d.about, focus: [...d.about.focus, ''] } }))
+  const removeFocus = (index) =>
+    update(d => ({ ...d, about: { ...d.about, focus: d.about.focus.filter((_, i) => i !== index) } }))
 
   // Skills
   const addStation = () =>
@@ -175,7 +175,7 @@ export function DataProvider({ children }) {
       data,
       updateHero,
       updateAboutParagraph, addAboutParagraph, removeAboutParagraph,
-      updateInfoRow, updateModule, addModule, removeModule,
+      updateInfoRow, updateFocus, addFocus, removeFocus,
       addStation, updateStation, removeStation,
       addTool, removeTool, updateToolLevel,
       addProject, updateProject, removeProject, reorderProjects,

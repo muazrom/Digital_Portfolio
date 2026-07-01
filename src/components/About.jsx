@@ -102,12 +102,12 @@ export default function About() {
                   output={a.paragraphs}
                 />
                 <TerminalLine
-                  cmd="ls modules/"
+                  cmd="ls focus/"
                   output={null}
                 />
-                {/* Module tags */}
+                {/* Focus tags */}
                 <div style={{ paddingLeft: 20, borderLeft: '1px solid #1e1e1e', display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {a.modules.map(m => (
+                  {a.focus.map(m => (
                     <span key={m} style={{
                       fontFamily: 'JetBrains Mono', fontSize: 10,
                       background: 'rgba(37,99,235,0.06)',
