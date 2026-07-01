@@ -5,7 +5,8 @@
       "name": "forgery",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--prefix", "forgery"],
-      "port": 5175
+      "port": 5175,
+      "autoPort": true
     },
     {
       "name": "main",
