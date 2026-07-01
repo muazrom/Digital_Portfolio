@@ -116,8 +116,15 @@ export default function Hero() {
           </div>
 
           {/* Title */}
-          <p className="font-mono mb-8 fade-up fade-up-delay-3" style={{ fontSize: 14, color: '#c0c0c0' }}>
-            {h.title}
+          <p className="font-mono mb-8 fade-up fade-up-delay-3" style={{ fontSize: 15, letterSpacing: '0.02em' }}>
+            {h.title.split(' · ').map((part, i, arr) => (
+              <span key={i}>
+                <span style={{ color: '#e8e8e8', fontWeight: 600 }}>{part}</span>
+                {i < arr.length - 1 && (
+                  <span style={{ color: '#2563eb', margin: '0 10px', textShadow: '0 0 8px rgba(37,99,235,0.6)' }}>·</span>
+                )}
+              </span>
+            ))}
           </p>
 
           {/* Bio */}
