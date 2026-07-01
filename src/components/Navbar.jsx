@@ -69,21 +69,21 @@ export default function Navbar() {
           className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-accent/30"
           style={GLASS}
         >
-          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-10 pr-6">
+          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-[60px] pr-9">
             <span className="text-muted">muaz</span>
             <span className="text-white font-semibold">rom</span>
             <span className="text-accent font-semibold">.my</span>
           </span>
 
           {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-2.5 pr-3">
+          <ul className="hidden md:flex items-center gap-[15px] pr-[18px]">
             {links.map((link) => {
               const isActive = active === link.toLowerCase()
               return (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className={`block font-mono text-xs tracking-wide px-6 py-2.5 rounded-full transition-colors duration-200 ${
+                    className={`block font-mono text-xs tracking-wide px-9 py-2.5 rounded-full transition-colors duration-200 ${
                       isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
