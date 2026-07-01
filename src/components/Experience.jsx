@@ -5,10 +5,15 @@ import { useWindowSize } from '../hooks/useWindowSize'
 export default function Experience() {
   const { data } = useData()
   const experiences = data.experience
+  // The ring only has room for a handful of nodes before labels start colliding —
+  // show the curated "featured" subset there; the full list stays one click away via "Show all".
+  const featured = experiences.filter(e => e.featured)
+  const ringItems = featured.length > 0 ? featured : experiences
   const [active, setActive] = useState(0)
   const [showAll, setShowAll] = useState(false)
   const touchStartX = useRef(null)
-  const total = experiences.length
+  const total = ringItems.length
+  const allTotal = experiences.length
 
   const { w } = useWindowSize()
   const isMobile = w < 768
@@ -33,7 +38,7 @@ export default function Experience() {
   }
 
   if (total === 0) return null
-  const exp = experiences[safeActive]
+  const exp = ringItems[safeActive]
 
   // A single role card used by both the mobile list and the desktop "expand all" grid.
   const RoleCard = ({ e, i }) => (
@@ -56,7 +61,7 @@ export default function Experience() {
           <p className="section-number mb-2">// 05</p>
           <div className="flex items-end justify-between">
             <h2 className="section-title">Experience &amp; Activities</h2>
-            <span className="font-mono text-xs text-muted">{total} roles</span>
+            <span className="font-mono text-xs text-muted">{allTotal} roles</span>
           </div>
         </div>
         <div className="max-w-5xl mx-auto px-6 flex flex-col gap-4">
@@ -77,7 +82,7 @@ export default function Experience() {
               onClick={() => setShowAll(v => !v)}
               className="font-mono text-xs px-3 h-8 border border-border text-muted hover:border-accent hover:text-accent transition-all duration-200"
             >
-              {showAll ? 'Collapse ↑' : `Show all ${total} ↓`}
+              {showAll ? 'Collapse ↑' : `Show all ${allTotal} ↓`}
             </button>
             <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent disabled:opacity-20 transition-all duration-200">←</button>
             <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
@@ -100,7 +105,7 @@ export default function Experience() {
             transform: `rotate(${ringRotation}deg)`,
             transition: 'transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)',
           }}>
-            {experiences.map((e, i) => {
+            {ringItems.map((e, i) => {
               const angleDeg = (360 / total) * i
               const angleRad = (angleDeg - 90) * (Math.PI / 180)
               const nx = CENTER + RADIUS * Math.cos(angleRad)
@@ -155,7 +160,7 @@ export default function Experience() {
             <p className="text-sm leading-relaxed" style={{ color: '#c0c0c0' }}>{exp.summary}</p>
           </div>
           <div className="flex items-center gap-2 mt-5">
-            {experiences.map((_, i) => (
+            {ringItems.map((_, i) => (
               <button key={i} onClick={() => setActive(i)} style={{ height: 5, width: safeActive === i ? 20 : 5, borderRadius: safeActive === i ? 3 : '50%', background: safeActive === i ? '#2563eb' : '#2a2a2a', transition: 'all 0.25s ease' }} />
             ))}
           </div>

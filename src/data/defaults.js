@@ -137,6 +137,7 @@ export const defaultData = {
     {
       id: 'e8', role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
       summary: 'Providing desktop support for internal users at iFast Global Hub AI, covering hardware and software troubleshooting, system maintenance, and IT assistance across the organisation.',
+      featured: true,
     },
     {
       id: 'e1', role: 'Vice Secretary', org: 'Warisan Run', period: 'May 2026',
@@ -145,18 +146,22 @@ export const defaultData = {
     {
       id: 'e2', role: 'Head of Logistics & Technical', org: 'Jelajah Nusantara International Mobility Programme', period: 'Nov 2025',
       summary: "Led technical and logistics operations for the university's international mobility programme to Indonesia. Coordinated equipment, transportation, and technical requirements across international borders.",
+      featured: true,
     },
     {
       id: 'e3', role: 'Head of Dept & Scenographer', org: 'Pentaz Production — Karnival Teater UM', period: 'Apr 2025 & 2026',
       summary: 'Designed and led full stage sets and props for Karnival Teater Universiti Malaya for two consecutive years. Managed production budget and team coordination — received acknowledgement from the panel of jury.',
+      featured: true,
     },
     {
       id: 'e4', role: 'Head of Department', org: 'Minggu Haluan Siswa KK10', period: 'Oct 2025',
       summary: 'Managed technical setup and equipment for the university orientation programme serving 300 new students and 50 committee members. Ensured seamless execution of all technical operations.',
+      featured: true,
     },
     {
       id: 'e7', role: 'Director', org: 'Dayasari Goes Green', period: 'Feb 2024',
       summary: 'Directed a recycling awareness programme organised by one of the residential colleges at University Malaya. Led the committee in planning and executing activities centred around sustainability and environmental responsibility.',
+      featured: true,
     },
     {
       id: 'e6', role: 'Head of Logistics & Technical', org: 'Tazcup', period: '2025',
@@ -165,6 +170,7 @@ export const defaultData = {
     {
       id: 'e5', role: 'Assistant', org: 'Perisian Huda Sdn Bhd', period: 'Apr 2023',
       summary: 'Assisted in collecting natural data for machine learning and developing the "Mushafi" app. Served as a beta tester and provided user feedback that directly shaped the product.',
+      featured: true,
     },
   ],
 }
