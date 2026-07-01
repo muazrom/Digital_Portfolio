@@ -36,7 +36,7 @@ function FreqChannel({ ch }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
           <div>
             <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555', marginBottom: 2, letterSpacing: '0.1em' }}>FREQ (MHz)</p>
-            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 14, color: '#2563eb', fontWeight: 500 }}>{ch.freq}</p>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#666', fontWeight: 400 }}>{ch.freq}</p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
@@ -48,7 +48,7 @@ function FreqChannel({ ch }) {
         </div>
         {/* Bottom row: label + value */}
         <div>
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555', marginBottom: 3, letterSpacing: '0.1em' }}>{ch.label}</p>
+          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb', marginBottom: 3, letterSpacing: '0.15em', fontWeight: 600 }}>{ch.label}</p>
           <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, color: '#ccc', fontWeight: 500, wordBreak: 'break-all' }}>{ch.value}</p>
         </div>
       </div>
