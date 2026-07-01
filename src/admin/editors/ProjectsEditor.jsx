@@ -4,7 +4,7 @@ import { useData } from '../../context/DataContext'
 const STATUSES = ['Live', 'In Development', 'Ongoing', 'Completed']
 const statusColor = { Live: '#4ade80', 'In Development': '#facc15', Ongoing: '#60a5fa', Completed: '#888' }
 
-const blank = { name: '', status: 'In Development', description: '', stack: [], github: '', live: '' }
+const blank = { name: '', status: 'In Development', description: '', stack: [], github: '', live: '', image: '', caseStudy: '' }
 
 function ProjectCard({ project, onUpdate, onRemove }) {
   const [stackInput, setStackInput] = useState('')
@@ -50,6 +50,22 @@ function ProjectCard({ project, onUpdate, onRemove }) {
           <input value={s.live || ''} onChange={e => onUpdate('live', e.target.value || null)}
             style={{ width: '100%', background: '#111', border: '1px solid #2a2a2a', borderRadius: 4, padding: '8px 12px', color: '#fff', fontSize: 12, fontFamily: 'JetBrains Mono', outline: 'none' }} />
         </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+        <div>
+          <label style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555', display: 'block', marginBottom: 5 }}>SCREENSHOT PATH</label>
+          <input value={s.image || ''} onChange={e => onUpdate('image', e.target.value || null)}
+            placeholder="/screenshots/name.png"
+            style={{ width: '100%', background: '#111', border: '1px solid #2a2a2a', borderRadius: 4, padding: '8px 12px', color: '#fff', fontSize: 12, fontFamily: 'JetBrains Mono', outline: 'none' }} />
+        </div>
+      </div>
+
+      <div style={{ marginBottom: 12 }}>
+        <label style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555', display: 'block', marginBottom: 5 }}>CASE STUDY</label>
+        <textarea rows={4} value={s.caseStudy || ''} onChange={e => onUpdate('caseStudy', e.target.value)}
+          placeholder="Problem → approach → outcome, in a few sentences."
+          style={{ width: '100%', background: '#111', border: '1px solid #2a2a2a', borderRadius: 4, padding: '8px 12px', color: '#fff', fontSize: 13, outline: 'none', resize: 'vertical' }} />
       </div>
 
       {/* Stack */}

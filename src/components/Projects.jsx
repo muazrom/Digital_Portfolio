@@ -16,10 +16,24 @@ function getCardStyle(rel, offset, farOffset) {
   return { transform: `translateX(${sign * farOffset * 1.3}px) rotateY(${sign * -55}deg) scale(0.5)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
+function ScreenshotFrame({ image, name }) {
+  if (image) return <img src={image} alt={`${name} screenshot`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+  return (
+    <div style={{
+      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'radial-gradient(circle at 50% 40%, rgba(37,99,235,0.12), #0a0a0a 70%)',
+    }}>
+      <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}>Screenshot coming soon</span>
+    </div>
+  )
+}
+
 export default function Projects() {
   const { data } = useData()
   const projects = data.projects
   const [index, setIndex] = useState(0)
+  const [open, setOpen] = useState(false)
+  const [modalProj, setModalProj] = useState(null)
   const { w } = useWindowSize()
   const total = projects.length
   const safeIndex = Math.min(index, total - 1)
@@ -30,20 +44,24 @@ export default function Projects() {
   // Side card offset scales with card width — wide enough that neighbors clear the center card
   const SIDE_OFFSET = Math.round(CARD_W * 0.95)
   const FAR_OFFSET = Math.round(CARD_W * 1.35)
+  // Expanded (flipped) card grows into a landscape case-study panel
+  const LANDSCAPE_W = Math.min(Math.round(CARD_W * 2.05), Math.round(w * 0.82), 620)
+  const LANDSCAPE_H = Math.round(LANDSCAPE_W * 0.6)
 
-  const prev = () => setIndex(i => (i - 1 + total) % total)
-  const next = () => setIndex(i => (i + 1) % total)
+  const prev = () => { setOpen(false); setIndex(i => (i - 1 + total) % total) }
+  const next = () => { setOpen(false); setIndex(i => (i + 1) % total) }
 
   const wheelAccum = useRef(0)
   const onWheel = useCallback((e) => {
+    if (open) return
     e.preventDefault()
     wheelAccum.current += e.deltaY
     if (wheelAccum.current > 60) { next(); wheelAccum.current = 0 }
     else if (wheelAccum.current < -60) { prev(); wheelAccum.current = 0 }
-  }, [total])
+  }, [total, open])
 
   const touchX = useRef(null)
-  const onTouchStart = (e) => { touchX.current = e.touches[0].clientX }
+  const onTouchStart = (e) => { if (!open) touchX.current = e.touches[0].clientX }
   const onTouchEnd = (e) => {
     if (touchX.current === null) return
     const diff = touchX.current - e.changedTouches[0].clientX
@@ -87,16 +105,47 @@ export default function Projects() {
                   <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#777', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
                 ))}
               </div>
-              <div style={{ display: 'flex', gap: 16, paddingTop: 10, marginTop: 'auto', borderTop: '1px solid #1e1e1e' }}>
+              <div style={{ display: 'flex', gap: 16, alignItems: 'center', paddingTop: 10, marginTop: 'auto', borderTop: '1px solid #1e1e1e' }}>
                 {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>GitHub ↗</a>}
                 {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb' }}>Live demo ↗</a>}
+                <button onClick={() => setModalProj(proj)} style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginLeft: 'auto' }}>
+                  ⤢ Case study
+                </button>
               </div>
             </div>
           ))}
         </div>
+
+        {modalProj && (
+          <div onClick={() => setModalProj(null)} style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)',
+            zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
+          }}>
+            <div onClick={e => e.stopPropagation()} style={{
+              width: '100%', maxWidth: 480, maxHeight: '85vh', overflowY: 'auto',
+              background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 14,
+              padding: 20, display: 'flex', flexDirection: 'column', gap: 14,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: '#fff' }}>{modalProj.name}</h3>
+                <button onClick={() => setModalProj(null)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 18, cursor: 'pointer', lineHeight: 1 }}>✕</button>
+              </div>
+              <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: 8, overflow: 'hidden', background: '#0a0a0a' }}>
+                <ScreenshotFrame image={modalProj.image} name={modalProj.name} />
+              </div>
+              <p style={{ fontSize: 13, color: '#999', lineHeight: 1.7 }}>{modalProj.caseStudy || 'Case study coming soon.'}</p>
+              <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
+                {modalProj.github && <a href={modalProj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#888' }}>GitHub ↗</a>}
+                {modalProj.live && <a href={modalProj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb' }}>Live demo ↗</a>}
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     )
   }
+
+  const flipEase = 'cubic-bezier(0.4, 0, 0.2, 1)'
 
   return (
     <section id="projects" className="py-24 relative">
@@ -116,42 +165,80 @@ export default function Projects() {
           let rel = i - safeIndex
           if (rel > total / 2) rel -= total
           if (rel < -total / 2) rel += total
-          const style = getCardStyle(rel, SIDE_OFFSET, FAR_OFFSET)
           const isActive = rel === 0
+          const isExpanded = isActive && open
+          const baseStyle = getCardStyle(rel, SIDE_OFFSET, FAR_OFFSET)
+          const style = (open && !isActive) ? { ...baseStyle, opacity: 0, pointerEvents: 'none' } : baseStyle
 
           return (
-            <div key={proj.id} onClick={() => !isActive && setIndex(i)} style={{
+            <div key={proj.id} onClick={() => { if (!isActive) { setOpen(false); setIndex(i) } }} style={{
               position: 'absolute', width: CARD_W, height: CARD_H,
               transformStyle: 'preserve-3d', transformOrigin: 'center center',
               transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease',
               cursor: isActive ? 'default' : 'pointer', ...style,
             }}>
               <div style={{
-                width: '100%', height: '100%',
-                background: isActive ? 'linear-gradient(160deg, #161616 0%, #111 100%)' : '#0f0f0f',
-                border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
-                borderRadius: 12, padding: Math.round(CARD_W * 0.08),
-                display: 'flex', flexDirection: 'column', gap: Math.round(CARD_W * 0.04),
-                boxShadow: isActive ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)' : '0 8px 24px rgba(0,0,0,0.5)',
-                overflow: 'hidden', position: 'relative',
+                position: 'absolute', top: '50%', left: '50%',
+                width: isExpanded ? LANDSCAPE_W : CARD_W,
+                height: isExpanded ? LANDSCAPE_H : CARD_H,
+                transformStyle: 'preserve-3d',
+                transform: `translate(-50%, -50%) rotateY(${isExpanded ? 180 : 0}deg)`,
+                transition: isExpanded
+                  ? `transform 0.4s ${flipEase} 0s, width 0.4s ${flipEase} 0.4s, height 0.4s ${flipEase} 0.4s`
+                  : `width 0.4s ${flipEase} 0s, height 0.4s ${flipEase} 0s, transform 0.4s ${flipEase} 0.4s`,
               }}>
-                {isActive && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #2563eb, transparent)' }} />}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor[proj.status], boxShadow: `0 0 6px ${statusColor[proj.status]}`, flexShrink: 0 }} />
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
+                {/* FRONT */}
+                <div style={{
+                  position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+                  background: isActive ? 'linear-gradient(160deg, #161616 0%, #111 100%)' : '#0f0f0f',
+                  border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
+                  borderRadius: 12, padding: Math.round(CARD_W * 0.08),
+                  display: 'flex', flexDirection: 'column', gap: Math.round(CARD_W * 0.04),
+                  boxShadow: isActive ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)' : '0 8px 24px rgba(0,0,0,0.5)',
+                  overflow: 'hidden',
+                }}>
+                  {isActive && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #2563eb, transparent)' }} />}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor[proj.status], boxShadow: `0 0 6px ${statusColor[proj.status]}`, flexShrink: 0 }} />
+                    <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
+                  </div>
+                  <div style={{ flex: 1, overflow: 'hidden' }}>
+                    <h3 style={{ fontSize: Math.round(CARD_W * 0.078), fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
+                    <p style={{ fontSize: Math.round(CARD_W * 0.044), color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                    {proj.stack.map(tech => (
+                      <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#777', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
+                    {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>GitHub ↗</a>}
+                    {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb' }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>Live demo ↗</a>}
+                  </div>
                 </div>
-                <div style={{ flex: 1, overflow: 'hidden' }}>
-                  <h3 style={{ fontSize: Math.round(CARD_W * 0.078), fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
-                  <p style={{ fontSize: Math.round(CARD_W * 0.044), color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-                  {proj.stack.map(tech => (
-                    <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#777', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
-                  ))}
-                </div>
-                <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
-                  {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>GitHub ↗</a>}
-                  {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb' }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>Live demo ↗</a>}
+
+                {/* BACK — case study, only reachable via the active card */}
+                <div style={{
+                  position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+                  transform: 'rotateY(180deg)',
+                  background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 12,
+                  display: 'flex', flexDirection: 'row', overflow: 'hidden',
+                  boxShadow: '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)',
+                }}>
+                  <div style={{ flex: '1 1 55%', position: 'relative', background: '#0a0a0a' }}>
+                    <ScreenshotFrame image={proj.image} name={proj.name} />
+                  </div>
+                  <div style={{ flex: '1 1 45%', display: 'flex', flexDirection: 'column', padding: 18, overflowY: 'auto' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
+                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, fontWeight: 700, color: '#fff' }}>Case Study</h4>
+                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: 13, lineHeight: 1, padding: 0 }}>✕</button>
+                    </div>
+                    <p style={{ fontSize: 11.5, color: '#999', lineHeight: 1.6, flex: 1 }}>{proj.caseStudy || 'Case study coming soon.'}</p>
+                    <div style={{ display: 'flex', gap: 14, paddingTop: 10, marginTop: 8, borderTop: '1px solid #1e1e1e' }}>
+                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}>GitHub ↗</a>}
+                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb' }}>Live demo ↗</a>}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -159,11 +246,20 @@ export default function Projects() {
         })}
       </div>
 
-      <div className="flex items-center justify-center gap-6 mt-16">
+      <div className="flex justify-center mt-6" style={{ opacity: open ? 0 : 1, pointerEvents: open ? 'none' : 'auto', transition: 'opacity 0.3s ease' }}>
+        <button onClick={() => setOpen(true)} style={{
+          background: 'none', border: 'none', cursor: 'pointer',
+          fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555',
+        }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>
+          ⤢ Expand case study
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center gap-6 mt-10" style={{ opacity: open ? 0 : 1, pointerEvents: open ? 'none' : 'auto', transition: 'opacity 0.3s ease' }}>
         <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">←</button>
         <div className="flex items-center gap-2">
           {projects.map((_, i) => (
-            <button key={i} onClick={() => setIndex(i)} style={{ height: 5, width: safeIndex === i ? 20 : 5, borderRadius: safeIndex === i ? 3 : '50%', background: safeIndex === i ? '#2563eb' : '#2a2a2a', transition: 'all 0.25s ease' }} />
+            <button key={i} onClick={() => { setOpen(false); setIndex(i) }} style={{ height: 5, width: safeIndex === i ? 20 : 5, borderRadius: safeIndex === i ? 3 : '50%', background: safeIndex === i ? '#2563eb' : '#2a2a2a', transition: 'all 0.25s ease' }} />
           ))}
         </div>
         <button onClick={next} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">→</button>
