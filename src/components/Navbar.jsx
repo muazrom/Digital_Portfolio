@@ -3,6 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 const links = ['About', 'Skills', 'Projects', 'Experience', 'Badges', 'Contact']
 const SECRET = '#admin'
 
+const GLASS = {
+  background: 'rgba(255,255,255,0.2)',
+  backdropFilter: 'blur(20px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+}
+
 export default function Navbar() {
   const buffer = useRef('')
   const [open, setOpen] = useState(false)
@@ -57,49 +63,42 @@ export default function Navbar() {
 
   return (
     <>
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-dashed border-border"
-      style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)', maxWidth: '100vw', overflow: 'hidden' }}>
-      <nav className="relative max-w-5xl mx-auto px-4 md:px-6 h-14 flex items-center justify-between gap-4" style={{ minWidth: 0 }}>
-        {/* Corner tick marks — blueprint crop marks */}
-        <CornerTicks />
+      <div className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+        <nav
+          className="pointer-events-auto flex items-center gap-1 rounded-full border border-white/15 shadow-2xl"
+          style={GLASS}
+        >
+          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-5 pr-2">
+            <span className="text-muted">muaz</span>
+            <span className="text-white font-semibold">rom</span>
+            <span className="text-accent font-semibold">.my</span>
+          </span>
 
-        <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0">
-          <span className="text-muted">muaz</span>
-          <span className="text-white font-semibold">rom</span>
-          <span className="text-accent font-semibold">.my</span>
-        </span>
+          {/* Desktop links */}
+          <ul className="hidden md:flex items-center gap-1">
+            {links.map((link) => {
+              const isActive = active === link.toLowerCase()
+              return (
+                <li key={link}>
+                  <a
+                    href={`#${link.toLowerCase()}`}
+                    className={`block font-mono text-xs tracking-wide px-3 py-2 rounded-full transition-colors duration-200 ${
+                      isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {link}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center divide-x divide-dashed divide-border">
-          {links.map((link) => {
-            const isActive = active === link.toLowerCase()
-            return (
-              <li key={link} className="px-4 first:pl-0 last:pr-0">
-                <a
-                  href={`#${link.toLowerCase()}`}
-                  className={`font-mono text-xs tracking-wide transition-colors duration-200 relative ${
-                    isActive ? 'text-accent' : 'text-muted hover:text-white'
-                  }`}
-                >
-                  <span className="text-[9px] mr-1 opacity-50">{isActive ? '▸' : '·'}</span>
-                  {link}
-                  {isActive && (
-                    <span className="absolute -bottom-1.5 left-0 w-full h-px bg-accent" />
-                  )}
-                </a>
-              </li>
-            )
-          })}
-        </ul>
-
-        <div className="flex items-center gap-3 shrink-0">
           {/* Resume — visible on desktop; lives inside the mobile menu otherwise */}
           <a
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-block font-mono text-xs border border-dashed border-accent/50 text-accent px-3 py-1.5 hover:border-solid hover:bg-accent hover:text-white hover:border-accent transition-all duration-200"
-            style={{ boxShadow: '0 0 12px rgba(37,99,235,0.15)' }}
+            className="hidden md:inline-block font-mono text-xs bg-accent text-white rounded-full px-4 py-2 mr-1 hover:bg-accent/80 transition-colors duration-200"
           >
             Resume ↗
           </a>
@@ -110,87 +109,58 @@ export default function Navbar() {
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden flex flex-col items-center justify-center gap-[5px] w-9 h-9 border border-dashed border-border hover:border-solid hover:border-accent transition-colors duration-200"
+            className="md:hidden flex flex-col items-center justify-center gap-[5px] w-10 h-10 mr-1 rounded-full hover:bg-white/10 transition-colors duration-200"
           >
             <span style={barStyle(open, 0)} />
             <span style={barStyle(open, 1)} />
             <span style={barStyle(open, 2)} />
           </button>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </div>
 
-    {/* Mobile menu overlay — rendered as a header sibling; header's backdropFilter
-        would otherwise establish a containing block and collapse this fixed panel */}
-    <div
-      className="md:hidden"
-      style={{
-        position: 'fixed',
-        top: 56, left: 0, right: 0, bottom: 0,
-        background: 'rgba(10,10,10,0.97)',
-        backdropFilter: 'blur(12px)',
-        transform: open ? 'translateY(0)' : 'translateY(-8px)',
-        opacity: open ? 1 : 0,
-        pointerEvents: open ? 'auto' : 'none',
-        transition: 'opacity 0.25s ease, transform 0.25s ease',
-        zIndex: 40,
-      }}
-    >
-        <ul className="flex flex-col px-6 py-4">
-          {links.map((link, i) => {
-            const isActive = active === link.toLowerCase()
-            return (
-              <li key={link}>
-                <a
-                  href={`#${link.toLowerCase()}`}
-                  onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between py-4 border-b border-dashed border-border font-mono text-sm transition-colors duration-200 ${
-                    isActive ? 'text-accent' : 'text-muted hover:text-white'
-                  }`}
-                >
-                  <span>{link}</span>
-                  <span className="text-accent text-xs">// {String(i + 1).padStart(2, '0')}</span>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
-        <div className="px-6 pt-2">
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="block text-center font-mono text-sm border border-accent/50 text-accent px-4 py-3 hover:bg-accent hover:text-white transition-all duration-200"
-            style={{ boxShadow: '0 0 12px rgba(37,99,235,0.15)' }}
-          >
-            Resume ↗
-          </a>
+      {/* Mobile floating glass dropdown */}
+      <div
+        className="md:hidden fixed top-20 right-4 left-4 z-40"
+        style={{
+          transform: open ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.97)',
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? 'auto' : 'none',
+          transition: 'opacity 0.25s ease, transform 0.25s ease',
+          transformOrigin: 'top center',
+        }}
+      >
+        <div className="rounded-3xl border border-white/15 shadow-2xl overflow-hidden" style={GLASS}>
+          <ul className="flex flex-col p-2">
+            {links.map((link) => {
+              const isActive = active === link.toLowerCase()
+              return (
+                <li key={link}>
+                  <a
+                    href={`#${link.toLowerCase()}`}
+                    onClick={() => setOpen(false)}
+                    className={`block font-mono text-sm px-4 py-3 rounded-2xl transition-colors duration-200 ${
+                      isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {link}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+          <div className="p-2 pt-0">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="block text-center font-mono text-sm bg-accent text-white rounded-2xl px-4 py-3 hover:bg-accent/80 transition-colors duration-200"
+            >
+              Resume ↗
+            </a>
+          </div>
         </div>
-    </div>
-    </>
-  )
-}
-
-// Blueprint-style corner crop marks framing the nav bar
-function CornerTicks() {
-  const size = 8
-  const positions = [
-    { top: 0, left: 0, borderTop: '1px solid', borderLeft: '1px solid' },
-    { top: 0, right: 0, borderTop: '1px solid', borderRight: '1px solid' },
-    { bottom: 0, left: 0, borderBottom: '1px solid', borderLeft: '1px solid' },
-    { bottom: 0, right: 0, borderBottom: '1px solid', borderRight: '1px solid' },
-  ]
-  return (
-    <>
-      {positions.map((pos, i) => (
-        <span
-          key={i}
-          aria-hidden="true"
-          className="hidden md:block absolute border-accent/40"
-          style={{ ...pos, width: size, height: size, pointerEvents: 'none' }}
-        />
-      ))}
+      </div>
     </>
   )
 }
