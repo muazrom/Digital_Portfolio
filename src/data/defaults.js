@@ -96,6 +96,12 @@ export const defaultData = {
       stack: ['React', 'Vite', 'Tailwind CSS', 'Cloudflare'],
       github: 'https://github.com/muazrom/Digital_Portfolio', live: 'https://muazrom.my',
     },
+    {
+      id: 'p7', name: 'Vault', status: 'Completed',
+      description: 'Zero-knowledge password manager for the browser. Unlocked entirely by a hardware key, fingerprint, or device passkey via WebAuthn — no master password, no cloud, no server ever sees your data.',
+      stack: ['React', 'WebAuthn', 'AES-256-GCM', 'IndexedDB'],
+      github: 'https://github.com/muazrom/vault', live: null,
+    },
   ],
 
   // tier: 1 = exam-based professional cert · 2 = course-completion badge · 3 = learning badge · 'award' = award (no rank)

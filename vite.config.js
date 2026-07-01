@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [react()],
   publicDir: 'assets',
   server: {
-    port: 5174,
+    port: process.env.PORT ? Number(process.env.PORT) : 5174,
   },
 })
