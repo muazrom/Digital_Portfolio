@@ -121,8 +121,8 @@ export default function Hero() {
           </p>
 
           {/* Bio */}
-          <p className="leading-relaxed max-w-lg mx-auto mb-10 fade-up fade-up-delay-4"
-            style={{ fontSize: 15, color: '#b8b8b8' }}>
+          <p className="leading-relaxed max-w-xl mx-auto mb-10 fade-up fade-up-delay-4"
+            style={{ fontSize: 18, color: '#b8b8b8' }}>
             {h.bio}
           </p>
 
