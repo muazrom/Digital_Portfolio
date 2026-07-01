@@ -138,6 +138,11 @@ export default function Hero() {
               style={{ letterSpacing: '0.08em' }}>
               CONTACT
             </a>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+              className="font-mono text-xs text-muted px-6 py-3 border border-border hover:border-accent hover:text-white transition-all duration-200"
+              style={{ letterSpacing: '0.08em' }}>
+              RESUME
+            </a>
           </div>
         </div>
 
