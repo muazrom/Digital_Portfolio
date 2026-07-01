@@ -9,9 +9,11 @@ const statusColor = {
 function getCardStyle(rel, offset, farOffset) {
   const abs = Math.abs(rel)
   const sign = rel >= 0 ? 1 : -1
+  // Center + immediate neighbors are "clear" (full opacity); the next ring out fades in dimmed.
   if (abs === 0) return { transform: 'translateX(0px) rotateY(0deg) scale(1)', opacity: 1, zIndex: 10, pointerEvents: 'auto' }
-  if (abs === 1) return { transform: `translateX(${sign * offset}px) rotateY(${sign * -42}deg) scale(0.82)`, opacity: 0.45, zIndex: 5, pointerEvents: 'auto' }
-  return { transform: `translateX(${sign * farOffset}px) rotateY(${sign * -55}deg) scale(0.68)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
+  if (abs === 1) return { transform: `translateX(${sign * offset}px) rotateY(${sign * -20}deg) scale(0.88)`, opacity: 1, zIndex: 6, pointerEvents: 'auto' }
+  if (abs === 2) return { transform: `translateX(${sign * farOffset}px) rotateY(${sign * -42}deg) scale(0.65)`, opacity: 0.35, zIndex: 2, pointerEvents: 'auto' }
+  return { transform: `translateX(${sign * farOffset * 1.3}px) rotateY(${sign * -55}deg) scale(0.5)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
 export default function Projects() {
@@ -25,9 +27,9 @@ export default function Projects() {
   // Fluid card sizing — 58vw on mobile, capped at 280px on desktop
   const CARD_W = Math.min(Math.floor(w * 0.58), 280)
   const CARD_H = Math.round(CARD_W * 1.36)
-  // Side card offset scales with card width
-  const SIDE_OFFSET = Math.round(CARD_W * 0.72)
-  const FAR_OFFSET = Math.round(CARD_W * 1.1)
+  // Side card offset scales with card width — wide enough that neighbors clear the center card
+  const SIDE_OFFSET = Math.round(CARD_W * 0.95)
+  const FAR_OFFSET = Math.round(CARD_W * 1.35)
 
   const prev = () => setIndex(i => (i - 1 + total) % total)
   const next = () => setIndex(i => (i + 1) % total)
