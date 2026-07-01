@@ -25,11 +25,11 @@ function TerminalLine({ cmd, output, delay = 0 }) {
           {Array.isArray(output)
             ? output.map((line, i) => (
                 <p key={i} style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#bbb', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>
-                  <span style={{ color: '#777', marginRight: 8 }}>›</span>{line}
+                  <span style={{ color: '#2563eb', fontWeight: 700, marginRight: 8, textShadow: '0 0 8px rgba(37,99,235,0.6)' }}>›</span>{line}
                 </p>
               ))
             : <p style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#bbb', lineHeight: 1.8 }}>
-                <span style={{ color: '#555', marginRight: 8 }}>›</span>{output}
+                <span style={{ color: '#2563eb', fontWeight: 700, marginRight: 8, textShadow: '0 0 8px rgba(37,99,235,0.6)' }}>›</span>{output}
               </p>
           }
         </div>
