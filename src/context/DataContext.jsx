@@ -6,8 +6,12 @@ const STORAGE_KEY = 'portfolio_data'
 function mergeArray(defaultArr, storedArr) {
   const defaultIds = new Set(defaultArr.map(i => i.id))
   const storedMap = new Map(storedArr.map(i => [i.id, i]))
-  // Default items in default order, with stored edits applied; deleted defaults are dropped
-  const result = defaultArr.map(item => storedMap.get(item.id) || item)
+  // Default items in default order; stored edits are layered on top field-by-field so
+  // new fields added to defaults later (e.g. `featured`) aren't shadowed by stale storage
+  const result = defaultArr.map(item => {
+    const s = storedMap.get(item.id)
+    return s ? { ...item, ...s } : item
+  })
   // Append user-created items (not present in defaults)
   for (const item of storedArr) {
     if (!defaultIds.has(item.id)) result.push(item)
@@ -23,6 +27,10 @@ function loadData() {
       return {
         ...defaultData,
         ...stored,
+        // Field-by-field merge so new default fields (e.g. `about.focus`) survive
+        // even if the stored copy predates them
+        hero:       { ...defaultData.hero,  ...stored.hero },
+        about:      { ...defaultData.about, ...stored.about },
         skills:     mergeArray(defaultData.skills,     stored.skills     || []),
         projects:   mergeArray(defaultData.projects,   stored.projects   || []),
         badges:     mergeArray(defaultData.badges,     stored.badges     || []),
