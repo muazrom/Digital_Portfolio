@@ -4,9 +4,10 @@ const links = ['About', 'Skills', 'Projects', 'Experience', 'Badges', 'Contact']
 const SECRET = '#admin'
 
 const GLASS = {
-  background: 'rgba(255,255,255,0.2)',
+  background: 'linear-gradient(135deg, rgba(37,99,235,0.22), rgba(37,99,235,0.06))',
   backdropFilter: 'blur(20px) saturate(180%)',
   WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+  boxShadow: '0 8px 32px rgba(37,99,235,0.25), inset 0 1px 0 rgba(255,255,255,0.15)',
 }
 
 export default function Navbar() {
@@ -65,24 +66,24 @@ export default function Navbar() {
     <>
       <div className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
         <nav
-          className="pointer-events-auto flex items-center gap-1 rounded-full border border-white/15 shadow-2xl"
+          className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-accent/30"
           style={GLASS}
         >
-          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-5 pr-2">
+          <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-7 pr-4">
             <span className="text-muted">muaz</span>
             <span className="text-white font-semibold">rom</span>
             <span className="text-accent font-semibold">.my</span>
           </span>
 
           {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1">
+          <ul className="hidden md:flex items-center gap-1.5">
             {links.map((link) => {
               const isActive = active === link.toLowerCase()
               return (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className={`block font-mono text-xs tracking-wide px-3 py-2 rounded-full transition-colors duration-200 ${
+                    className={`block font-mono text-xs tracking-wide px-4 py-2.5 rounded-full transition-colors duration-200 ${
                       isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
@@ -98,7 +99,7 @@ export default function Navbar() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-block font-mono text-xs bg-accent text-white rounded-full px-4 py-2 mr-1 hover:bg-accent/80 transition-colors duration-200"
+            className="hidden md:inline-block font-mono text-xs bg-accent text-white rounded-full px-5 py-2.5 ml-1 mr-1.5 hover:bg-accent/80 transition-colors duration-200"
           >
             Resume ↗
           </a>
@@ -129,7 +130,7 @@ export default function Navbar() {
           transformOrigin: 'top center',
         }}
       >
-        <div className="rounded-3xl border border-white/15 shadow-2xl overflow-hidden" style={GLASS}>
+        <div className="rounded-3xl border border-accent/30 overflow-hidden" style={GLASS}>
           <ul className="flex flex-col p-2">
             {links.map((link) => {
               const isActive = active === link.toLowerCase()
