@@ -153,15 +153,21 @@ export default function Hero() {
               { label: 'STATUS', value: h.status, dot: '#4ade80' },
               { label: 'LOCATION', value: h.location, dot: null },
               { label: 'UNIVERSITY', value: h.university, dot: null },
-            ].map((item) => (
+            ].map((item, i) => (
               <div key={item.label}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid #222',
+                  background: 'linear-gradient(135deg, rgba(37,99,235,0.16), rgba(255,255,255,0.04))',
+                  backdropFilter: 'blur(16px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                  boxShadow: '0 8px 24px rgba(37,99,235,0.12), inset 0 1px 0 rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.12)',
                   borderRadius: 999,
                   padding: '8px 18px',
                   cursor: 'default',
+                  animation: `pill-float ${3.6 + i * 0.5}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.4}s`,
+                  willChange: 'transform',
                 }}
               >
                 {item.dot && (
@@ -203,6 +209,13 @@ export default function Hero() {
           ...pos,
         }} />
       ))}
+
+      <style>{`
+        @keyframes pill-float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-7px); }
+        }
+      `}</style>
     </section>
   )
 }
