@@ -84,9 +84,7 @@ export default function Experience() {
             >
               {showAll ? 'Collapse ↑' : `Show all ${allTotal} ↓`}
             </button>
-            <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent disabled:opacity-20 transition-all duration-200">←</button>
             <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
-            <button onClick={next} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent disabled:opacity-20 transition-all duration-200">→</button>
           </div>
         </div>
       </div>
@@ -144,11 +142,6 @@ export default function Experience() {
             <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#999' }}>
               {String(safeActive + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
             </p>
-          </div>
-
-          <div className="absolute flex items-center gap-4" style={{ bottom: 4, left: '50%', transform: 'translateX(-50%)' }}>
-            <button onClick={prev} className="w-7 h-7 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">←</button>
-            <button onClick={next} className="w-7 h-7 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">→</button>
           </div>
         </div>
 
