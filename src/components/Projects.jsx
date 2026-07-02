@@ -16,18 +16,6 @@ function getCardStyle(rel, offset, farOffset) {
   return { transform: `translateX(${sign * farOffset * 1.3}px) rotateY(${sign * -55}deg) scale(0.5)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
-function ScreenshotFrame({ image, name }) {
-  if (image) return <img src={image} alt={`${name} screenshot`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-  return (
-    <div style={{
-      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: 'radial-gradient(circle at 50% 40%, rgba(37,99,235,0.12), #0a0a0a 70%)',
-    }}>
-      <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}>Screenshot coming soon</span>
-    </div>
-  )
-}
-
 export default function Projects() {
   const { data } = useData()
   const projects = data.projects
@@ -111,6 +99,7 @@ export default function Projects() {
                 <button onClick={() => setModalProj(proj)} style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   ⤢ Case study
                 </button>
+                {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>Screenshot ↗</a>}
                 {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>Live demo ↗</a>}
               </div>
             </div>
@@ -131,11 +120,9 @@ export default function Projects() {
                 <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: '#fff' }}>{modalProj.name}</h3>
                 <button onClick={() => setModalProj(null)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 18, cursor: 'pointer', lineHeight: 1 }}>✕</button>
               </div>
-              <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: 8, overflow: 'hidden', background: '#0a0a0a' }}>
-                <ScreenshotFrame image={modalProj.image} name={modalProj.name} />
-              </div>
               <p style={{ fontSize: 13, color: '#999', lineHeight: 1.7 }}>{modalProj.caseStudy || 'Case study coming soon.'}</p>
               <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
+                {modalProj.image && <a href={modalProj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#888' }}>Screenshot ↗</a>}
                 {modalProj.github && <a href={modalProj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#888' }}>GitHub ↗</a>}
                 {modalProj.live && <a href={modalProj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb' }}>Live demo ↗</a>}
               </div>
@@ -214,6 +201,7 @@ export default function Projects() {
                   </div>
                   <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
                     <button onClick={e => { e.stopPropagation(); if (!isActive) setIndex(i); setOpen(true) }} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>⤢ Case study</button>
+                    {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Screenshot ↗</a>}
                     {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Live demo ↗</a>}
                   </div>
                 </div>
@@ -223,21 +211,19 @@ export default function Projects() {
                   position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
                   transform: 'rotateY(180deg)',
                   background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 12,
-                  display: 'flex', flexDirection: 'row', overflow: 'hidden',
+                  display: 'flex', justifyContent: 'center', overflow: 'hidden',
                   boxShadow: '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)',
                 }}>
-                  <div style={{ flex: '1 1 55%', position: 'relative', background: '#0a0a0a' }}>
-                    <ScreenshotFrame image={proj.image} name={proj.name} />
-                  </div>
-                  <div style={{ flex: '1 1 45%', display: 'flex', flexDirection: 'column', padding: Math.round(LANDSCAPE_W * 0.035), overflowY: 'auto' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
-                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: Math.round(LANDSCAPE_W * 0.024), fontWeight: 700, color: '#fff' }}>Case Study</h4>
-                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: 15, lineHeight: 1, padding: 0 }}>✕</button>
+                  <div style={{ width: '100%', maxWidth: 640, display: 'flex', flexDirection: 'column', padding: '36px 32px', overflowY: 'auto' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 22, fontWeight: 700, color: '#fff' }}>Case Study</h4>
+                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: 16, lineHeight: 1, padding: 0 }}>✕</button>
                     </div>
-                    <p style={{ fontSize: Math.round(LANDSCAPE_W * 0.0155), color: '#999', lineHeight: 1.75, flex: 1 }}>{proj.caseStudy || 'Case study coming soon.'}</p>
-                    <div style={{ display: 'flex', gap: 16, paddingTop: 14, marginTop: 10, borderTop: '1px solid #1e1e1e' }}>
-                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11.5, color: '#555' }}>GitHub ↗</a>}
-                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11.5, color: '#2563eb' }}>Live demo ↗</a>}
+                    <p style={{ fontSize: 14.5, color: '#999', lineHeight: 1.8, flex: 1 }}>{proj.caseStudy || 'Case study coming soon.'}</p>
+                    <div style={{ display: 'flex', gap: 16, paddingTop: 16, marginTop: 16, borderTop: '1px solid #1e1e1e' }}>
+                      {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#555' }}>Screenshot ↗</a>}
+                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#555' }}>GitHub ↗</a>}
+                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb' }}>Live demo ↗</a>}
                     </div>
                   </div>
                 </div>
