@@ -46,7 +46,9 @@ export default function Projects() {
   const FAR_OFFSET = Math.round(CARD_W * 1.35)
   // Expanded (flipped) card grows to fill the section's content column (matches max-w-5xl minus its px-6 padding)
   const LANDSCAPE_W = Math.min(Math.round(w * 0.9), 976)
-  const LANDSCAPE_H = Math.min(Math.round(LANDSCAPE_W * 0.58), Math.round(h * 0.7))
+  // Tall enough that the card, centred on the carousel's original midpoint, grows up past its own
+  // top edge and covers the section header ("// 04" + title) sitting above it.
+  const LANDSCAPE_H = Math.min(700, Math.round(h * 0.85))
 
   const prev = () => { setOpen(false); setIndex(i => (i - 1 + total) % total) }
   const next = () => { setOpen(false); setIndex(i => (i + 1) % total) }
