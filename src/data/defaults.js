@@ -67,6 +67,14 @@ export const defaultData = {
 
   projects: [
     {
+      id: 'p7', name: 'Vault', status: 'Completed',
+      description: 'Zero-knowledge password manager for the browser. Unlocked entirely by a hardware key, fingerprint, or device passkey via WebAuthn — no master password, no cloud, no server ever sees your data.',
+      stack: ['React', 'WebAuthn', 'AES-256-GCM', 'IndexedDB'],
+      github: 'https://github.com/muazrom/vault', live: null,
+      image: null,
+      caseStudy: 'Wanted a password manager where losing the master password could not lock me out and a server breach could not leak anything, so I removed both from the equation: unlock is entirely local via WebAuthn (hardware key, fingerprint, or passkey), vault contents are AES-256-GCM encrypted, and everything lives in IndexedDB — nothing ever leaves the browser.',
+    },
+    {
       id: 'p1', name: 'Noctua', status: 'In Development',
       description: 'AI-driven personal assistant & life management dashboard. Features natural language journaling, proactive data tracking, and intelligent goal planning with LangGraph-powered contextual AI workflows.',
       stack: ['React', 'Python', 'SQLite', 'LangGraph', 'Tailwind CSS'],
@@ -105,14 +113,6 @@ export const defaultData = {
       github: 'https://github.com/muazrom/Digital_Portfolio', live: 'https://muazrom.my',
       image: null,
       caseStudy: 'This site. Rebuilt from a static single-page resume into a React + Vite app with an in-browser admin editor — every section including this project carousel is data-driven, not hardcoded — and deployed it on Cloudflare Pages with a custom domain.',
-    },
-    {
-      id: 'p7', name: 'Vault', status: 'Completed',
-      description: 'Zero-knowledge password manager for the browser. Unlocked entirely by a hardware key, fingerprint, or device passkey via WebAuthn — no master password, no cloud, no server ever sees your data.',
-      stack: ['React', 'WebAuthn', 'AES-256-GCM', 'IndexedDB'],
-      github: 'https://github.com/muazrom/vault', live: null,
-      image: null,
-      caseStudy: 'Wanted a password manager where losing the master password could not lock me out and a server breach could not leak anything, so I removed both from the equation: unlock is entirely local via WebAuthn (hardware key, fingerprint, or passkey), vault contents are AES-256-GCM encrypted, and everything lives in IndexedDB — nothing ever leaves the browser.',
     },
   ],
 
