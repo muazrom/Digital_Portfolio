@@ -7,10 +7,13 @@ export function useScrollReveal() {
     if (!el) return
     const obs = new IntersectionObserver(
       ([entry]) => {
+        // Reveal once and stop observing — for sections taller than the viewport (e.g. the
+        // mobile Projects grid), the intersection ratio crosses the threshold multiple times
+        // while scrolling through, and removing the class mid-scroll restarted the fade
+        // transition from 0 every time, leaving it stuck at a low opacity.
         if (entry.isIntersecting) {
           el.classList.add('in-view')
-        } else {
-          el.classList.remove('in-view')
+          obs.unobserve(el)
         }
       },
       { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
