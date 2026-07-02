@@ -67,12 +67,75 @@ export const defaultData = {
 
   projects: [
     {
-      id: 'p7', name: 'Vault', status: 'Completed',
+      id: 'p7', name: 'Vault', status: 'In Development',
       description: 'Zero-knowledge password manager for the browser. Unlocked entirely by a hardware key, fingerprint, or device passkey via WebAuthn — no master password, no cloud, no server ever sees your data.',
       stack: ['React', 'WebAuthn', 'AES-256-GCM', 'IndexedDB'],
       github: 'https://github.com/muazrom/vault', live: null,
       image: null,
-      caseStudy: 'Wanted a password manager where losing the master password could not lock me out and a server breach could not leak anything, so I removed both from the equation: unlock is entirely local via WebAuthn (hardware key, fingerprint, or passkey), vault contents are AES-256-GCM encrypted, and everything lives in IndexedDB — nothing ever leaves the browser.',
+      caseStudy: {
+        // 1–2 lines — render as the pull-quote at the top
+        problem:
+          "Password managers protect all your secrets behind... one more password — one that can be phished, keylogged, or forgotten. Cloud-based vaults add a second risk: your secrets live on someone else's server.",
+
+        // paragraph — end on the thesis line
+        idea:
+          "Vault is a zero-knowledge password manager with no master password and no server. Access is bound to a hardware credential — a YubiKey, Touch ID, Face ID, or device passkey. The same WebAuthn assertion that proves who you are also produces the secret material that decrypts what you own, so authentication and key derivation are fused into a single step. Everything is encrypted and stored locally in the browser; nothing ever phones home. No credential, no key, no vault — not even partially.",
+
+        // what Vault defends against / covers
+        scope: [
+          "Phishing of a master password — there is no password to phish",
+          "Server-side breaches — there is no server; the vault never leaves the device",
+          "Keyloggers — nothing is typed to unlock",
+          "Partial vault corruption — entries are encrypted individually, so one bad entry can't break the rest",
+          "Offline use — fully functional with no internet after first load",
+        ],
+
+        // what it does NOT defend against + technical limits
+        constraints: [
+          "Out of scope: an attacker with physical control of an already-unlocked device",
+          "Out of scope: malware with memory access during an active session",
+          "Assumes full-disk encryption (FileVault / BitLocker / LUKS) for physical-access threat models",
+          "Losing the hardware credential can mean losing the vault — mitigated by encrypted JSON export/import",
+          "Requires the WebAuthn PRF extension: Chrome/Edge 116+, Firefox 119+, Safari 17+",
+        ],
+
+        // render as the pipeline diagram, one line of 'why' per step
+        workflow: [
+          "Unlock request → the browser fires a WebAuthn assertion against the registered passkey or hardware key",
+          "The authenticator returns the credential plus its PRF extension output — a deterministic secret that is never stored anywhere",
+          "The PRF output feeds HKDF-SHA256, which derives the 256-bit vault key (in memory only, zeroed on lock or tab close)",
+          "The key decrypts entries with AES-256-GCM via the browser's native WebCrypto — lazily, per entry, as they're viewed",
+          "Encrypted blobs persist in IndexedDB; export produces an encrypted JSON bundle the user fully controls",
+        ],
+
+        // paragraph each: what it is → why I chose it → what I rejected
+        concepts: [
+          {
+            name: "WebAuthn (FIDO2) + PRF extension",
+            description:
+              "WebAuthn normally only proves identity — it gives you a yes/no, not a secret. The PRF extension changes that: the authenticator deterministically produces the same high-entropy output for the same credential and salt, without that secret ever being stored. I chose it because it lets one hardware gesture both authenticate the user and yield key material, eliminating the master password entirely. The rejected alternative was a conventional master password with a stretched KDF — which reintroduces every weakness the project exists to remove.",
+          },
+          {
+            name: "HKDF-SHA256 key derivation",
+            description:
+              "HKDF expands strong input material into a fixed-length cryptographic key. Password-based KDFs like PBKDF2 or Argon2 exist to slow brute force against low-entropy human passwords — but the PRF output is already high-entropy machine-generated secret material, so expensive stretching would add cost without adding security. HKDF is the correct tool for this input, and it ships natively in WebCrypto.",
+          },
+          {
+            name: "AES-256-GCM, per entry",
+            description:
+              "GCM provides authenticated encryption — tampering with ciphertext is detected, not silently decrypted into garbage. Every vault entry is encrypted individually rather than as one blob, so a single corrupted record can't take down the whole vault and entries decrypt lazily instead of all at once. All operations use the browser's built-in WebCrypto API: no third-party crypto libraries, no supply-chain surface to audit.",
+          },
+          {
+            name: "Zero-knowledge, offline-first architecture",
+            description:
+              "Plaintext never touches disk or a server: the vault key lives only in memory for the session and is zeroed when the vault locks. Storage is IndexedDB — async, structured, and far larger capacity than localStorage — and the production build is a fully static site that can be hosted anywhere, because the trust boundary is the user's own device, not my infrastructure.",
+          },
+        ],
+
+        // one line, honest and forward-looking
+        finished:
+          "In development — registration, unlock, and encrypted CRUD work end-to-end; credential recovery flow is next.",
+      },
     },
     {
       id: 'p1', name: 'Noctua', status: 'In Development',
