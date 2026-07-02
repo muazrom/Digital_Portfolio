@@ -1,6 +1,8 @@
+// Base64-encoded so the address never appears as a plaintext string in the built bundle (avoids naive scrapers).
+const EMAIL = atob('emF1bWFyaWVmMDhAZ21haWwuY29t')
+
 const channels = [
-  { freq: '144.200', label: 'EMAIL', value: 'zaumarief08@gmail.com', href: 'mailto:zaumarief08@gmail.com', status: 'LIVE' },
-  { freq: '446.006', label: 'WHATSAPP', value: '+60 17-897 2218', href: 'https://wa.me/60178972218', status: 'LIVE' },
+  { freq: '144.200', label: 'EMAIL', value: EMAIL, href: `mailto:${EMAIL}`, status: 'LIVE' },
   { freq: '27.185', label: 'GITHUB', value: 'github.com/muazrom', href: 'https://github.com/muazrom', status: 'LIVE' },
   { freq: '868.300', label: 'LINKEDIN', value: 'linkedin.com/in/muazrom', href: 'https://linkedin.com/in/muazrom', status: 'LIVE' },
 ]

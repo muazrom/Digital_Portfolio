@@ -21,7 +21,7 @@ export const defaultData = {
       { label: 'DEGREE', value: 'B.CS (Information Systems)' },
       { label: 'UNIVERSITY', value: 'University Malaya' },
       { label: 'LOCATION', value: 'Kajang, Selangor' },
-      { label: 'EMAIL', value: 'zaumarief08@gmail.com' },
+      { label: 'EMAIL', value: atob('emF1bWFyaWVmMDhAZ21haWwuY29t') },
     ],
   },
 
