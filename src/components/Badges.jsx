@@ -59,25 +59,11 @@ function BadgeCard({ badge, isTouch }) {
   const faceBase = {
     position: 'absolute', inset: 0,
     backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-    borderRadius: 14, overflow: 'hidden',
-    border: `1px solid ${flipped ? t.main : 'rgba(255,255,255,0.09)'}`,
-    background: 'radial-gradient(120% 120% at 50% -10%, rgba(255,255,255,0.035), transparent 55%), #141311',
-    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.5), 0 8px 20px rgba(0,0,0,0.35)',
+    borderRadius: 12, overflow: 'hidden',
+    border: `1px solid ${flipped ? t.main : '#2a2a2a'}`,
+    background: '#0f0f0f',
     transition: 'border-color 0.3s',
   }
-
-  // Lanyard punch-hole + header band, shared by both faces to sell the "ID card" read.
-  const CardTop = () => (
-    <>
-      <div style={{
-        position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)',
-        width: 14, height: 14, borderRadius: '50%',
-        background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)',
-        boxShadow: 'inset 0 2px 3px rgba(0,0,0,0.85), 0 1px 0 rgba(255,255,255,0.05)',
-      }} />
-      <div style={{ position: 'absolute', top: 26, left: 0, right: 0, height: 3, background: t.main, opacity: 0.9 }} />
-    </>
-  )
 
   return (
     <div style={{ width: SIZE, height: SIZE, perspective: 1000, cursor: isTouch ? 'pointer' : 'default' }} {...flipHandlers}>
@@ -88,10 +74,11 @@ function BadgeCard({ badge, isTouch }) {
         transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
       }}>
         {/* ───── FRONT ───── */}
-        <div style={{ ...faceBase, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '30px 16px 14px' }}>
-          <CardTop />
+        <div style={{ ...faceBase, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '14px 16px' }}>
+          {/* Tier colour strip */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: t.main, opacity: 0.9 }} />
 
-          <Medal tier={badge.tier} />
+          <div style={{ marginTop: 2 }}><Medal tier={badge.tier} /></div>
 
           <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 13.5, fontWeight: 600, color: '#eaeaea', lineHeight: 1.3, marginTop: 8,
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
@@ -99,15 +86,11 @@ function BadgeCard({ badge, isTouch }) {
           </p>
           <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#888', marginTop: 5 }}>{badge.issuer}</p>
 
-          {/* Perforated stub — printed tier label, no pill/glow */}
-          <div style={{
-            marginTop: 'auto', alignSelf: 'stretch',
-            borderTop: '1px dashed rgba(255,255,255,0.15)',
-            marginLeft: -16, marginRight: -16,
-            paddingTop: 8, paddingLeft: 16, paddingRight: 16,
-          }}>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em', color: t.light, fontWeight: 600 }}>
-              {badge.tier === 'award' ? '★ AWARD' : `TIER ${t.roman} — ${t.label.toUpperCase()}`}
+          {/* Tier chip */}
+          <div style={{ marginTop: 'auto', paddingTop: 10 }}>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em', color: t.light,
+              background: t.glow, border: `1px solid ${t.main}`, padding: '3px 9px', borderRadius: 99, opacity: 0.9 }}>
+              {badge.tier === 'award' ? 'AWARD' : `TIER ${t.roman} · ${t.label.toUpperCase()}`}
             </span>
           </div>
 
@@ -119,14 +102,13 @@ function BadgeCard({ badge, isTouch }) {
 
         {/* ───── BACK ───── */}
         <div style={{ ...faceBase, transform: 'rotateY(180deg)', display: 'flex', flexDirection: 'column' }}>
-          <CardTop />
           {hasImage ? (
-            <div style={{ flex: 1, marginTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0a0a', padding: 12 }}>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0a0a', padding: 12 }}>
               <img src={badge.image} alt={badge.name} onError={() => setImgError(true)}
                 style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
             </div>
           ) : (
-            <div style={{ flex: 1, marginTop: 24, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, background: `radial-gradient(circle at 50% 40%, ${t.glow}, #0a0a0a 70%)` }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, background: `radial-gradient(circle at 50% 40%, ${t.glow}, #0a0a0a 70%)` }}>
               <Medal tier={badge.tier} size={68} />
               <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777', textAlign: 'center', padding: '0 18px' }}>
                 Image coming soon
@@ -134,8 +116,8 @@ function BadgeCard({ badge, isTouch }) {
             </div>
           )}
 
-          {/* Perforated stub, matches front */}
-          <div style={{ borderTop: '1px dashed rgba(255,255,255,0.15)', padding: '10px 14px', textAlign: 'center', background: '#111' }}>
+          {/* Link bar */}
+          <div style={{ borderTop: `1px solid ${t.main}`, padding: '10px 14px', textAlign: 'center', background: '#0d0d0d' }}>
             {badge.credential ? (
               <a href={badge.credential} target="_blank" rel="noopener noreferrer"
                 onClick={e => e.stopPropagation()}
