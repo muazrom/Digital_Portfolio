@@ -34,7 +34,7 @@ export default function Projects() {
   const [index, setIndex] = useState(0)
   const [open, setOpen] = useState(false)
   const [modalProj, setModalProj] = useState(null)
-  const { w } = useWindowSize()
+  const { w, h } = useWindowSize()
   const total = projects.length
   const safeIndex = Math.min(index, total - 1)
 
@@ -44,9 +44,9 @@ export default function Projects() {
   // Side card offset scales with card width — wide enough that neighbors clear the center card
   const SIDE_OFFSET = Math.round(CARD_W * 0.95)
   const FAR_OFFSET = Math.round(CARD_W * 1.35)
-  // Expanded (flipped) card grows into a landscape case-study panel
-  const LANDSCAPE_W = Math.min(Math.round(CARD_W * 2.05), Math.round(w * 0.82), 620)
-  const LANDSCAPE_H = Math.round(LANDSCAPE_W * 0.6)
+  // Expanded (flipped) card grows to fill the section's content column (matches max-w-5xl minus its px-6 padding)
+  const LANDSCAPE_W = Math.min(Math.round(w * 0.9), 976)
+  const LANDSCAPE_H = Math.min(Math.round(LANDSCAPE_W * 0.58), Math.round(h * 0.7))
 
   const prev = () => { setOpen(false); setIndex(i => (i - 1 + total) % total) }
   const next = () => { setOpen(false); setIndex(i => (i + 1) % total) }
@@ -227,15 +227,15 @@ export default function Projects() {
                   <div style={{ flex: '1 1 55%', position: 'relative', background: '#0a0a0a' }}>
                     <ScreenshotFrame image={proj.image} name={proj.name} />
                   </div>
-                  <div style={{ flex: '1 1 45%', display: 'flex', flexDirection: 'column', padding: 18, overflowY: 'auto' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
-                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, fontWeight: 700, color: '#fff' }}>Case Study</h4>
-                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: 13, lineHeight: 1, padding: 0 }}>✕</button>
+                  <div style={{ flex: '1 1 45%', display: 'flex', flexDirection: 'column', padding: Math.round(LANDSCAPE_W * 0.035), overflowY: 'auto' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
+                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: Math.round(LANDSCAPE_W * 0.024), fontWeight: 700, color: '#fff' }}>Case Study</h4>
+                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: 15, lineHeight: 1, padding: 0 }}>✕</button>
                     </div>
-                    <p style={{ fontSize: 11.5, color: '#999', lineHeight: 1.6, flex: 1 }}>{proj.caseStudy || 'Case study coming soon.'}</p>
-                    <div style={{ display: 'flex', gap: 14, paddingTop: 10, marginTop: 8, borderTop: '1px solid #1e1e1e' }}>
-                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }}>GitHub ↗</a>}
-                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb' }}>Live demo ↗</a>}
+                    <p style={{ fontSize: Math.round(LANDSCAPE_W * 0.0155), color: '#999', lineHeight: 1.75, flex: 1 }}>{proj.caseStudy || 'Case study coming soon.'}</p>
+                    <div style={{ display: 'flex', gap: 16, paddingTop: 14, marginTop: 10, borderTop: '1px solid #1e1e1e' }}>
+                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11.5, color: '#555' }}>GitHub ↗</a>}
+                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11.5, color: '#2563eb' }}>Live demo ↗</a>}
                     </div>
                   </div>
                 </div>
