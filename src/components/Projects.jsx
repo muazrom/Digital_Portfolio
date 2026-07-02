@@ -106,11 +106,10 @@ export default function Projects() {
                 ))}
               </div>
               <div style={{ display: 'flex', gap: 16, alignItems: 'center', paddingTop: 10, marginTop: 'auto', borderTop: '1px solid #1e1e1e' }}>
-                {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>GitHub ↗</a>}
-                {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb' }}>Live demo ↗</a>}
-                <button onClick={() => setModalProj(proj)} style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginLeft: 'auto' }}>
+                <button onClick={() => setModalProj(proj)} style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   ⤢ Case study
                 </button>
+                {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>Live demo ↗</a>}
               </div>
             </div>
           ))}
@@ -212,8 +211,8 @@ export default function Projects() {
                     ))}
                   </div>
                   <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
-                    {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>GitHub ↗</a>}
-                    {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb' }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>Live demo ↗</a>}
+                    <button onClick={e => { e.stopPropagation(); if (!isActive) setIndex(i); setOpen(true) }} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>⤢ Case study</button>
+                    {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Live demo ↗</a>}
                   </div>
                 </div>
 
@@ -246,16 +245,7 @@ export default function Projects() {
         })}
       </div>
 
-      <div className="flex justify-center mt-6" style={{ opacity: open ? 0 : 1, pointerEvents: open ? 'none' : 'auto', transition: 'opacity 0.3s ease' }}>
-        <button onClick={() => setOpen(true)} style={{
-          background: 'none', border: 'none', cursor: 'pointer',
-          fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555',
-        }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>
-          ⤢ Expand case study
-        </button>
-      </div>
-
-      <div className="flex items-center justify-center gap-6 mt-10" style={{ opacity: open ? 0 : 1, pointerEvents: open ? 'none' : 'auto', transition: 'opacity 0.3s ease' }}>
+      <div className="flex items-center justify-center gap-6 mt-16" style={{ opacity: open ? 0 : 1, pointerEvents: open ? 'none' : 'auto', transition: 'opacity 0.3s ease' }}>
         <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">←</button>
         <div className="flex items-center gap-2">
           {projects.map((_, i) => (
