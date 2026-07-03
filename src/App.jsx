@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { DataProvider } from './context/DataContext'
-import BootIntro from './components/BootIntro'
+import Intro from './components/Intro'
 import ParticleBackground from './components/ParticleBackground'
 import CustomCursor from './components/CustomCursor'
 import { isAuthenticated, setAuthenticated } from './admin/auth'
@@ -61,7 +61,7 @@ export default function App() {
   return (
     <DataProvider>
       <CustomCursor />
-      {booting && <BootIntro onDone={() => setBooting(false)} />}
+      {booting && <Intro onDone={() => setBooting(false)} />}
       {view === 'admin' ? (
         authed
           ? <AdminDashboard onLogout={handleLogout} />
