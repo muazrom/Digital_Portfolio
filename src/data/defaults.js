@@ -2,7 +2,7 @@ export const defaultData = {
   hero: {
     name: "Mu'az Arief",
     title: 'CS Student · Cybersecurity & AI · University Malaya',
-    bio: "Passionate about cybersecurity and building AI-powered systems. Proven leader with hands-on experience developing full-stack applications — from secure auth to intelligent workflows.",
+    bio: "I go where the ideas are moving — right now that's AI agents and security that has to survive them. I learn by building: passwordless auth with WebAuthn, agentic workflows, whatever's next after that.",
     status: 'Desktop Support Intern · iFast',
     location: 'Kajang, Selangor',
     university: 'University Malaya',
