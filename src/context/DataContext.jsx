@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useCallback } from 'react'
-import { defaultData } from '../data/defaults'
+import { defaultData, CONTENT_VERSION } from '../data/defaults'
 
 const STORAGE_KEY = 'portfolio_data'
+const VERSION_KEY = 'portfolio_data_version'
 
 function mergeArray(defaultArr, storedArr) {
   const defaultIds = new Set(defaultArr.map(i => i.id))
@@ -21,6 +22,11 @@ function mergeArray(defaultArr, storedArr) {
 
 function loadData() {
   try {
+    if (localStorage.getItem(VERSION_KEY) !== String(CONTENT_VERSION)) {
+      localStorage.removeItem(STORAGE_KEY)
+      localStorage.setItem(VERSION_KEY, String(CONTENT_VERSION))
+      return defaultData
+    }
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const stored = JSON.parse(raw)
@@ -43,6 +49,7 @@ function loadData() {
 
 function saveData(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  localStorage.setItem(VERSION_KEY, String(CONTENT_VERSION))
 }
 
 const DataContext = createContext(null)

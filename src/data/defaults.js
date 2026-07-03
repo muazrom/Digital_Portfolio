@@ -1,3 +1,7 @@
+// Bump whenever this file's content changes, so a browser's stale localStorage
+// snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
+export const CONTENT_VERSION = 1
+
 export const defaultData = {
   hero: {
     name: "Mu'az Arief",
