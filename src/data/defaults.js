@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 2
+export const CONTENT_VERSION = 3
 
 export const defaultData = {
   hero: {
@@ -164,6 +164,14 @@ export const defaultData = {
       github: 'https://github.com/muazrom', live: null,
       image: null,
       caseStudy: 'Most resume tools stop at "fix your bullet points." This one takes a PDF upload, scores it against a five-category rubric via Gemini with a strict JSON response schema, and — the differentiated part — suggests career paths the candidate is plausibly positioned for based on their real background. A runnable demo lives on the Noctua shelf.',
+    },
+    {
+      id: 'p10', name: 'MyFinance', status: 'In Development',
+      description: 'Personal finance dashboard covering transactions, monthly commitments, investments, and a wishlist — plus a what-if planner that projects portfolio growth across multiple phases of ROI and monthly contributions.',
+      stack: ['React', 'Vite', 'Tailwind CSS', 'Recharts'],
+      github: 'https://github.com/muazrom', live: null,
+      image: null,
+      caseStudy: 'Budget apps show where money went; I wanted one that also shows where it could go. Alongside the usual tracking — transactions, commitments, investments, wishlist — the hypothetical planner chains phases of different ROI and contribution rates into a single compound-growth projection, charted month by month with Recharts.',
     },
     {
       id: 'p6', name: 'Manga Tracker', status: 'In Development',
