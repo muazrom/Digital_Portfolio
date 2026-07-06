@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 1
+export const CONTENT_VERSION = 2
 
 export const defaultData = {
   hero: {
@@ -71,7 +71,7 @@ export const defaultData = {
 
   projects: [
     {
-      id: 'p7', name: 'Vault', status: 'In Development',
+      id: 'p7', name: 'Vault', status: 'Completed',
       description: 'Zero-knowledge password manager for the browser. Unlocked entirely by a hardware key, fingerprint, or device passkey via WebAuthn — no master password, no cloud, no server ever sees your data.',
       stack: ['React', 'WebAuthn', 'AES-256-GCM', 'IndexedDB'],
       github: 'https://github.com/muazrom/vault', live: null,
@@ -138,16 +138,32 @@ export const defaultData = {
 
         // one line, honest and forward-looking
         finished:
-          "In development — registration, unlock, and encrypted CRUD work end-to-end; credential recovery flow is next.",
+          "Finished — registration, unlock, encrypted CRUD, and encrypted export/import all work end-to-end.",
       },
     },
     {
-      id: 'p1', name: 'Noctua', status: 'In Development',
-      description: 'AI-driven personal assistant & life management dashboard. Features natural language journaling, proactive data tracking, and intelligent goal planning with LangGraph-powered contextual AI workflows.',
-      stack: ['React', 'Python', 'SQLite', 'LangGraph', 'Tailwind CSS'],
+      id: 'p1', name: 'Noctua', status: 'Live',
+      description: 'Live demo hub where my projects actually run. Pull a project off the shelf and its demo boots right in the browser — real code, zero servers, nothing shared between visitors.',
+      stack: ['JavaScript', 'HTML', 'CSS', 'Cloudflare Pages'],
+      github: 'https://github.com/muazrom', live: 'https://noctua.muazrom.my',
+      image: null,
+      caseStudy: 'A portfolio can only claim things work — Noctua proves it. Each project ships as a sandboxed static build that boots in the visitor\'s own browser, so demos run on real code with no backend and no state shared between visitors. Internships Tracker and Resume Checker are on the shelf so far, with more being added as projects mature.',
+    },
+    {
+      id: 'p8', name: 'RSVPsaf', status: 'In Development',
+      description: 'Digital wedding invitation and RSVP platform built for a family walimatul urus. Guests get the full invite, itinerary, and venue details from one link, then RSVP with their headcount — backed by Supabase with a private admin dashboard.',
+      stack: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'Framer Motion'],
       github: 'https://github.com/muazrom', live: null,
       image: null,
-      caseStudy: 'Started as a way to consolidate journaling, habit tracking, and goal planning that were scattered across four different apps. Built the assistant on LangGraph so it can hold context across conversations and proactively surface patterns instead of waiting to be asked. Journaling and tracking are working end-to-end; the planning layer is next.',
+      caseStudy: 'Built to replace the paper invite for a family wedding: one link carries the invitation, itinerary, and venue directions, and guests confirm attendance with a headcount straight into Supabase. An admin dashboard tallies responses in real time, so the final count comes from data instead of chasing people over WhatsApp.',
+    },
+    {
+      id: 'p9', name: 'Resume Checker', status: 'In Development',
+      description: 'AI-powered resume checker that scores a resume against a structured rubric, gives targeted improvement advice, and suggests career paths based on the candidate\'s actual background — not just their current job title.',
+      stack: ['Next.js', 'TypeScript', 'Gemini API', 'Tailwind CSS'],
+      github: 'https://github.com/muazrom', live: null,
+      image: null,
+      caseStudy: 'Most resume tools stop at "fix your bullet points." This one takes a PDF upload, scores it against a five-category rubric via Gemini with a strict JSON response schema, and — the differentiated part — suggests career paths the candidate is plausibly positioned for based on their real background. A runnable demo lives on the Noctua shelf.',
     },
     {
       id: 'p6', name: 'Manga Tracker', status: 'In Development',
@@ -156,14 +172,6 @@ export const defaultData = {
       github: 'https://github.com/muazrom/manga-tracker', live: null,
       image: null,
       caseStudy: 'Wanted one tracker for manga, manhwa, and manhua that also let me read without switching apps. Wired the UI to the comick.io API for metadata and chapter data, then layered a Flutter reader on top so tracking and reading progress stay in sync automatically.',
-    },
-    {
-      id: 'p3', name: 'VISSCO', status: 'Completed',
-      description: 'Web-based attendance management system for students and lecturers. Built for the Pre-University Innovation Competition with CRUD operations, secure login, and password encryption.',
-      stack: ['HTML', 'CSS', 'JavaScript', 'SQLite'],
-      github: 'https://github.com/muazrom', live: null,
-      image: null,
-      caseStudy: 'Built for a Pre-University Innovation Competition brief that required a working system, not a mockup. Implemented CRUD-based session management with encrypted login so lecturers could take attendance without a paper sheet, and demoed it live end-to-end at the competition.',
     },
     {
       id: 'p5', name: 'Internships Tracker', status: 'Completed',
