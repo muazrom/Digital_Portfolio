@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 3
+export const CONTENT_VERSION = 4
 
 export const defaultData = {
   hero: {
@@ -158,7 +158,7 @@ export const defaultData = {
       caseStudy: 'Built to replace the paper invite for a family wedding: one link carries the invitation, itinerary, and venue directions, and guests confirm attendance with a headcount straight into Supabase. An admin dashboard tallies responses in real time, so the final count comes from data instead of chasing people over WhatsApp.',
     },
     {
-      id: 'p9', name: 'Resume Checker', status: 'In Development',
+      id: 'p9', name: 'Resume Checker', status: 'Completed',
       description: 'AI-powered resume checker that scores a resume against a structured rubric, gives targeted improvement advice, and suggests career paths based on the candidate\'s actual background — not just their current job title.',
       stack: ['Next.js', 'TypeScript', 'Gemini API', 'Tailwind CSS'],
       github: 'https://github.com/muazrom', live: null,
@@ -166,7 +166,7 @@ export const defaultData = {
       caseStudy: 'Most resume tools stop at "fix your bullet points." This one takes a PDF upload, scores it against a five-category rubric via Gemini with a strict JSON response schema, and — the differentiated part — suggests career paths the candidate is plausibly positioned for based on their real background. A runnable demo lives on the Noctua shelf.',
     },
     {
-      id: 'p10', name: 'MyFinance', status: 'In Development',
+      id: 'p10', name: 'MyFinance', status: 'Completed',
       description: 'Personal finance dashboard covering transactions, monthly commitments, investments, and a wishlist — plus a what-if planner that projects portfolio growth across multiple phases of ROI and monthly contributions.',
       stack: ['React', 'Vite', 'Tailwind CSS', 'Recharts'],
       github: 'https://github.com/muazrom', live: null,
@@ -174,7 +174,7 @@ export const defaultData = {
       caseStudy: 'Budget apps show where money went; I wanted one that also shows where it could go. Alongside the usual tracking — transactions, commitments, investments, wishlist — the hypothetical planner chains phases of different ROI and contribution rates into a single compound-growth projection, charted month by month with Recharts.',
     },
     {
-      id: 'p6', name: 'Manga Tracker', status: 'In Development',
+      id: 'p6', name: 'Manga Tracker', status: 'Completed',
       description: 'Cross-platform Flutter app to track manga, manhwa & manhua reading progress, with an in-app reader powered by the comick.io API.',
       stack: ['Flutter', 'Dart', 'comick.io API'],
       github: 'https://github.com/muazrom/manga-tracker', live: null,
