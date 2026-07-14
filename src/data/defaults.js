@@ -571,6 +571,16 @@ export const defaultData = {
       image: null,
       credential: null,
     },
+    {
+      id: 'b4',
+      name: 'Computer Hardware Basics',
+      issuer: 'Cisco Networking Academy',
+      date: '2026',
+      category: 'Course',
+      tier: 3,
+      image: '/badges/cisco-computer-hardware-basics.png',
+      credential: 'https://www.credly.com/earner/earned/badge/215db823-5346-4b3b-98ed-bcfdd04d5c1c',
+    },
   ],
 
   experience: [
