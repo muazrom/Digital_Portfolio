@@ -186,6 +186,9 @@ export default function Projects({ id, num }) {
             <h2 className="section-title">Projects</h2>
             <span className="font-mono text-xs text-muted">{String(total).padStart(2, '0')} total</span>
           </div>
+          <p className="font-mono text-xs text-muted mt-3">
+            BUILD_LOG // security-relevant work, plus the tooling I build to automate things
+          </p>
         </div>
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {projects.map((proj) => (
@@ -257,6 +260,9 @@ export default function Projects({ id, num }) {
             {String(safeIndex + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
           </span>
         </div>
+        <p className="font-mono text-xs text-muted mt-3">
+          BUILD_LOG // security-relevant work, plus the tooling I build to automate things
+        </p>
       </div>
 
       <div className="relative mx-auto" style={{ width: CARD_W, height: CARD_H, perspective: 1200, perspectiveOrigin: '50% 40%' }}
