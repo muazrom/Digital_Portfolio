@@ -39,8 +39,16 @@ function loadData() {
         about:      { ...defaultData.about, ...stored.about },
         skills:     mergeArray(defaultData.skills,     stored.skills     || []),
         projects:   mergeArray(defaultData.projects,   stored.projects   || []),
-        badges:     mergeArray(defaultData.badges,     stored.badges     || []),
         experience: mergeArray(defaultData.experience, stored.experience || []),
+        // `credentials` is an object, so the `...stored` spread above would replace it
+        // wholesale — new ladder/log entries shipped in code would be invisible until
+        // the next version bump. Same bug class as 0fc16d5 fixed for arrays.
+        credentials: {
+          ...defaultData.credentials,
+          ...stored.credentials,
+          ladder: mergeArray(defaultData.credentials.ladder, stored.credentials?.ladder || []),
+          log:    mergeArray(defaultData.credentials.log,    stored.credentials?.log    || []),
+        },
       }
     }
   } catch {}
@@ -172,13 +180,31 @@ export function DataProvider({ children }) {
   const removeExperience = (id) =>
     update(d => ({ ...d, experience: d.experience.filter(e => e.id !== id) }))
 
-  // Badges
-  const addBadge = (badge) =>
-    update(d => ({ ...d, badges: [...(d.badges || []), { ...badge, id: `b${Date.now()}` }] }))
-  const updateBadge = (id, field, value) =>
-    update(d => ({ ...d, badges: d.badges.map(b => b.id === id ? { ...b, [field]: value } : b) }))
-  const removeBadge = (id) =>
-    update(d => ({ ...d, badges: d.badges.filter(b => b.id !== id) }))
+  // Credentials — `bucket` is 'ladder' or 'log'
+  const addCredential = (bucket, item) =>
+    update(d => ({
+      ...d,
+      credentials: {
+        ...d.credentials,
+        [bucket]: [...(d.credentials?.[bucket] || []), { ...item, id: `${bucket === 'ladder' ? 'cr' : 'lg'}-${Date.now()}` }],
+      },
+    }))
+  const updateCredential = (bucket, id, field, value) =>
+    update(d => ({
+      ...d,
+      credentials: {
+        ...d.credentials,
+        [bucket]: d.credentials[bucket].map(c => c.id === id ? { ...c, [field]: value } : c),
+      },
+    }))
+  const removeCredential = (bucket, id) =>
+    update(d => ({
+      ...d,
+      credentials: {
+        ...d.credentials,
+        [bucket]: d.credentials[bucket].filter(c => c.id !== id),
+      },
+    }))
 
   const resetToDefaults = () => {
     saveData(defaultData)
@@ -195,7 +221,7 @@ export function DataProvider({ children }) {
       addTool, removeTool, updateToolLevel,
       addProject, updateProject, removeProject, reorderProjects,
       addExperience, updateExperience, removeExperience,
-      addBadge, updateBadge, removeBadge,
+      addCredential, updateCredential, removeCredential,
       resetToDefaults,
     }}>
       {children}

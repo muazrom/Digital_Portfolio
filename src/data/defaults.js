@@ -541,50 +541,106 @@ export const defaultData = {
     },
   ],
 
-  // tier: 1 = exam-based professional cert · 2 = course-completion badge · 3 = learning badge · 'award' = award (no rank)
-  // image: path under /public for the back-of-card picture (e.g. '/badges/cisco.png'), or null
-  badges: [
-    {
-      id: 'b2',
-      name: 'Introduction to Cybersecurity',
-      issuer: 'Cisco Networking Academy',
-      date: '2026',
-      category: 'Course',
-      tier: 2,
-      image: '/badges/cisco-intro-cybersecurity.png',
-      credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
-    },
-    {
-      id: 'b3',
-      name: 'Pre Security Learning Path',
-      issuer: 'TryHackMe',
-      date: 'Jun 2026',
-      category: 'Certificate',
-      tier: 2,
-      image: '/badges/tryhackme-pre-security.png',
-      credential: '/badges/tryhackme-pre-security.pdf',
-    },
-    {
-      id: 'b1',
-      name: 'Pitram Silver Award',
-      issuer: 'Pitram',
-      date: '2024',
-      category: 'Award',
-      tier: 'award',
-      image: null,
-      credential: null,
-    },
-    {
-      id: 'b4',
-      name: 'Computer Hardware Basics',
-      issuer: 'Cisco Networking Academy',
-      date: '2026',
-      category: 'Course',
-      tier: 3,
-      image: '/badges/cisco-computer-hardware-basics.png',
-      credential: 'https://www.credly.com/earner/earned/badge/215db823-5346-4b3b-98ed-bcfdd04d5c1c',
-    },
-  ],
+  // Two structures, deliberately not one ranked list.
+  //
+  //   ladder — ONLY exam-based, industry-recognised certifications, in route order.
+  //            Hard rule: no course-completion badge goes in here, however much work
+  //            it was. A CCNA and a free intro badge are not peers, and the audience
+  //            this section is for knows the difference immediately.
+  //            Soft rule: keep `planned` to 2-3. Ten unvisited stops is a fantasy;
+  //            two is a plan. Every non-earned entry MUST carry `why` — with nothing
+  //            earned yet, the stated reasoning IS the evidence.
+  //
+  //   log    — coursework, module badges, path completions. Evidence of hours, not
+  //            credentials. Reverse-chronological, never ranked. Allowed to get long.
+  //
+  // domain drives the colour accent: network | security | systems
+  credentials: {
+    ladder: [
+      {
+        id: 'cr-ccna',
+        code: 'CCNA',
+        name: 'Cisco Certified Network Associate',
+        vendor: 'Cisco',
+        rung: 'associate',
+        domain: 'network',
+        status: 'in_progress',
+        earned: null,
+        target: 'Mid 2027',
+        credential: null,
+        image: null,
+        why: 'Routing and switching is the floor for anything on the firewall side. I want to understand what an appliance is actually filtering before I learn a vendor GUI that hides it.',
+        // TODO(muaz): replace `detail` with your real position in the material.
+        progress: { label: 'Studying', detail: null },
+      },
+      {
+        id: 'cr-secplus',
+        code: 'Security+',
+        name: 'CompTIA Security+',
+        vendor: 'CompTIA',
+        rung: 'associate',
+        domain: 'security',
+        status: 'planned',
+        earned: null,
+        target: '2028',
+        credential: null,
+        image: null,
+        why: 'The baseline most security job descriptions here list. Deliberately after CCNA — I would rather understand the network first than memorise controls for a network I cannot read.',
+        progress: null,
+      },
+      {
+        id: 'cr-pcnsa',
+        code: 'PCNSA',
+        name: 'Palo Alto Networks Certified Network Security Administrator',
+        vendor: 'Palo Alto Networks',
+        rung: 'professional',
+        domain: 'security',
+        status: 'planned',
+        earned: null,
+        target: 'After Security+',
+        credential: null,
+        image: null,
+        why: 'The point where the track stops being general and becomes a firewall specialisation. Vendor choice is not final — Fortinet is at least as common in Malaysian environments, and I would rather pick based on where I end up working than guess now.',
+        progress: null,
+      },
+    ],
+
+    log: [
+      {
+        id: 'lg-thm-presecurity',
+        name: 'Pre Security Learning Path',
+        issuer: 'TryHackMe',
+        kind: 'path',
+        topic: 'security',
+        date: '2026-06',
+        credential: '/badges/tryhackme-pre-security.pdf',
+        image: '/badges/tryhackme-pre-security.png',
+        writeups: [],
+      },
+      {
+        id: 'lg-cisco-introcyber',
+        name: 'Introduction to Cybersecurity',
+        issuer: 'Cisco Networking Academy',
+        kind: 'course',
+        topic: 'security',
+        date: '2026',
+        credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
+        image: '/badges/cisco-intro-cybersecurity.png',
+        writeups: [],
+      },
+      {
+        id: 'lg-cisco-hardware',
+        name: 'Computer Hardware Basics',
+        issuer: 'Cisco Networking Academy',
+        kind: 'module',
+        topic: 'systems',
+        date: '2026',
+        credential: 'https://www.credly.com/earner/earned/badge/215db823-5346-4b3b-98ed-bcfdd04d5c1c',
+        image: '/badges/cisco-computer-hardware-basics.png',
+        writeups: [],
+      },
+    ],
+  },
 
   experience: [
     {
@@ -612,6 +668,10 @@ export const defaultData = {
       id: 'e4', role: 'Head of Department', org: 'Minggu Haluan Siswa KK10', period: 'Oct 2025',
       summary: 'Managed technical setup and equipment for the university orientation programme serving 300 new students and 50 committee members. Ensured seamless execution of all technical operations.',
       featured: true,
+    },
+    {
+      id: 'e9', role: 'Pitram Silver Award', org: 'Pitram', period: '2024',
+      summary: 'Awarded for contribution to a university programme. Moved here from the credentials section — a non-technical award does not belong on a certification route.',
     },
     {
       id: 'e7', role: 'Director', org: 'Dayasari Goes Green', period: 'Feb 2024',

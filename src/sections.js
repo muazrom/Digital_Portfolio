@@ -2,7 +2,7 @@ import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
-import Badges from './components/Badges'
+import Certifications from './components/Certifications'
 import Contact from './components/Contact'
 
 // The one place section order, numbering, and nav labels are defined.
@@ -14,7 +14,7 @@ export const sections = [
   { id: 'skills', label: 'Skills', Component: Skills },
   { id: 'projects', label: 'Projects', Component: Projects },
   { id: 'experience', label: 'Experience', Component: Experience },
-  { id: 'badges', label: 'Badges', Component: Badges },
+  { id: 'certifications', label: 'Certifications', Component: Certifications },
   { id: 'contact', label: 'Contact', Component: Contact },
 ]
 

@@ -5,14 +5,14 @@ import HeroEditor from './editors/HeroEditor'
 import SkillsEditor from './editors/SkillsEditor'
 import ProjectsEditor from './editors/ProjectsEditor'
 import ExperienceEditor from './editors/ExperienceEditor'
-import BadgesEditor from './editors/BadgesEditor'
+import CredentialsEditor from './editors/CredentialsEditor'
 
 const TABS = [
   { id: 'hero', label: 'Hero', desc: 'Name, title, bio, status cards' },
   { id: 'skills', label: 'Skills & Tools', desc: 'Stations, tools, proficiency' },
   { id: 'projects', label: 'Projects', desc: 'Add, edit, remove projects' },
   { id: 'experience', label: 'Experience', desc: 'Activities and roles' },
-  { id: 'badges', label: 'Badges & Certs', desc: 'Awards and certificates' },
+  { id: 'credentials', label: 'Credentials', desc: 'Certification route and learning log' },
   { id: 'settings', label: 'Settings', desc: 'Password, reset data' },
 ]
 
@@ -170,7 +170,7 @@ export default function AdminDashboard({ onLogout }) {
             {tab === 'skills' && <SkillsEditor />}
             {tab === 'projects' && <ProjectsEditor />}
             {tab === 'experience' && <ExperienceEditor />}
-            {tab === 'badges' && <BadgesEditor />}
+            {tab === 'credentials' && <CredentialsEditor />}
             {tab === 'settings' && <SettingsPanel onLogout={onLogout} />}
           </div>
         </main>
