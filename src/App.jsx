@@ -10,6 +10,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Footer from './components/Footer'
 import SectionDivider from './components/SectionDivider'
+import WriteupsPage from './pages/WriteupsPage'
 import { sections, sectionNumber } from './sections'
 import { useScrollReveal } from './hooks/useScrollReveal'
 
@@ -25,23 +26,35 @@ function Section({ index, label, children }) {
   )
 }
 
-function getView() {
-  return window.location.hash.startsWith('#admin') ? 'admin' : 'public'
+// Routes live under '#/'. Anything else — '#about', '#certifications', '' — is the
+// one-pager, so native anchor scrolling keeps working untouched.
+function getRoute() {
+  const hash = window.location.hash
+  if (hash.startsWith('#admin')) return { view: 'admin' }
+  if (hash.startsWith('#/writeups/')) {
+    return { view: 'writeup', slug: decodeURIComponent(hash.slice('#/writeups/'.length)) }
+  }
+  if (hash === '#/writeups' || hash === '#/writeups/') return { view: 'writeups' }
+  return { view: 'public' }
 }
 
 export default function App() {
-  const [booting, setBooting] = useState(() => !window.location.hash.startsWith('#admin'))
-  const [view, setView] = useState(getView)
+  const [booting, setBooting] = useState(() => getRoute().view === 'public')
+  const [route, setRoute] = useState(getRoute)
   const [authed, setAuthed] = useState(isAuthenticated)
+  const { view } = route
 
   useEffect(() => {
     const onHashChange = () => {
-      const next = getView()
-      if (next === 'admin') {
+      const next = getRoute()
+      if (next.view === 'admin') {
         setAuthenticated(false)
         setAuthed(false)
       }
-      setView(next)
+      // Leaving the one-pager should land at the top of the new view, not wherever
+      // the reader happened to be scrolled to.
+      if (next.view === 'writeups' || next.view === 'writeup') window.scrollTo(0, 0)
+      setRoute(next)
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
@@ -65,14 +78,20 @@ export default function App() {
         <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
           <ParticleBackground />
           <Navbar />
-          <main>
-            <Hero />
-            {sections.map(({ id, label, Component }, i) => (
-              <Section key={id} index={i + 2} label={label}>
-                <Component id={id} num={sectionNumber(i)} />
-              </Section>
-            ))}
-          </main>
+          {view === 'writeups' || view === 'writeup' ? (
+            <main>
+              <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
+            </main>
+          ) : (
+            <main>
+              <Hero />
+              {sections.map(({ id, label, Component }, i) => (
+                <Section key={id} index={i + 2} label={label}>
+                  <Component id={id} num={sectionNumber(i)} />
+                </Section>
+              ))}
+            </main>
+          )}
           <Footer />
         </div>
       )}

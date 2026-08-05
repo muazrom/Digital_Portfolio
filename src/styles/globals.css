@@ -77,6 +77,71 @@
     letter-spacing: -0.02em;
   }
 
+  /* Long-form writeup body — the only place on the site with real prose flow. */
+  .writeup-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #b4b4b4;
+  }
+  .writeup-body h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin: 2.4rem 0 0.9rem;
+  }
+  .writeup-body h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #eaeaea;
+    margin: 1.9rem 0 0.7rem;
+  }
+  .writeup-body p { margin-bottom: 1.1rem; }
+  .writeup-body ul,
+  .writeup-body ol { margin: 0 0 1.1rem 1.3rem; }
+  .writeup-body ul { list-style: disc; }
+  .writeup-body ol { list-style: decimal; }
+  .writeup-body li { margin-bottom: 0.4rem; }
+  .writeup-body strong { color: #e6e6e6; font-weight: 600; }
+  .writeup-body a { color: #93b4ff; text-decoration: underline; text-underline-offset: 2px; }
+  .writeup-body hr { border: 0; border-top: 1px solid #232323; margin: 2rem 0; }
+  .writeup-body blockquote {
+    border-left: 2px solid #2563eb;
+    padding-left: 1rem;
+    margin: 0 0 1.1rem;
+    color: #9a9a9a;
+    font-style: italic;
+  }
+  .writeup-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    color: #cfd8e3;
+  }
+  /* Wide code must scroll inside its own box — the page body never scrolls sideways. */
+  .writeup-body pre {
+    background: #0d0d0d;
+    border: 1px solid #232323;
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    margin-bottom: 1.2rem;
+  }
+  .writeup-body pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #c8d3e0;
+  }
+
   .card {
     background-color: #111111;
     border: 1px solid #2a2a2a;
