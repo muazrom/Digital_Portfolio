@@ -93,6 +93,26 @@ export function renderMarkdown(md) {
       continue
     }
 
+    // table — header row, a |---|---| separator, then body rows. The lab writeups
+    // lean on these for ipconfig output and tracert hops, so they're not optional.
+    if (/^\s*\|.*\|\s*$/.test(line) && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i + 1] || '')) {
+      const cells = (row) =>
+        row.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim())
+      const head = cells(lines[i])
+      i += 2 // header + separator
+      const body = []
+      while (i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i])) body.push(cells(lines[i++]))
+      out.push(
+        '<div class="table-scroll"><table>' +
+          `<thead><tr>${head.map((c) => `<th>${inline(c)}</th>`).join('')}</tr></thead>` +
+          `<tbody>${body
+            .map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join('')}</tr>`)
+            .join('')}</tbody>` +
+          '</table></div>'
+      )
+      continue
+    }
+
     // horizontal rule
     if (/^\s*---+\s*$/.test(line)) {
       out.push('<hr />')
@@ -111,7 +131,7 @@ export function renderMarkdown(md) {
     while (
       i < lines.length &&
       lines[i].trim() &&
-      !/^(#{1,4}\s|```|>\s?|\s*[-*]\s|\s*\d+\.\s|\s*---+\s*$)/.test(lines[i])
+      !/^(#{1,4}\s|```|>\s?|\s*[-*]\s|\s*\d+\.\s|\s*\|.*\|\s*$|\s*---+\s*$)/.test(lines[i])
     ) {
       buf.push(lines[i++])
     }

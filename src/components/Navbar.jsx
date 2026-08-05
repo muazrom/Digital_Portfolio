@@ -79,14 +79,15 @@ export default function Navbar() {
           </span>
 
           {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-[15px] pr-[18px]">
+          <ul className="hidden md:flex items-center gap-[8px] pr-[18px]">
             {links.map(({ id, label }) => {
               const isActive = active === id
               return (
                 <li key={id}>
                   <a
                     href={`#${id}`}
-                    className={`block font-mono text-xs tracking-wide px-9 py-2.5 rounded-full transition-colors duration-200 ${
+                    style={{ whiteSpace: 'nowrap' }}
+                    className={`block font-mono text-xs tracking-wide px-6 py-2.5 rounded-full transition-colors duration-200 ${
                       isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >

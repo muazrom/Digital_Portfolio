@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { publishedWriteups, writeupBySlug } from '../content/writeups'
+import { useEffect, useMemo, useState } from 'react'
+import { publishedWriteups, writeupBySlug, loadBody } from '../content/writeups'
 import { renderMarkdown } from '../lib/markdown'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -122,7 +122,18 @@ function WriteupsIndex() {
 
 function WriteupDetail({ slug }) {
   const w = writeupBySlug(slug)
+  const [body, setBody] = useState(null)
   useDocumentTitle(w ? `${w.title} — Field Notes` : `Not found — ${SITE_TITLE}`, w?.summary)
+
+  useEffect(() => {
+    if (!w) return
+    let cancelled = false
+    setBody(null)
+    loadBody(w.slug).then((md) => { if (!cancelled) setBody(md ?? '') })
+    return () => { cancelled = true }
+  }, [w?.slug])
+
+  const html = useMemo(() => (body ? renderMarkdown(body) : ''), [body])
 
   if (!w) {
     return (
@@ -173,10 +184,11 @@ function WriteupDetail({ slug }) {
         {(w.tags || []).map(t => <Tag key={t}>{t}</Tag>)}
       </div>
 
-      <div
-        className="writeup-body"
-        dangerouslySetInnerHTML={{ __html: renderMarkdown(w.body) }}
-      />
+      {body === null ? (
+        <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555' }}>Loading…</p>
+      ) : (
+        <div className="writeup-body" dangerouslySetInnerHTML={{ __html: html }} />
+      )}
     </article>
   )
 }

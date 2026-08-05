@@ -124,6 +124,36 @@
     padding: 0.1em 0.35em;
     color: #cfd8e3;
   }
+  /* Tables scroll inside their own box so the page never scrolls sideways on mobile. */
+  .writeup-body .table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1.2rem;
+    border: 1px solid #232323;
+    border-radius: 8px;
+  }
+  .writeup-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .writeup-body th,
+  .writeup-body td {
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid #1e1e1e;
+    white-space: nowrap;
+  }
+  .writeup-body th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7b8794;
+    background: #0d0d0d;
+  }
+  .writeup-body td { color: #b4b4b4; }
+  .writeup-body tbody tr:last-child td { border-bottom: 0; }
+
   /* Wide code must scroll inside its own box — the page body never scrolls sideways. */
   .writeup-body pre {
     background: #0d0d0d;

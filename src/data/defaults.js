@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 6
+export const CONTENT_VERSION = 7
 
 export const defaultData = {
   hero: {
@@ -38,25 +38,34 @@ export const defaultData = {
       id: 'S01', label: 'Networking', desc: 'Packets & paths',
       tools: [
         { name: 'Subnetting & IP Addressing', level: 2 }, { name: 'DNS & DHCP', level: 2 },
+        { name: 'NAT', level: 2 }, { name: 'ARP & Broadcast Domains', level: 2 },
         { name: 'TCP/IP', level: 1 }, { name: 'Routing & Switching', level: 1 },
       ],
     },
     {
-      id: 'S02', label: 'Systems & Infrastructure', desc: 'The layer underneath',
+      id: 'S02', label: 'Labs & Diagnostics', desc: 'Proving it works',
+      tools: [
+        { name: 'Cisco Packet Tracer', level: 2 }, { name: 'ping / tracert', level: 2 },
+        { name: 'ipconfig', level: 2 }, { name: 'Packet Inspection', level: 1 },
+      ],
+    },
+    {
+      id: 'S03', label: 'Systems & Infrastructure', desc: 'The layer underneath',
       tools: [
         { name: 'Windows / Active Directory', level: 2 }, { name: 'Endpoint Support', level: 2 },
         { name: 'Hardware Troubleshooting', level: 2 }, { name: 'Linux', level: 1 },
       ],
     },
     {
-      id: 'S03', label: 'Security', desc: 'Security bench',
+      id: 'S04', label: 'Security', desc: 'Security bench',
       tools: [
         { name: 'Secure Auth', level: 2 }, { name: 'Encryption Fundamentals', level: 2 },
+        { name: 'SSH vs Telnet', level: 2 }, { name: 'Network Segmentation', level: 1 },
         { name: 'Threat Fundamentals', level: 1 },
       ],
     },
     {
-      id: 'S04', label: 'Development & Automation', desc: 'Making it repeatable',
+      id: 'S05', label: 'Development & Automation', desc: 'Making it repeatable',
       tools: [
         { name: 'Python', level: 2 }, { name: 'JavaScript', level: 2 },
         { name: 'React', level: 2 }, { name: 'API Integration', level: 2 },
@@ -64,7 +73,7 @@ export const defaultData = {
       ],
     },
     {
-      id: 'S05', label: 'Tools & Platforms', desc: 'Workshop gear',
+      id: 'S06', label: 'Tools & Platforms', desc: 'Workshop gear',
       tools: [
         { name: 'Git / GitHub', level: 2 }, { name: 'Cloudflare', level: 1 },
         { name: 'Figma', level: 2 }, { name: 'Excel', level: 2 },
