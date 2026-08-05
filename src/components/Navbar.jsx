@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { sections } from '../sections'
 
-const links = ['About', 'Skills', 'Projects', 'Experience', 'Badges', 'Contact']
+// Labels and anchors both come from the section list, so a rename can't
+// silently desync the nav href from the section's id.
+const links = sections.map(({ id, label }) => ({ id, label }))
 const SECRET = '#admin'
 
 const GLASS = {
@@ -17,8 +20,8 @@ export default function Navbar() {
 
   // Scroll-spy: highlight the link for whichever section is in view
   useEffect(() => {
-    const sections = links
-      .map((link) => document.getElementById(link.toLowerCase()))
+    const observed = links
+      .map((link) => document.getElementById(link.id))
       .filter(Boolean)
 
     const observer = new IntersectionObserver(
@@ -29,7 +32,7 @@ export default function Navbar() {
       },
       { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
     )
-    sections.forEach((section) => observer.observe(section))
+    observed.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
   }, [])
 
@@ -77,17 +80,17 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-[15px] pr-[18px]">
-            {links.map((link) => {
-              const isActive = active === link.toLowerCase()
+            {links.map(({ id, label }) => {
+              const isActive = active === id
               return (
-                <li key={link}>
+                <li key={id}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={`#${id}`}
                     className={`block font-mono text-xs tracking-wide px-9 py-2.5 rounded-full transition-colors duration-200 ${
                       isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    {link}
+                    {label}
                   </a>
                 </li>
               )
@@ -122,18 +125,18 @@ export default function Navbar() {
       >
         <div className="rounded-3xl border border-accent/30 overflow-hidden" style={GLASS}>
           <ul className="flex flex-col p-2">
-            {links.map((link) => {
-              const isActive = active === link.toLowerCase()
+            {links.map(({ id, label }) => {
+              const isActive = active === id
               return (
-                <li key={link}>
+                <li key={id}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={`#${id}`}
                     onClick={() => setOpen(false)}
                     className={`block font-mono text-sm px-4 py-3 rounded-2xl transition-colors duration-200 ${
                       isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    {link}
+                    {label}
                   </a>
                 </li>
               )

@@ -38,13 +38,13 @@ function ToolTag({ name, level }) {
   )
 }
 
-export default function Skills() {
+export default function Skills({ id, num }) {
   const { data } = useData()
 
   return (
-    <section id="skills" className="py-24 relative">
+    <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// 03</p>
+        <p className="section-number mb-2">// {num}</p>
         <h2 className="section-title mb-2">Skills &amp; Tools</h2>
         <p className="font-mono text-xs text-muted mb-14">WORKSHOP_INVENTORY // tools available at each station</p>
 

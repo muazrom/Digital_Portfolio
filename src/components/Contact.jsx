@@ -113,11 +113,11 @@ function ChannelCard({ ch }) {
   )
 }
 
-export default function Contact() {
+export default function Contact({ id, num }) {
   return (
-    <section id="contact" className="py-24 relative">
+    <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// 07</p>
+        <p className="section-number mb-2">// {num}</p>
         <h2 className="section-title mb-2">Contact</h2>
         <p className="font-mono text-xs text-muted mb-10">
           Open to opportunities · currently interning at <span className="text-white">iFast Global Hub AI</span> from Jul 2026

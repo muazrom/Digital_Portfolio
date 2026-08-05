@@ -134,7 +134,7 @@ function BadgeCard({ badge, isTouch }) {
   )
 }
 
-export default function Badges() {
+export default function Badges({ id, num }) {
   const { data } = useData()
   const badges = data.badges || []
   if (badges.length === 0) return null
@@ -146,9 +146,9 @@ export default function Badges() {
   const sorted = [...badges].sort((a, b) => orderOf(a.tier) - orderOf(b.tier))
 
   return (
-    <section id="badges" className="py-24 relative">
+    <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// 06</p>
+        <p className="section-number mb-2">// {num}</p>
         <h2 className="section-title mb-2">Badges &amp; Certificates</h2>
         <p className="font-mono text-xs text-muted mb-12">CREDENTIAL_RACK // {isTouch ? 'tap a card to flip' : 'hover a card to flip'}</p>
 

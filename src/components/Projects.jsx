@@ -128,7 +128,7 @@ function getCardStyle(rel, offset, farOffset) {
   return { transform: `translateX(${sign * farOffset * 1.3}px) rotateY(${sign * -55}deg) scale(0.5)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
-export default function Projects() {
+export default function Projects({ id, num }) {
   const { data } = useData()
   const projects = data.projects
   const [index, setIndex] = useState(0)
@@ -179,9 +179,9 @@ export default function Projects() {
 
   if (isMobile) {
     return (
-      <section id="projects" className="py-24 relative">
+      <section id={id} className="py-24 relative">
         <div className="max-w-5xl mx-auto px-6 mb-10">
-          <p className="section-number mb-2">// 04</p>
+          <p className="section-number mb-2">// {num}</p>
           <div className="flex items-end justify-between">
             <h2 className="section-title">Projects</h2>
             <span className="font-mono text-xs text-muted">{String(total).padStart(2, '0')} total</span>
@@ -248,9 +248,9 @@ export default function Projects() {
   const flipEase = 'cubic-bezier(0.4, 0, 0.2, 1)'
 
   return (
-    <section id="projects" className="py-24 relative">
+    <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6 mb-14">
-        <p className="section-number mb-2">// 04</p>
+        <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
           <h2 className="section-title">Projects</h2>
           <span className="font-mono text-xs text-muted">

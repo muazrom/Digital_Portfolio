@@ -38,15 +38,15 @@ function TerminalLine({ cmd, output, delay = 0 }) {
   )
 }
 
-export default function About() {
+export default function About({ id, num }) {
   const { data } = useData()
   const a = data.about
 
   return (
-    <section id="about" className="py-24 relative">
+    <section id={id} className="py-24 relative">
 
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// 02</p>
+        <p className="section-number mb-2">// {num}</p>
         <h2 className="section-title mb-10">About Me</h2>
 
         {/* Blueprint terminal window */}

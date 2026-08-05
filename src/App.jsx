@@ -8,14 +8,9 @@ import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import About from './components/About'
-import Skills from './components/Skills'
-import Projects from './components/Projects'
-import Experience from './components/Experience'
-import Badges from './components/Badges'
-import Contact from './components/Contact'
 import Footer from './components/Footer'
 import SectionDivider from './components/SectionDivider'
+import { sections, sectionNumber } from './sections'
 import { useScrollReveal } from './hooks/useScrollReveal'
 
 function Section({ index, label, children }) {
@@ -72,24 +67,11 @@ export default function App() {
           <Navbar />
           <main>
             <Hero />
-            <Section index={2} label="About">
-              <About />
-            </Section>
-            <Section index={3} label="Skills">
-              <Skills />
-            </Section>
-            <Section index={4} label="Projects">
-              <Projects />
-            </Section>
-            <Section index={5} label="Experience">
-              <Experience />
-            </Section>
-            <Section index={6} label="Badges">
-              <Badges />
-            </Section>
-            <Section index={7} label="Contact">
-              <Contact />
-            </Section>
+            {sections.map(({ id, label, Component }, i) => (
+              <Section key={id} index={i + 2} label={label}>
+                <Component id={id} num={sectionNumber(i)} />
+              </Section>
+            ))}
           </main>
           <Footer />
         </div>

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
 
-export default function Experience() {
+export default function Experience({ id, num }) {
   const { data } = useData()
   const experiences = data.experience
   // The ring only has room for a handful of nodes before labels start colliding —
@@ -56,9 +56,9 @@ export default function Experience() {
   // Mobile: the rotating ring is fiddly on touch — show all roles as a scannable list.
   if (isMobile) {
     return (
-      <section id="experience" className="py-24 relative">
+      <section id={id} className="py-24 relative">
         <div className="max-w-5xl mx-auto px-6 mb-8">
-          <p className="section-number mb-2">// 05</p>
+          <p className="section-number mb-2">// {num}</p>
           <div className="flex items-end justify-between">
             <h2 className="section-title">Experience &amp; Activities</h2>
             <span className="font-mono text-xs text-muted">{allTotal} roles</span>
@@ -72,9 +72,9 @@ export default function Experience() {
   }
 
   return (
-    <section id="experience" className="py-24 relative">
+    <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6 mb-8">
-        <p className="section-number mb-2">// 05</p>
+        <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
           <h2 className="section-title">Experience &amp; Activities</h2>
           <div className="flex items-center gap-3">
