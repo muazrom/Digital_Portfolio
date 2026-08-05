@@ -123,13 +123,21 @@ function WriteupsIndex() {
 function WriteupDetail({ slug }) {
   const w = writeupBySlug(slug)
   const [body, setBody] = useState(null)
+  const [loadError, setLoadError] = useState(false)
   useDocumentTitle(w ? `${w.title} — Field Notes` : `Not found — ${SITE_TITLE}`, w?.summary)
 
   useEffect(() => {
     if (!w) return
     let cancelled = false
     setBody(null)
-    loadBody(w.slug).then((md) => { if (!cancelled) setBody(md ?? '') })
+    setLoadError(false)
+    loadBody(w.slug)
+      .then((md) => { if (!cancelled) setBody(md ?? '') })
+      // A body is a lazily-imported chunk, so it can fail independently of the page:
+      // most likely mid-deploy, when the SPA fallback answers a not-yet-uploaded asset
+      // with index.html and the browser caches that HTML against the chunk's URL.
+      // Without this the reader sits on "Loading…" forever with nothing to act on.
+      .catch(() => { if (!cancelled) setLoadError(true) })
     return () => { cancelled = true }
   }, [w?.slug])
 
@@ -184,7 +192,26 @@ function WriteupDetail({ slug }) {
         {(w.tags || []).map(t => <Tag key={t}>{t}</Tag>)}
       </div>
 
-      {body === null ? (
+      {loadError ? (
+        <div style={{
+          border: '1px solid #3a2a2a', background: 'rgba(239,68,68,0.05)',
+          borderRadius: 8, padding: '16px 18px',
+        }}>
+          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#c98b8b', lineHeight: 1.7 }}>
+            This writeup didn&rsquo;t load. Usually a cached response from a deploy that
+            was still in flight — a hard reload clears it.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              marginTop: 12, background: 'none', border: '1px solid #3a2a2a',
+              color: '#c98b8b', borderRadius: 4, padding: '7px 14px',
+              cursor: 'pointer', fontFamily: 'JetBrains Mono', fontSize: 11,
+            }}>
+            Reload
+          </button>
+        </div>
+      ) : body === null ? (
         <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555' }}>Loading…</p>
       ) : (
         <div className="writeup-body" dangerouslySetInnerHTML={{ __html: html }} />
