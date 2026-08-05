@@ -120,7 +120,7 @@ export default function Contact({ id, num }) {
         <p className="section-number mb-2">// {num}</p>
         <h2 className="section-title mb-2">Contact</h2>
         <p className="font-mono text-xs text-muted mb-10">
-          Open to opportunities · currently interning at <span className="text-white">iFast Global Hub AI</span> from Jul 2026
+          Graduating early 2028 · looking toward <span className="text-white">network &amp; security engineering</span> · open to conversations now
         </p>
         <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', maxWidth: 720 }}>
           {channels.map(ch => <ChannelCard key={ch.key} ch={ch} />)}

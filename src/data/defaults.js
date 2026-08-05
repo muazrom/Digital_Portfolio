@@ -1,12 +1,13 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 5
+export const CONTENT_VERSION = 6
 
 export const defaultData = {
   hero: {
     name: "Mu'az Arief",
-    title: 'CS Student · Cybersecurity & AI · University Malaya',
-    bio: "I go where the ideas are moving — right now that's AI agents and security that has to survive them. I learn by building: passwordless auth with WebAuthn, agentic workflows, whatever's next after that.",
+    // NOTE: Hero.jsx splits this on the literal ' · ' — keep exactly three segments.
+    title: 'CS Student · Networking & Security · University Malaya',
+    bio: "I'm heading for network security — the infrastructure layer everything else quietly sits on, and the one nobody looks at until it breaks. Right now that means desktop support at iFast, studying toward CCNA, and publishing what I learn as I go.",
     status: 'Desktop Support Intern · iFast',
     location: 'Kajang, Selangor',
     university: 'University Malaya',
@@ -14,11 +15,11 @@ export const defaultData = {
 
   about: {
     paragraphs: [
-      "Computer Science student at University Malaya, majoring in Information Systems. Passionate about cybersecurity and leveraging AI to develop secure, intelligent systems.",
-      "I build full-stack applications with a focus on security and AI integration — from secure authentication systems to LangGraph-powered AI workflows. Currently interning as a Desktop Support at iFast Global Hub AI Sdn Bhd.",
-      "Beyond code, I've led teams in multiple Head of Department roles across university events, managing budgets, logistics, and cross-functional coordination for hundreds of participants.",
+      "Computer Science student at University Malaya, majoring in Information Systems, working toward a career in network security. I'm drawn to the infrastructure layer — the routing, segmentation, and access control that every application depends on and mostly takes for granted.",
+      "I'm learning in public. That means studying toward CCNA, working through networking and security coursework, and writing up what I actually learn instead of only collecting completion badges. My internship at iFast Global Hub AI is my first real exposure to production infrastructure — endpoints, directory services, and the escalation path to the teams who own the network.",
+      "Beyond the technical side, I've held multiple Head of Department roles across university events, managing budgets, logistics, and cross-functional coordination for hundreds of participants.",
     ],
-    focus: ['Cybersecurity', 'LLM Systems', 'Agentic Workflows', 'Automation'],
+    focus: ['Network Security', 'Infrastructure', 'Firewalls & Segmentation', 'Automation'],
     info: [
       { label: 'NAME', value: "Mu'az Arief bin Mohamad Rom" },
       { label: 'STATUS', value: 'Student · Intern' },
@@ -29,42 +30,44 @@ export const defaultData = {
     ],
   },
 
+  // Honesty rule for this board: only list what survives two minutes of interview
+  // questioning. level 1 = Basic, 2 = Proficient, 3 = Strong. Things being aimed at
+  // rather than held belong on the certification route, not here.
   skills: [
     {
-      id: 'S01', label: 'Languages', desc: 'Core syntax',
+      id: 'S01', label: 'Networking', desc: 'Packets & paths',
+      tools: [
+        { name: 'Subnetting & IP Addressing', level: 2 }, { name: 'DNS & DHCP', level: 2 },
+        { name: 'TCP/IP', level: 1 }, { name: 'Routing & Switching', level: 1 },
+      ],
+    },
+    {
+      id: 'S02', label: 'Systems & Infrastructure', desc: 'The layer underneath',
+      tools: [
+        { name: 'Windows / Active Directory', level: 2 }, { name: 'Endpoint Support', level: 2 },
+        { name: 'Hardware Troubleshooting', level: 2 }, { name: 'Linux', level: 1 },
+      ],
+    },
+    {
+      id: 'S03', label: 'Security', desc: 'Security bench',
+      tools: [
+        { name: 'Secure Auth', level: 2 }, { name: 'Encryption Fundamentals', level: 2 },
+        { name: 'Threat Fundamentals', level: 1 },
+      ],
+    },
+    {
+      id: 'S04', label: 'Development & Automation', desc: 'Making it repeatable',
       tools: [
         { name: 'Python', level: 2 }, { name: 'JavaScript', level: 2 },
-        { name: 'HTML', level: 2 }, { name: 'CSS', level: 2 },
-        { name: 'Java', level: 1 },
-      ],
-    },
-    {
-      id: 'S02', label: 'Frameworks & Libraries', desc: 'Build stack',
-      tools: [
-        { name: 'React', level: 2 }, { name: 'Tailwind CSS', level: 2 },
-        { name: 'Node.js', level: 2 }, { name: 'Vite', level: 2 },
-      ],
-    },
-    {
-      id: 'S03', label: 'AI & Prompting', desc: 'Intelligence layer',
-      tools: [
-        { name: 'Prompt Engineering', level: 2 }, { name: 'LangGraph', level: 1 },
-        { name: 'API Integration', level: 2 }, { name: 'AI-assisted Dev', level: 2 },
-      ],
-    },
-    {
-      id: 'S04', label: 'Cybersecurity', desc: 'Security bench',
-      tools: [
-        { name: 'Secure Auth', level: 2 }, { name: 'Password Encryption', level: 1 },
-        { name: 'Network Fundamentals', level: 1 },
+        { name: 'React', level: 2 }, { name: 'API Integration', level: 2 },
+        { name: 'Bash', level: 1 },
       ],
     },
     {
       id: 'S05', label: 'Tools & Platforms', desc: 'Workshop gear',
       tools: [
-        { name: 'Git / GitHub', level: 2 }, { name: 'Linux', level: 1 },
+        { name: 'Git / GitHub', level: 2 }, { name: 'Cloudflare', level: 1 },
         { name: 'Figma', level: 2 }, { name: 'Excel', level: 2 },
-        { name: 'Cloudflare', level: 1 },
       ],
     },
   ],
@@ -586,7 +589,9 @@ export const defaultData = {
   experience: [
     {
       id: 'e8', role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
-      summary: 'Providing desktop support for internal users at iFast Global Hub AI, covering hardware and software troubleshooting, system maintenance, and IT assistance across the organisation.',
+      // Deliberately generic. No client names, no topology detail, no ticket
+      // specifics, no internal tooling names.
+      summary: 'First-line IT support for internal users: endpoint provisioning and troubleshooting, hardware and software faults, account and access issues, and escalation to the infrastructure teams who own the network and server layer. My first sustained look at how a production environment is actually held together.',
       featured: true,
     },
     {
