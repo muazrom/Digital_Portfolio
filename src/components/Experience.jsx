@@ -5,15 +5,15 @@ import { useWindowSize } from '../hooks/useWindowSize'
 export default function Experience({ id, num }) {
   const { data } = useData()
   const experiences = data.experience
-  // The ring only has room for a handful of nodes before labels start colliding —
-  // show the curated "featured" subset there; the full list stays one click away via "Show all".
-  const featured = experiences.filter(e => e.featured)
-  const ringItems = featured.length > 0 ? featured : experiences
+  // Split by track so one technical internship isn't buried among six event roles.
+  // The ring carries technical work only — that is the spotlight, and it is what
+  // someone hiring for infrastructure came to read. Leadership sits below.
+  const technical = experiences.filter(e => e.track === 'technical')
+  const leadership = experiences.filter(e => e.track === 'leadership')
+  const ringItems = technical.length > 0 ? technical : experiences
   const [active, setActive] = useState(0)
-  const [showAll, setShowAll] = useState(false)
   const touchStartX = useRef(null)
   const total = ringItems.length
-  const allTotal = experiences.length
 
   const { w } = useWindowSize()
   const isMobile = w < 768
@@ -40,7 +40,33 @@ export default function Experience({ id, num }) {
   if (total === 0) return null
   const exp = ringItems[safeActive]
 
-  // A single role card used by both the mobile list and the desktop "expand all" grid.
+  // Divider heading shared by both breakpoints, same treatment as the section
+  // sub-headings elsewhere on the site.
+  const GroupLabel = ({ title, note }) => (
+    <div className="flex items-center gap-3 mb-4">
+      <span className="font-mono text-[11px] text-white">{title}</span>
+      <span className="font-mono text-[9px] text-muted">— {note}</span>
+      <div className="flex-1 h-px" style={{ background: '#232323' }} />
+    </div>
+  )
+
+  // Compact row for leadership roles — present and readable, but visibly supporting
+  // rather than competing with the technical work above.
+  const LeadershipRow = ({ e }) => (
+    <div style={{
+      background: '#0f0f0f', border: '1px solid #232323', borderRadius: 8,
+      padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 3,
+    }}>
+      <div className="flex items-baseline justify-between gap-3">
+        <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 13.5, fontWeight: 600, color: '#dcdcdc' }}>{e.role}</h4>
+        <span className="font-mono text-[9px]" style={{ color: '#666', flexShrink: 0 }}>{e.period}</span>
+      </div>
+      <p className="font-mono text-[9.5px]" style={{ color: '#6a6a6a' }}>{e.org}</p>
+      <p style={{ fontSize: 12, lineHeight: 1.6, color: '#8a8a8a', marginTop: 2 }}>{e.summary}</p>
+    </div>
+  )
+
+  // A single role card used by the mobile technical list.
   const RoleCard = ({ e, i }) => (
     <div className="card p-5" style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <div className="flex items-center justify-between">
@@ -59,13 +85,21 @@ export default function Experience({ id, num }) {
       <section id={id} className="py-24 relative">
         <div className="max-w-5xl mx-auto px-6 mb-8">
           <p className="section-number mb-2">// {num}</p>
-          <div className="flex items-end justify-between">
-            <h2 className="section-title">Experience &amp; Activities</h2>
-            <span className="font-mono text-xs text-muted">{allTotal} roles</span>
-          </div>
+          <h2 className="section-title">Experience &amp; Activities</h2>
         </div>
-        <div className="max-w-5xl mx-auto px-6 flex flex-col gap-4">
-          {experiences.map((e, i) => <RoleCard key={e.id} e={e} i={i} />)}
+        <div className="max-w-5xl mx-auto px-6">
+          <GroupLabel title="Technical" note={`${technical.length} roles`} />
+          <div className="flex flex-col gap-4 mb-10">
+            {technical.map((e, i) => <RoleCard key={e.id} e={e} i={i} />)}
+          </div>
+          {leadership.length > 0 && (
+            <>
+              <GroupLabel title="Leadership & activities" note={`${leadership.length} roles`} />
+              <div className="flex flex-col gap-3">
+                {leadership.map(e => <LeadershipRow key={e.id} e={e} />)}
+              </div>
+            </>
+          )}
         </div>
       </section>
     )
@@ -77,16 +111,11 @@ export default function Experience({ id, num }) {
         <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
           <h2 className="section-title">Experience &amp; Activities</h2>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowAll(v => !v)}
-              className="font-mono text-xs px-3 h-8 border border-border text-muted hover:border-accent hover:text-accent transition-all duration-200"
-            >
-              {showAll ? 'Collapse ↑' : `Show all ${allTotal} ↓`}
-            </button>
-            <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
-          </div>
+          <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
         </div>
+      </div>
+      <div className="max-w-5xl mx-auto px-6 mb-8">
+        <GroupLabel title="Technical" note={`${technical.length} roles`} />
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16 max-w-5xl mx-auto px-6">
@@ -160,10 +189,12 @@ export default function Experience({ id, num }) {
         </div>
       </div>
 
-      {showAll && (
-        <div className="max-w-5xl mx-auto px-6 mt-12 grid grid-cols-1 md:grid-cols-2 gap-4"
-          style={{ animation: 'fade-up 0.35s ease forwards' }}>
-          {experiences.map((e, i) => <RoleCard key={e.id} e={e} i={i} />)}
+      {leadership.length > 0 && (
+        <div className="max-w-5xl mx-auto px-6 mt-14">
+          <GroupLabel title="Leadership & activities" note={`${leadership.length} roles`} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {leadership.map(e => <LeadershipRow key={e.id} e={e} />)}
+          </div>
         </div>
       )}
     </section>

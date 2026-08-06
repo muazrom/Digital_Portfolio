@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 9
+export const CONTENT_VERSION = 10
 
 export const defaultData = {
   hero: {
@@ -314,51 +314,64 @@ export const defaultData = {
     },
   ],
 
+  // Split by `track` so one technical internship isn't diluted by six event roles.
+  //   technical   — paid or competitive work: the internship, the company role, the
+  //                 competition placing. Rendered on the ring, in the spotlight.
+  //   leadership  — university committee and event roles. Real and worth showing,
+  //                 but supporting evidence, so they sit below in a compact list.
+  // The "Head of Logistics & Technical" roles stay under leadership: they involved
+  // genuine equipment and AV work, but they were student events, and filing them as
+  // technical would read as padding to anyone hiring for infrastructure.
   experience: [
     {
-      id: 'e8', role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
+      id: 'e8', track: 'technical',
+      role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
       // Deliberately generic. No client names, no topology detail, no ticket
       // specifics, no internal tooling names.
       summary: 'First-line IT support for internal users: endpoint provisioning and troubleshooting, hardware and software faults, account and access issues, and escalation to the infrastructure teams who own the network and server layer. My first sustained look at how a production environment is actually held together.',
-      featured: true,
     },
     {
-      id: 'e1', role: 'Vice Secretary', org: 'Warisan Run', period: 'May 2026',
+      id: 'e9', track: 'technical',
+      role: 'Silver Award', org: 'Pitram', period: '2024',
+      // TODO(muaz): add one line on what the competition involved — "Silver at Pitram"
+      // means nothing to someone outside it, and that context is the whole value.
+      summary: 'Entered Pitram as a participant and placed, taking the Silver award.',
+    },
+    {
+      id: 'e5', track: 'technical',
+      role: 'Assistant', org: 'Perisian Huda Sdn Bhd', period: 'Apr 2023',
+      summary: 'Assisted in collecting natural data for machine learning and developing the "Mushafi" app. Served as a beta tester and provided user feedback that directly shaped the product.',
+    },
+
+    {
+      id: 'e1', track: 'leadership',
+      role: 'Vice Secretary', org: 'Warisan Run', period: 'May 2026',
       summary: 'Handled administrative tasks including documentation, planning, and resolving internal problems for an event involving 260 participants and 48 committee members.',
     },
     {
-      id: 'e2', role: 'Head of Logistics & Technical', org: 'Jelajah Nusantara International Mobility Programme', period: 'Nov 2025',
+      id: 'e2', track: 'leadership',
+      role: 'Head of Logistics & Technical', org: 'Jelajah Nusantara International Mobility Programme', period: 'Nov 2025',
       summary: "Led technical and logistics operations for the university's international mobility programme to Indonesia. Coordinated equipment, transportation, and technical requirements across international borders.",
-      featured: true,
     },
     {
-      id: 'e3', role: 'Head of Dept & Scenographer', org: 'Pentaz Production — Karnival Teater UM', period: 'Apr 2025 & 2026',
-      summary: 'Designed and led full stage sets and props for Karnival Teater Universiti Malaya for two consecutive years. Managed production budget and team coordination — received acknowledgement from the panel of jury.',
-      featured: true,
-    },
-    {
-      id: 'e4', role: 'Head of Department', org: 'Minggu Haluan Siswa KK10', period: 'Oct 2025',
+      id: 'e4', track: 'leadership',
+      role: 'Head of Department', org: 'Minggu Haluan Siswa KK10', period: 'Oct 2025',
       summary: 'Managed technical setup and equipment for the university orientation programme serving 300 new students and 50 committee members. Ensured seamless execution of all technical operations.',
-      featured: true,
     },
     {
-      id: 'e9', role: 'Pitram Silver Award', org: 'Pitram', period: '2024',
-      // TODO(muaz): replace with what this award was actually for.
-      summary: 'Silver award recipient.',
+      id: 'e3', track: 'leadership',
+      role: 'Head of Dept & Scenographer', org: 'Pentaz Production — Karnival Teater UM', period: 'Apr 2025 & 2026',
+      summary: 'Designed and led full stage sets and props for Karnival Teater Universiti Malaya for two consecutive years. Managed production budget and team coordination — received acknowledgement from the panel of jury.',
     },
     {
-      id: 'e7', role: 'Director', org: 'Dayasari Goes Green', period: 'Feb 2024',
-      summary: 'Directed a recycling awareness programme organised by one of the residential colleges at University Malaya. Led the committee in planning and executing activities centred around sustainability and environmental responsibility.',
-      featured: true,
-    },
-    {
-      id: 'e6', role: 'Head of Logistics & Technical', org: 'Tazcup', period: '2025',
+      id: 'e6', track: 'leadership',
+      role: 'Head of Logistics & Technical', org: 'Tazcup', period: '2025',
       summary: 'Managed logistics and technical operations for Tazcup, a futsal tournament open to University Malaya students and the surrounding community. Coordinated equipment, venue setup, and ensured smooth technical execution throughout the event.',
     },
     {
-      id: 'e5', role: 'Assistant', org: 'Perisian Huda Sdn Bhd', period: 'Apr 2023',
-      summary: 'Assisted in collecting natural data for machine learning and developing the "Mushafi" app. Served as a beta tester and provided user feedback that directly shaped the product.',
-      featured: true,
+      id: 'e7', track: 'leadership',
+      role: 'Director', org: 'Dayasari Goes Green', period: 'Feb 2024',
+      summary: 'Directed a recycling awareness programme organised by one of the residential colleges at University Malaya. Led the committee in planning and executing activities centred around sustainability and environmental responsibility.',
     },
   ],
 }
