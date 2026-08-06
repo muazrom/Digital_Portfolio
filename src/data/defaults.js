@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 7
+export const CONTENT_VERSION = 9
 
 export const defaultData = {
   hero: {
@@ -32,7 +32,7 @@ export const defaultData = {
 
   // Honesty rule for this board: only list what survives two minutes of interview
   // questioning. level 1 = Basic, 2 = Proficient, 3 = Strong. Things being aimed at
-  // rather than held belong on the certification route, not here.
+  // rather than held belong in the hero bio as prose, not on this board.
   skills: [
     {
       id: 'S01', label: 'Networking', desc: 'Packets & paths',
@@ -268,106 +268,51 @@ export const defaultData = {
     },
   ],
 
-  // Two structures, deliberately not one ranked list.
+  // Earned credentials only. Anything not yet held belongs in prose — the hero bio
+  // already says "studying toward CCNA" — because a section that mostly lists
+  // intentions reads as a wishlist, not evidence.
   //
-  //   ladder — ONLY exam-based, industry-recognised certifications, in route order.
-  //            Hard rule: no course-completion badge goes in here, however much work
-  //            it was. A CCNA and a free intro badge are not peers, and the audience
-  //            this section is for knows the difference immediately.
-  //            Soft rule: keep `planned` to 2-3. Ten unvisited stops is a fantasy;
-  //            two is a plan. Every non-earned entry MUST carry `why` — with nothing
-  //            earned yet, the stated reasoning IS the evidence.
+  // `kind` is the single field driving both the medal design and the card label.
+  // It replaces the old `tier`, which conflated credential rigor with artifact type
+  // and is why the previous renderer needed an orderOf() shim. When CCNA lands it
+  // goes in as kind: 'certification' and renders at top weight automatically,
+  // visibly distinct from a free course badge.
   //
-  //   log    — coursework, module badges, path completions. Evidence of hours, not
-  //            credentials. Reverse-chronological, never ranked. Allowed to get long.
-  //
-  // domain drives the colour accent: network | security | systems
-  credentials: {
-    ladder: [
-      {
-        id: 'cr-ccna',
-        code: 'CCNA',
-        name: 'Cisco Certified Network Associate',
-        vendor: 'Cisco',
-        rung: 'associate',
-        domain: 'network',
-        status: 'in_progress',
-        earned: null,
-        target: 'Mid 2027',
-        credential: null,
-        image: null,
-        why: 'Routing and switching is the floor for anything on the firewall side. I want to understand what an appliance is actually filtering before I learn a vendor GUI that hides it.',
-        // TODO(muaz): replace `detail` with your real position in the material.
-        progress: { label: 'Studying', detail: null },
-      },
-      {
-        id: 'cr-secplus',
-        code: 'Security+',
-        name: 'CompTIA Security+',
-        vendor: 'CompTIA',
-        rung: 'associate',
-        domain: 'security',
-        status: 'planned',
-        earned: null,
-        target: '2028',
-        credential: null,
-        image: null,
-        why: 'The baseline most security job descriptions here list. Deliberately after CCNA — I would rather understand the network first than memorise controls for a network I cannot read.',
-        progress: null,
-      },
-      {
-        id: 'cr-pcnsa',
-        code: 'PCNSA',
-        name: 'Palo Alto Networks Certified Network Security Administrator',
-        vendor: 'Palo Alto Networks',
-        rung: 'professional',
-        domain: 'security',
-        status: 'planned',
-        earned: null,
-        target: 'After Security+',
-        credential: null,
-        image: null,
-        why: 'The point where the track stops being general and becomes a firewall specialisation. Vendor choice is not final — Fortinet is at least as common in Malaysian environments, and I would rather pick based on where I end up working than guess now.',
-        progress: null,
-      },
-    ],
-
-    log: [
-      {
-        id: 'lg-thm-presecurity',
-        name: 'Pre Security Learning Path',
-        issuer: 'TryHackMe',
-        kind: 'path',
-        topic: 'security',
-        date: '2026-06',
-        credential: '/badges/tryhackme-pre-security.pdf',
-        image: '/badges/tryhackme-pre-security.png',
-        writeups: [],
-      },
-      {
-        id: 'lg-cisco-introcyber',
-        name: 'Introduction to Cybersecurity',
-        issuer: 'Cisco Networking Academy',
-        kind: 'course',
-        topic: 'security',
-        date: '2026',
-        credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
-        image: '/badges/cisco-intro-cybersecurity.png',
-        writeups: [],
-      },
-      {
-        id: 'lg-cisco-hardware',
-        name: 'Computer Hardware Basics',
-        issuer: 'Cisco Networking Academy',
-        kind: 'module',
-        topic: 'systems',
-        date: '2026',
-        credential: 'https://www.credly.com/earner/earned/badge/215db823-5346-4b3b-98ed-bcfdd04d5c1c',
-        image: '/badges/cisco-computer-hardware-basics.png',
-        writeups: [],
-      },
-    ],
-  },
+  //   kind:  certification | path | course | module
+  //   topic: network | security | systems   (colour accent)
+  //   date:  ISO, sortable
+  credentials: [
+    {
+      id: 'cr-thm-presecurity',
+      name: 'Pre Security Learning Path',
+      issuer: 'TryHackMe',
+      kind: 'path',
+      topic: 'security',
+      date: '2026-06',
+      image: '/badges/tryhackme-pre-security.png',
+      credential: '/badges/tryhackme-pre-security.pdf',
+    },
+    {
+      id: 'cr-cisco-introcyber',
+      name: 'Introduction to Cybersecurity',
+      issuer: 'Cisco Networking Academy',
+      kind: 'course',
+      topic: 'security',
+      date: '2026',
+      image: '/badges/cisco-intro-cybersecurity.png',
+      credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
+    },
+    {
+      id: 'cr-cisco-hardware',
+      name: 'Computer Hardware Basics',
+      issuer: 'Cisco Networking Academy',
+      kind: 'module',
+      topic: 'systems',
+      date: '2026',
+      image: '/badges/cisco-computer-hardware-basics.png',
+      credential: 'https://www.credly.com/earner/earned/badge/215db823-5346-4b3b-98ed-bcfdd04d5c1c',
+    },
+  ],
 
   experience: [
     {
@@ -398,7 +343,8 @@ export const defaultData = {
     },
     {
       id: 'e9', role: 'Pitram Silver Award', org: 'Pitram', period: '2024',
-      summary: 'Awarded for contribution to a university programme. Moved here from the credentials section — a non-technical award does not belong on a certification route.',
+      // TODO(muaz): replace with what this award was actually for.
+      summary: 'Silver award recipient.',
     },
     {
       id: 'e7', role: 'Director', org: 'Dayasari Goes Green', period: 'Feb 2024',

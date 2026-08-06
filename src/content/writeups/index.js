@@ -13,8 +13,8 @@
 //   the filename and the URL. This deliberately breaks the b1/e1/p7 convention
 //   used in defaults.js.
 //   Dates are ISO so they sort and a sitemap lastmod needs no parser.
-//   Cross-links use ids (`relatedCredential` -> credentials.ladder[].id in
-//   defaults.js), never array positions.
+//   Cross-links use ids (`relatedCredential` -> credentials[].id in defaults.js),
+//   never array positions. Null until there's a credential worth pointing at.
 //
 // To publish: drop <slug>.md in ./bodies/, add an entry here with
 // status: 'published'. Nothing else.
@@ -40,7 +40,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 4,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'observe-traffic-flow-in-a-routed-network',
@@ -53,7 +53,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 7,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'create-a-lan',
@@ -66,7 +66,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 6,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'use-ftp-services',
@@ -79,7 +79,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 4,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'the-client-interaction',
@@ -92,7 +92,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 4,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'examine-nat-on-a-wireless-router',
@@ -105,7 +105,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 8,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'identify-mac-and-ip-addresses',
@@ -118,7 +118,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 8,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'configure-dhcp-on-a-wireless-router',
@@ -131,7 +131,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 4,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'connect-to-a-web-server',
@@ -144,7 +144,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 4,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
   {
     slug: 'configure-a-wireless-router-and-clients',
@@ -157,7 +157,7 @@ export const writeups = [
     source: { platform: 'Cisco NetAcad', name: 'Networking Basics — Packet Tracer', url: null },
     minutes: 5,
     status: 'published',
-    relatedCredential: 'cr-ccna',
+    relatedCredential: null,
   },
 ]
 

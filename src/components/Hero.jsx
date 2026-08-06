@@ -179,10 +179,11 @@ export default function Hero() {
             {h.bio}
           </p>
 
-          {/* CTAs — the primary action points at the network security evidence.
+          {/* CTAs — the primary action points at the strongest network security
+              evidence, which is the writeups: work actually done, not intentions.
               Sending a visitor to Projects first would undercut the whole ordering. */}
           <div className="flex items-center justify-center gap-4 mb-10 fade-up fade-up-delay-5">
-            <TerminalButton href="#certifications" primary>CERT ROUTE</TerminalButton>
+            <TerminalButton href="#fieldnotes" primary>FIELD NOTES</TerminalButton>
             <TerminalButton href="#contact">CONTACT</TerminalButton>
             <TerminalButton href="/resume.pdf" external>RESUME</TerminalButton>
           </div>

@@ -12,7 +12,7 @@ const TABS = [
   { id: 'skills', label: 'Skills & Tools', desc: 'Stations, tools, proficiency' },
   { id: 'projects', label: 'Projects', desc: 'Add, edit, remove projects' },
   { id: 'experience', label: 'Experience', desc: 'Activities and roles' },
-  { id: 'credentials', label: 'Credentials', desc: 'Certification route and learning log' },
+  { id: 'credentials', label: 'Credentials', desc: 'Badges and certificates earned' },
   { id: 'settings', label: 'Settings', desc: 'Password, reset data' },
 ]
 

@@ -2,7 +2,7 @@ import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
-import Certifications from './components/Certifications'
+import Credentials from './components/Credentials'
 import FieldNotes from './components/FieldNotes'
 import Contact from './components/Contact'
 import { publishedWriteups } from './content/writeups'
@@ -13,7 +13,7 @@ import { publishedWriteups } from './content/writeups'
 // receive it as a prop rather than hardcoding it, so the two can never disagree.
 //
 // Order is the argument: network security evidence comes before any software
-// project, so a visitor reaches the certification route before the React apps.
+// project, so a visitor reaches the credentials and writeups before the React apps.
 //
 // `enabled` is optional. A section whose component would render nothing must be
 // excluded here rather than returning null, or it still consumes a number, a
@@ -21,7 +21,7 @@ import { publishedWriteups } from './content/writeups'
 const allSections = [
   { id: 'about', label: 'About', Component: About },
   { id: 'skills', label: 'Skills', Component: Skills },
-  { id: 'certifications', label: 'Certifications', Component: Certifications },
+  { id: 'credentials', label: 'Credentials', Component: Credentials },
   { id: 'fieldnotes', label: 'Field Notes', Component: FieldNotes, enabled: () => publishedWriteups().length > 0 },
   { id: 'experience', label: 'Experience', Component: Experience },
   { id: 'projects', label: 'Projects', Component: Projects },
