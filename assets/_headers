@@ -3,10 +3,17 @@
 # NOTE: this file lives in assets/, not public/ — vite.config.js overrides
 # publicDir to 'assets', so anything placed in public/ is silently not served.
 
-# Build output filenames are content-hashed, so a given URL's bytes never change.
-# Cache them hard; a new build produces new names.
+# DO NOT mark /assets/* immutable. Content-hashed filenames make it tempting, but
+# Pages has no atomic swap: during a deploy a request for a not-yet-uploaded asset
+# is answered by the SPA fallback with index.html at status 200. An immutable
+# directive then pins that HTML to the asset's URL in the edge cache — for a year,
+# for every visitor. That took the site down once already; a browser gets HTML
+# where it expects a module, and nothing renders.
+#
+# A short TTL with revalidation keeps most of the benefit and lets a bad entry
+# expire on its own instead of needing a manual purge.
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=600, must-revalidate
 
 # The HTML entry point must never be cached, or a browser keeps loading an old
 # index.html that references asset filenames a new deploy has already removed.
