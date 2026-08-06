@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
 
@@ -137,6 +137,15 @@ export default function Projects({ id, num }) {
   const { w, h } = useWindowSize()
   const total = projects.length
   const safeIndex = Math.min(index, total - 1)
+
+  // Escape closes the case-study modal, matching the credentials detail panel
+  // and the mobile nav — same pattern as Navbar.jsx.
+  useEffect(() => {
+    if (!modalProj) return
+    const onEsc = (e) => { if (e.key === 'Escape') setModalProj(null) }
+    window.addEventListener('keydown', onEsc)
+    return () => window.removeEventListener('keydown', onEsc)
+  }, [modalProj])
 
   // Fluid card sizing — 58vw on mobile, capped at 280px on desktop
   const CARD_W = Math.min(Math.floor(w * 0.58), 280)

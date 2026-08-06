@@ -1,24 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useData } from '../context/DataContext'
+import { useWindowSize } from '../hooks/useWindowSize'
 
-// `kind` drives the medal design and the card label — one field, not the old
-// `tier`, which mixed credential rigor with artifact type and needed a sort shim
-// to untangle. 'certification' is reserved for exam-based certs; when CCNA lands
-// it renders at top weight automatically, visibly distinct from a course badge.
+// `kind` drives the accent and the unit label — one field, not the old `tier`,
+// which mixed credential rigor with artifact type and needed a sort shim to
+// untangle. 'certification' is reserved for exam-based certs; when CCNA lands it
+// renders in accent blue, visibly distinct from a course badge.
 const kindMeta = {
-  certification: { label: 'Certification',  roman: 'I',   sides: 7, main: '#2563eb', light: '#93b4ff', dark: '#0e1f4d', glow: 'rgba(37,99,235,0.35)' },
-  path:          { label: 'Learning path',  roman: 'II',  sides: 6, main: '#22c55e', light: '#86efac', dark: '#0f3d23', glow: 'rgba(34,197,94,0.30)' },
-  course:        { label: 'Course',         roman: 'II',  sides: 6, main: '#22c55e', light: '#86efac', dark: '#0f3d23', glow: 'rgba(34,197,94,0.30)' },
-  module:        { label: 'Module',         roman: 'III', sides: 5, main: '#9ca3af', light: '#d4d8df', dark: '#2a2d33', glow: 'rgba(156,163,175,0.28)' },
+  certification: { label: 'CERT',   main: '#2563eb', light: '#93b4ff' },
+  path:          { label: 'PATH',   main: '#22c55e', light: '#86efac' },
+  course:        { label: 'COURSE', main: '#22c55e', light: '#86efac' },
+  module:        { label: 'MODULE', main: '#9ca3af', light: '#d4d8df' },
 }
 const metaOf = (kind) => kindMeta[kind] || kindMeta.course
-
-// Regular polygon, point-up, inset slightly so the stroke isn't clipped.
-const polygonPath = (sides) =>
-  Array.from({ length: sides }, (_, i) => {
-    const a = (Math.PI * 2 * i) / sides - Math.PI / 2
-    return `${(50 + 47 * Math.cos(a)).toFixed(2)} ${(50 + 47 * Math.sin(a)).toFixed(2)}`
-  }).map((p, i) => `${i ? 'L' : 'M'}${p}`).join(' ') + ' Z'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const formatDate = (iso) => {
@@ -27,120 +21,205 @@ const formatDate = (iso) => {
   return m ? `${MONTHS[Number(m) - 1]} ${y}` : y
 }
 
-const SIZE = 224
+// A public verification URL is the only thing that makes a credential checkable
+// by someone else, so the LED reports that fact rather than decorating the row.
+const isVerifiable = (c) => Boolean(c.credential)
 
-function Medal({ kind, size = 88 }) {
-  const t = metaOf(kind)
-  const gid = `medal-grad-${kind}`
+/* ─────────────────────────── chassis ─────────────────────────── */
+
+function Rail({ units }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: `drop-shadow(0 0 10px ${t.glow})` }}>
-      <defs>
-        <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={t.main} />
-          <stop offset="100%" stopColor={t.dark} />
-        </linearGradient>
-      </defs>
-      <path d={polygonPath(t.sides)} fill={`url(#${gid})`} stroke={t.light} strokeWidth="2.5" strokeLinejoin="round" />
-      <circle cx="50" cy="50" r="30" fill="none" stroke={t.light} strokeWidth="1" strokeDasharray="3 4" opacity="0.45" />
-      <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
-        fontFamily="Space Grotesk, sans-serif" fontSize="32" fontWeight="700" fill="#fff" letterSpacing="-1">
-        {t.roman}
-      </text>
-    </svg>
+    <div
+      aria-hidden="true"
+      style={{
+        width: 12, flexShrink: 0, background: '#141414',
+        border: '1px solid #2e2e2e', borderRadius: 3,
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'space-around', alignItems: 'center', padding: '8px 0',
+      }}
+    >
+      {Array.from({ length: Math.max(4, units * 2) }, (_, i) => (
+        <span key={i} style={{ width: 3, height: 3, borderRadius: '50%', background: '#333' }} />
+      ))}
+    </div>
   )
 }
 
-function CredentialCard({ item, isTouch }) {
-  const [flipped, setFlipped] = useState(false)
-  const [imgError, setImgError] = useState(false)
+function Unit({ item, onOpen, compact }) {
   const t = metaOf(item.kind)
-  const hasImage = item.image && !imgError
-
-  const flipHandlers = isTouch
-    ? { onClick: () => setFlipped(f => !f) }
-    : { onMouseEnter: () => setFlipped(true), onMouseLeave: () => setFlipped(false) }
-
-  const faceBase = {
-    position: 'absolute', inset: 0,
-    backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-    borderRadius: 12, overflow: 'hidden',
-    border: `1px solid ${flipped ? t.main : '#2a2a2a'}`,
-    background: '#0f0f0f',
-    transition: 'border-color 0.3s',
-  }
+  const [hover, setHover] = useState(false)
+  const verifiable = isVerifiable(item)
 
   return (
-    <div style={{ width: SIZE, height: SIZE, perspective: 1000, cursor: isTouch ? 'pointer' : 'default' }} {...flipHandlers}>
-      <div style={{
-        position: 'relative', width: '100%', height: '100%',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-        transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+    <button
+      type="button"
+      onClick={() => onOpen(item)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      aria-haspopup="dialog"
+      style={{
+        width: '100%', textAlign: 'left', cursor: 'pointer',
+        background: hover ? '#181818' : '#141414',
+        border: `1px solid ${hover ? 'rgba(37,99,235,0.45)' : '#2e2e2e'}`,
+        borderRadius: 3, padding: compact ? '11px 12px' : '12px 14px',
+        display: 'flex', alignItems: 'center', gap: compact ? 10 : 14,
+        flexWrap: compact ? 'wrap' : 'nowrap',
+        transition: 'background 0.18s, border-color 0.18s',
+        fontFamily: 'JetBrains Mono',
+      }}
+    >
+      <span
+        title={verifiable ? 'Independently verifiable' : 'No public verification link'}
+        style={{
+          width: 5, height: 5, borderRadius: '50%', flexShrink: 0,
+          background: verifiable ? '#22c55e' : '#4a4a4a',
+          boxShadow: verifiable ? '0 0 6px rgba(34,197,94,0.7)' : 'none',
+        }}
+      />
+
+      <span style={{
+        fontSize: 9, letterSpacing: '0.1em', color: t.main,
+        width: compact ? 'auto' : 62, flexShrink: 0,
       }}>
-        {/* ───── FRONT ───── */}
-        <div style={{ ...faceBase, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '14px 16px' }}>
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: t.main, opacity: 0.9 }} />
+        {t.label}
+      </span>
 
-          <div style={{ marginTop: 2 }}><Medal kind={item.kind} /></div>
+      <span style={{
+        fontFamily: 'Space Grotesk, sans-serif', fontSize: compact ? 13 : 14,
+        fontWeight: 500, color: '#eaeaea',
+        flex: compact ? '1 1 100%' : 1, minWidth: 0,
+        order: compact ? 3 : 0,
+      }}>
+        {item.name}
+      </span>
 
-          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 13.5, fontWeight: 600, color: '#eaeaea', lineHeight: 1.3, marginTop: 8,
-            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-            {item.name}
-          </p>
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#888', marginTop: 5 }}>{item.issuer}</p>
+      <span style={{
+        fontSize: 9.5, color: '#666', flexShrink: 0,
+        order: compact ? 4 : 0,
+      }}>
+        {item.issuer} · {formatDate(item.date)}
+      </span>
 
-          <div style={{ marginTop: 'auto', paddingTop: 10 }}>
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em', color: t.light,
-              background: t.glow, border: `1px solid ${t.main}`, padding: '3px 9px', borderRadius: 99, opacity: 0.9 }}>
-              {t.label.toUpperCase()}{item.date ? ` · ${formatDate(item.date)}` : ''}
-            </span>
+      <span aria-hidden="true" style={{
+        fontSize: 10, color: hover ? '#93b4ff' : '#3f3f3f', flexShrink: 0,
+        transition: 'color 0.18s',
+      }}>
+        ⤢
+      </span>
+    </button>
+  )
+}
+
+/* ─────────────────────────── detail panel ─────────────────────────── */
+
+function DetailPanel({ item, onClose }) {
+  const [imgError, setImgError] = useState(false)
+  const t = metaOf(item.kind)
+
+  useEffect(() => {
+    const onEsc = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onEsc)
+    return () => window.removeEventListener('keydown', onEsc)
+  }, [onClose])
+
+  return (
+    <div
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={item.name}
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)',
+        zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
+      }}
+    >
+      <div onClick={e => e.stopPropagation()} style={{
+        width: '100%', maxWidth: 420, maxHeight: '85vh', overflowY: 'auto',
+        background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 14,
+        padding: 20, display: 'flex', flexDirection: 'column', gap: 14,
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+          <div style={{ minWidth: 0 }}>
+            <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: '#fff', lineHeight: 1.25 }}>
+              {item.name}
+            </h3>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#888', marginTop: 5 }}>
+              {item.issuer}
+            </p>
           </div>
+          <button onClick={onClose} aria-label="Close"
+            style={{ background: 'none', border: 'none', color: '#888', fontSize: 18, cursor: 'pointer', lineHeight: 1, flexShrink: 0 }}>
+            ✕
+          </button>
+        </div>
 
-          <span style={{ position: 'absolute', bottom: 8, right: 10, fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555' }}>
-            {isTouch ? 'tap ⟳' : 'hover ⟳'}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <span style={{
+            fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em',
+            color: t.light, border: `1px solid ${t.main}`, padding: '3px 9px', borderRadius: 99,
+          }}>
+            {t.label}
+          </span>
+          <span style={{
+            fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em',
+            color: '#777', border: '1px solid #2a2a2a', padding: '3px 9px', borderRadius: 99,
+          }}>
+            {formatDate(item.date)}
           </span>
         </div>
 
-        {/* ───── BACK ───── */}
-        <div style={{ ...faceBase, transform: 'rotateY(180deg)', display: 'flex', flexDirection: 'column' }}>
-          {hasImage ? (
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a0a0a', padding: 12 }}>
-              <img src={item.image} alt={item.name} onError={() => setImgError(true)}
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-            </div>
+        {/* Badge art varies wildly in size and aspect (192px square through to a
+            1354x959 landscape certificate), so contain it and never upscale. */}
+        <div style={{
+          background: '#0a0a0a', border: '1px solid #1e1e1e', borderRadius: 8,
+          minHeight: 140, padding: 16,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          {item.image && !imgError ? (
+            <img
+              src={item.image}
+              alt={item.name}
+              onError={() => setImgError(true)}
+              style={{
+                maxWidth: 'min(100%, 240px)', maxHeight: 220,
+                width: 'auto', height: 'auto', objectFit: 'contain',
+              }}
+            />
           ) : (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, background: `radial-gradient(circle at 50% 40%, ${t.glow}, #0a0a0a 70%)` }}>
-              <Medal kind={item.kind} size={68} />
-              <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#777', textAlign: 'center', padding: '0 18px' }}>
-                Image coming soon
-              </p>
-            </div>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#555' }}>
+              No image available
+            </p>
           )}
+        </div>
 
-          <div style={{ borderTop: `1px solid ${t.main}`, padding: '10px 14px', textAlign: 'center', background: '#0d0d0d' }}>
-            {item.credential ? (
-              <a href={item.credential} target="_blank" rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
-                style={{ fontFamily: 'JetBrains Mono', fontSize: 10.5, color: t.light, textDecoration: 'none' }}>
-                Verify credential ↗
-              </a>
-            ) : (
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#555' }}>No public link</span>
-            )}
-          </div>
+        <div style={{ paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
+          {item.credential ? (
+            <a href={item.credential} target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb', textDecoration: 'none' }}>
+              Verify credential ↗
+            </a>
+          ) : (
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555' }}>
+              No public verification link
+            </span>
+          )}
         </div>
       </div>
     </div>
   )
 }
 
+/* ─────────────────────────── section ─────────────────────────── */
+
 export default function Credentials({ id, num }) {
   const { data } = useData()
+  const [open, setOpen] = useState(null)
+  // Same hook Projects.jsx uses, rather than a second hand-rolled resize listener.
+  const { w } = useWindowSize()
+  const compact = w < 640
+
   const items = data.credentials || []
   if (items.length === 0) return null
-
-  const isTouch = typeof window !== 'undefined' &&
-    window.matchMedia('(hover: none), (pointer: coarse)').matches
 
   // Most recent first. No prestige ordering — these are completions, not a ranking.
   const sorted = [...items].sort((a, b) => String(b.date).localeCompare(String(a.date)))
@@ -151,15 +230,21 @@ export default function Credentials({ id, num }) {
         <p className="section-number mb-2">// {num}</p>
         <h2 className="section-title mb-2">Learning &amp; Credentials</h2>
         <p className="font-mono text-xs text-muted mb-12">
-          CREDENTIAL_RACK // {isTouch ? 'tap a card to flip' : 'hover a card to flip'}
+          RACK_01 // {sorted.length} unit{sorted.length === 1 ? '' : 's'} · select a unit for details
         </p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
-          {sorted.map(item => (
-            <CredentialCard key={item.id} item={item} isTouch={isTouch} />
-          ))}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'stretch' }}>
+          {!compact && <Rail units={sorted.length} />}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+            {sorted.map(item => (
+              <Unit key={item.id} item={item} onOpen={setOpen} compact={compact} />
+            ))}
+          </div>
+          {!compact && <Rail units={sorted.length} />}
         </div>
       </div>
+
+      {open && <DetailPanel item={open} onClose={() => setOpen(null)} />}
     </section>
   )
 }
