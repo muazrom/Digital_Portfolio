@@ -1,3 +1,4 @@
+import Icon from './Icon'
 import { useState } from 'react'
 
 // Base64-encoded so the address never appears as a plaintext string in the built bundle (avoids naive scrapers).
@@ -56,7 +57,7 @@ const channels = [
 
 function ChannelCard({ ch }) {
   const [copied, setCopied] = useState(false)
-  const Icon = ch.icon
+  const ChannelIcon = ch.icon
 
   const handleCopy = (e) => {
     e.preventDefault()
@@ -81,7 +82,7 @@ function ChannelCard({ ch }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: '#2563eb',
         }}>
-          <Icon width={16} height={16} />
+          <ChannelIcon width={16} height={16} />
         </div>
         <ArrowIcon width={14} height={14} className="text-muted group-hover:text-accent" style={{ transition: 'color 0.2s' }} />
       </div>
@@ -113,12 +114,12 @@ function ChannelCard({ ch }) {
   )
 }
 
-export default function Contact({ id, num }) {
+export default function Contact({ id, num, icon }) {
   return (
     <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
-        <h2 className="section-title mb-2">Contact</h2>
+        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Contact</h2></div>
         <p className="font-mono text-xs text-muted mb-10">
           Graduating early 2028 · looking toward <span className="text-white">network &amp; security engineering</span> · open to conversations now
         </p>

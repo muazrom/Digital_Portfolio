@@ -1,6 +1,7 @@
+import Icon from './Icon'
 import { useEffect, useRef } from 'react'
 
-export default function SectionDivider({ index, label }) {
+export default function SectionDivider({ index, label, icon }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function SectionDivider({ index, label }) {
           {String(index).padStart(2, '0')}
         </span>
         <span style={{ width: 1, height: 10, background: 'rgba(37,99,235,0.3)' }} />
+        {icon && <Icon name={icon} size={11} style={{ color: '#2563eb' }} />}
         <span style={{
           fontFamily: 'JetBrains Mono', fontSize: 8,
           color: '#aaa', letterSpacing: '0.12em',

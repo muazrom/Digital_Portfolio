@@ -1,3 +1,4 @@
+import Icon from './Icon'
 import { useData } from '../context/DataContext'
 
 const levelColor = {
@@ -6,7 +7,7 @@ const levelColor = {
   3: '#2563eb',
 }
 
-function ToolTag({ name, level }) {
+function ToolTag({ name, level, icon }) {
   return (
     <div className="group relative" style={{ cursor: 'default' }}>
       <div style={{
@@ -21,6 +22,15 @@ function ToolTag({ name, level }) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
       }}>
         <div style={{ position: 'absolute', top: -7, left: '50%', width: 1, height: 7, background: '#333', transform: 'translateX(-50%)' }} />
+        {icon && (
+          <div className="group-hover:text-accent" style={{
+            display: 'flex', justifyContent: 'center', marginBottom: 5,
+            color: levelColor[level] === 'rgba(255,255,255,0.15)' ? '#5f5f5f' : '#7f9cff',
+            transition: 'color 0.25s ease',
+          }}>
+            <Icon name={icon} size={15} />
+          </div>
+        )}
         <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, fontWeight: 500, color: '#ccc', whiteSpace: 'nowrap', marginBottom: 6 }}>
           {name}
         </p>
@@ -38,14 +48,14 @@ function ToolTag({ name, level }) {
   )
 }
 
-export default function Skills({ id, num }) {
+export default function Skills({ id, num, icon }) {
   const { data } = useData()
 
   return (
     <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
-        <h2 className="section-title mb-2">Skills &amp; Tools</h2>
+        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Skills &amp; Tools</h2></div>
         <p className="font-mono text-xs text-muted mb-14">WORKSHOP_INVENTORY // tools available at each station</p>
 
         <div style={{
@@ -67,6 +77,11 @@ export default function Skills({ id, num }) {
                     background: 'rgba(37,99,235,0.08)', border: '1px solid rgba(37,99,235,0.2)',
                     padding: '2px 7px', borderRadius: 3,
                   }}>{station.id}</span>
+                  {station.icon && (
+                    <span style={{ color: '#2563eb', display: 'flex' }}>
+                      <Icon name={station.icon} size={14} />
+                    </span>
+                  )}
                   <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#fff', fontWeight: 500 }}>
                     {station.label}
                   </span>
@@ -75,7 +90,7 @@ export default function Skills({ id, num }) {
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 16px', paddingLeft: 12 }}>
                   {station.tools.map(tool => (
-                    <ToolTag key={tool.name} name={tool.name} level={tool.level} />
+                    <ToolTag key={tool.name} name={tool.name} level={tool.level} icon={tool.icon} />
                   ))}
                 </div>
               </div>

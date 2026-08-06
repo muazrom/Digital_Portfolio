@@ -14,11 +14,11 @@ import WriteupsPage from './pages/WriteupsPage'
 import { sections, sectionNumber } from './sections'
 import { useScrollReveal } from './hooks/useScrollReveal'
 
-function Section({ index, label, children }) {
+function Section({ index, label, icon, children }) {
   const ref = useScrollReveal()
   return (
     <>
-      <SectionDivider index={index} label={label} />
+      <SectionDivider index={index} label={label} icon={icon} />
       <div ref={ref} className="reveal">
         {children}
       </div>
@@ -85,9 +85,9 @@ export default function App() {
           ) : (
             <main>
               <Hero />
-              {sections.map(({ id, label, Component }, i) => (
-                <Section key={id} index={i + 2} label={label}>
-                  <Component id={id} num={sectionNumber(i)} />
+              {sections.map(({ id, label, icon, Component }, i) => (
+                <Section key={id} index={i + 2} label={label} icon={icon}>
+                  <Component id={id} num={sectionNumber(i)} icon={icon} />
                 </Section>
               ))}
             </main>

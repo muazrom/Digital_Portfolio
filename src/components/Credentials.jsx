@@ -1,3 +1,4 @@
+import Icon from './Icon'
 import { useEffect, useState } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
@@ -7,10 +8,10 @@ import { useWindowSize } from '../hooks/useWindowSize'
 // untangle. 'certification' is reserved for exam-based certs; when CCNA lands it
 // renders in accent blue, visibly distinct from a course badge.
 const kindMeta = {
-  certification: { label: 'CERT',   main: '#2563eb', light: '#93b4ff' },
-  path:          { label: 'PATH',   main: '#22c55e', light: '#86efac' },
-  course:        { label: 'COURSE', main: '#22c55e', light: '#86efac' },
-  module:        { label: 'MODULE', main: '#9ca3af', light: '#d4d8df' },
+  certification: { label: 'CERT',   icon: 'award',  main: '#2563eb', light: '#93b4ff' },
+  path:          { label: 'PATH',   icon: 'book',   main: '#22c55e', light: '#86efac' },
+  course:        { label: 'COURSE', icon: 'notes',  main: '#22c55e', light: '#86efac' },
+  module:        { label: 'MODULE', icon: 'chip',   main: '#9ca3af', light: '#d4d8df' },
 }
 const metaOf = (kind) => kindMeta[kind] || kindMeta.course
 
@@ -77,9 +78,11 @@ function Unit({ item, onOpen, compact }) {
         }}
       />
 
+      <span style={{ color: t.main, display: 'flex' }}><Icon name={t.icon} size={14} /></span>
+
       <span style={{
         fontSize: 9, letterSpacing: '0.1em', color: t.main,
-        width: compact ? 'auto' : 62, flexShrink: 0,
+        width: compact ? 'auto' : 52, flexShrink: 0,
       }}>
         {t.label}
       </span>
@@ -157,14 +160,16 @@ function DetailPanel({ item, onClose }) {
           <span style={{
             fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em',
             color: t.light, border: `1px solid ${t.main}`, padding: '3px 9px', borderRadius: 99,
+            display: 'inline-flex', alignItems: 'center', gap: 5,
           }}>
-            {t.label}
+            <Icon name={t.icon} size={11} /> {t.label}
           </span>
           <span style={{
             fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em',
             color: '#777', border: '1px solid #2a2a2a', padding: '3px 9px', borderRadius: 99,
+            display: 'inline-flex', alignItems: 'center', gap: 5,
           }}>
-            {formatDate(item.date)}
+            <Icon name="calendar" size={11} /> {formatDate(item.date)}
           </span>
         </div>
 
@@ -211,7 +216,7 @@ function DetailPanel({ item, onClose }) {
 
 /* ─────────────────────────── section ─────────────────────────── */
 
-export default function Credentials({ id, num }) {
+export default function Credentials({ id, num, icon }) {
   const { data } = useData()
   const [open, setOpen] = useState(null)
   // Same hook Projects.jsx uses, rather than a second hand-rolled resize listener.
@@ -228,7 +233,7 @@ export default function Credentials({ id, num }) {
     <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
-        <h2 className="section-title mb-2">Learning &amp; Credentials</h2>
+        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Learning &amp; Credentials</h2></div>
         <p className="font-mono text-xs text-muted mb-12">
           RACK_01 // {sorted.length} unit{sorted.length === 1 ? '' : 's'} · select a unit for details
         </p>

@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 10
+export const CONTENT_VERSION = 11
 
 export const defaultData = {
   hero: {
@@ -35,48 +35,48 @@ export const defaultData = {
   // rather than held belong in the hero bio as prose, not on this board.
   skills: [
     {
-      id: 'S01', label: 'Networking', desc: 'Packets & paths',
+      id: 'S01', label: 'Networking', icon: 'network', desc: 'Packets & paths',
       tools: [
-        { name: 'Subnetting & IP Addressing', level: 2 }, { name: 'DNS & DHCP', level: 2 },
-        { name: 'NAT', level: 2 }, { name: 'ARP & Broadcast Domains', level: 2 },
-        { name: 'TCP/IP', level: 1 }, { name: 'Routing & Switching', level: 1 },
+        { name: 'Subnetting & IP Addressing', icon: 'network', level: 2 }, { name: 'DNS & DHCP', icon: 'globe', level: 2 },
+        { name: 'NAT', icon: 'router', level: 2 }, { name: 'ARP & Broadcast Domains', icon: 'switch', level: 2 },
+        { name: 'TCP/IP', icon: 'network', level: 1 }, { name: 'Routing & Switching', icon: 'router', level: 1 },
       ],
     },
     {
-      id: 'S02', label: 'Labs & Diagnostics', desc: 'Proving it works',
+      id: 'S02', label: 'Labs & Diagnostics', icon: 'flask', desc: 'Proving it works',
       tools: [
-        { name: 'Cisco Packet Tracer', level: 2 }, { name: 'ping / tracert', level: 2 },
-        { name: 'ipconfig', level: 2 }, { name: 'Packet Inspection', level: 1 },
+        { name: 'Cisco Packet Tracer', icon: 'flask', level: 2 }, { name: 'ping / tracert', icon: 'pulse', level: 2 },
+        { name: 'ipconfig', icon: 'terminal', level: 2 }, { name: 'Packet Inspection', icon: 'search', level: 1 },
       ],
     },
     {
-      id: 'S03', label: 'Systems & Infrastructure', desc: 'The layer underneath',
+      id: 'S03', label: 'Systems & Infrastructure', icon: 'server', desc: 'The layer underneath',
       tools: [
-        { name: 'Windows / Active Directory', level: 2 }, { name: 'Endpoint Support', level: 2 },
-        { name: 'Hardware Troubleshooting', level: 2 }, { name: 'Linux', level: 1 },
+        { name: 'Windows / Active Directory', icon: 'windows', level: 2 }, { name: 'Endpoint Support', icon: 'monitor', level: 2 },
+        { name: 'Hardware Troubleshooting', icon: 'chip', level: 2 }, { name: 'Linux', icon: 'terminal', level: 1 },
       ],
     },
     {
-      id: 'S04', label: 'Security', desc: 'Security bench',
+      id: 'S04', label: 'Security', icon: 'shield', desc: 'Security bench',
       tools: [
-        { name: 'Secure Auth', level: 2 }, { name: 'Encryption Fundamentals', level: 2 },
-        { name: 'SSH vs Telnet', level: 2 }, { name: 'Network Segmentation', level: 1 },
-        { name: 'Threat Fundamentals', level: 1 },
+        { name: 'Secure Auth', icon: 'key', level: 2 }, { name: 'Encryption Fundamentals', icon: 'lock', level: 2 },
+        { name: 'SSH vs Telnet', icon: 'shield', level: 2 }, { name: 'Network Segmentation', icon: 'switch', level: 1 },
+        { name: 'Threat Fundamentals', icon: 'shield', level: 1 },
       ],
     },
     {
-      id: 'S05', label: 'Development & Automation', desc: 'Making it repeatable',
+      id: 'S05', label: 'Development & Automation', icon: 'code', desc: 'Making it repeatable',
       tools: [
-        { name: 'Python', level: 2 }, { name: 'JavaScript', level: 2 },
-        { name: 'React', level: 2 }, { name: 'API Integration', level: 2 },
-        { name: 'Bash', level: 1 },
+        { name: 'Python', icon: 'code', level: 2 }, { name: 'JavaScript', icon: 'code', level: 2 },
+        { name: 'React', icon: 'code', level: 2 }, { name: 'API Integration', icon: 'external', level: 2 },
+        { name: 'Bash', icon: 'terminal', level: 1 },
       ],
     },
     {
-      id: 'S06', label: 'Tools & Platforms', desc: 'Workshop gear',
+      id: 'S06', label: 'Tools & Platforms', icon: 'wrench', desc: 'Workshop gear',
       tools: [
-        { name: 'Git / GitHub', level: 2 }, { name: 'Cloudflare', level: 1 },
-        { name: 'Figma', level: 2 }, { name: 'Excel', level: 2 },
+        { name: 'Git / GitHub', icon: 'gitBranch', level: 2 }, { name: 'Cloudflare', icon: 'cloud', level: 1 },
+        { name: 'Figma', icon: 'palette', level: 2 }, { name: 'Excel', icon: 'spreadsheet', level: 2 },
       ],
     },
   ],

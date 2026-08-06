@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { publishedWriteups, writeupBySlug, loadBody } from '../content/writeups'
 import { renderMarkdown } from '../lib/markdown'
+import Icon from '../components/Icon'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 export function formatDate(iso) {
@@ -32,8 +33,9 @@ function Tag({ children }) {
     <span style={{
       fontFamily: 'JetBrains Mono', fontSize: 9, color: '#7b8794',
       border: '1px solid #2a2a2a', borderRadius: 99, padding: '2px 8px',
+      display: 'inline-flex', alignItems: 'center', gap: 4,
     }}>
-      {children}
+      <Icon name="tag" size={10} />{children}
     </span>
   )
 }
@@ -44,7 +46,7 @@ function BackLink({ to, label }) {
       fontFamily: 'JetBrains Mono', fontSize: 11, color: '#93b4ff', textDecoration: 'none',
       display: 'inline-flex', alignItems: 'center', gap: 6,
     }}>
-      ← {label}
+      <Icon name="external" size={12} style={{ transform: 'scaleX(-1)' }} />{label}
     </a>
   )
 }
@@ -59,12 +61,12 @@ function WriteupCard({ w }) {
       onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.5)' }}
       onMouseLeave={e => { e.currentTarget.style.borderColor = '#232323' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 6 }}>
-        <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#666' }}>
-          {formatDate(w.date)}
+        <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#666', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+          <Icon name="calendar" size={11} />{formatDate(w.date)}
         </span>
         {w.minutes && (
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#4a4a4a' }}>
-            · {w.minutes} min
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#4a4a4a', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+            <Icon name="clock" size={11} />{w.minutes} min
           </span>
         )}
         {w.source?.platform && (

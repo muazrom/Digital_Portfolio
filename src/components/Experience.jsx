@@ -1,8 +1,9 @@
+import Icon from './Icon'
 import { useState, useRef } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
 
-export default function Experience({ id, num }) {
+export default function Experience({ id, num, icon }) {
   const { data } = useData()
   const experiences = data.experience
   // Split by track so one technical internship isn't buried among six event roles.
@@ -42,8 +43,9 @@ export default function Experience({ id, num }) {
 
   // Divider heading shared by both breakpoints, same treatment as the section
   // sub-headings elsewhere on the site.
-  const GroupLabel = ({ title, note }) => (
-    <div className="flex items-center gap-3 mb-4">
+  const GroupLabel = ({ title, note, icon: glyph }) => (
+    <div className="flex items-center gap-2.5 mb-4">
+      <span style={{ color: '#2563eb', display: 'flex' }}><Icon name={glyph} size={14} /></span>
       <span className="font-mono text-[11px] text-white">{title}</span>
       <span className="font-mono text-[9px] text-muted">— {note}</span>
       <div className="flex-1 h-px" style={{ background: '#232323' }} />
@@ -85,16 +87,16 @@ export default function Experience({ id, num }) {
       <section id={id} className="py-24 relative">
         <div className="max-w-5xl mx-auto px-6 mb-8">
           <p className="section-number mb-2">// {num}</p>
-          <h2 className="section-title">Experience &amp; Activities</h2>
+          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Experience &amp; Activities</h2></div>
         </div>
         <div className="max-w-5xl mx-auto px-6">
-          <GroupLabel title="Technical" note={`${technical.length} roles`} />
+          <GroupLabel title="Technical" icon="chip" note={`${technical.length} roles`} />
           <div className="flex flex-col gap-4 mb-10">
             {technical.map((e, i) => <RoleCard key={e.id} e={e} i={i} />)}
           </div>
           {leadership.length > 0 && (
             <>
-              <GroupLabel title="Leadership & activities" note={`${leadership.length} roles`} />
+              <GroupLabel title="Leadership & activities" icon="users" note={`${leadership.length} roles`} />
               <div className="flex flex-col gap-3">
                 {leadership.map(e => <LeadershipRow key={e.id} e={e} />)}
               </div>
@@ -110,12 +112,12 @@ export default function Experience({ id, num }) {
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <h2 className="section-title">Experience &amp; Activities</h2>
+          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Experience &amp; Activities</h2></div>
           <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
         </div>
       </div>
       <div className="max-w-5xl mx-auto px-6 mb-8">
-        <GroupLabel title="Technical" note={`${technical.length} roles`} />
+        <GroupLabel title="Technical" icon="chip" note={`${technical.length} roles`} />
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16 max-w-5xl mx-auto px-6">
@@ -191,7 +193,7 @@ export default function Experience({ id, num }) {
 
       {leadership.length > 0 && (
         <div className="max-w-5xl mx-auto px-6 mt-14">
-          <GroupLabel title="Leadership & activities" note={`${leadership.length} roles`} />
+          <GroupLabel title="Leadership & activities" icon="users" note={`${leadership.length} roles`} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {leadership.map(e => <LeadershipRow key={e.id} e={e} />)}
           </div>

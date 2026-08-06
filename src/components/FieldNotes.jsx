@@ -1,9 +1,10 @@
+import Icon from './Icon'
 import { publishedWriteups } from '../content/writeups'
 import { formatDate } from '../pages/WriteupsPage'
 
 const PREVIEW_COUNT = 3
 
-export default function FieldNotes({ id, num }) {
+export default function FieldNotes({ id, num, icon }) {
   const all = publishedWriteups()
   // Nothing published yet? Render nothing. An empty section with a promise in it
   // is weaker than no section at all.
@@ -16,7 +17,7 @@ export default function FieldNotes({ id, num }) {
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <h2 className="section-title mb-2">Field Notes</h2>
+          <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Field Notes</h2></div>
           {all.length > PREVIEW_COUNT && (
             <a href="#/writeups" style={{
               fontFamily: 'JetBrains Mono', fontSize: 11, color: '#93b4ff', textDecoration: 'none',
@@ -38,13 +39,13 @@ export default function FieldNotes({ id, num }) {
             }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.5)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = '#232323' }}>
-              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginBottom: 5 }}>
-                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#666' }}>
-                  {formatDate(w.date)}
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 5 }}>
+                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#666', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                  <Icon name="calendar" size={11} />{formatDate(w.date)}
                 </span>
                 {w.source?.platform && (
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#4a4a4a' }}>
-                    · {w.source.platform}
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#4a4a4a', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                    <Icon name="flask" size={11} />{w.source.platform}
                   </span>
                 )}
               </div>
