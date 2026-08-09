@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 11
+export const CONTENT_VERSION = 12
 
 export const defaultData = {
   hero: {
@@ -301,6 +301,26 @@ export const defaultData = {
       date: '2026',
       image: '/badges/cisco-intro-cybersecurity.png',
       credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
+    },
+    {
+      id: 'cr-cisco-netdevices',
+      name: 'Networking Devices and Initial Configuration',
+      issuer: 'Cisco Networking Academy',
+      kind: 'course',
+      topic: 'network',
+      date: '2026-08',
+      image: '/badges/cisco-networking-devices-initial-config.png',
+      credential: 'https://www.credly.com/badges/03796fd1-7045-4126-bb5d-1328e24a3313/public_url',
+    },
+    {
+      id: 'cr-cisco-netbasics',
+      name: 'Networking Basics',
+      issuer: 'Cisco Networking Academy',
+      kind: 'course',
+      topic: 'network',
+      date: '2026-08',
+      image: '/badges/cisco-networking-basics.png',
+      credential: 'https://www.credly.com/badges/4581f746-ff2e-4064-8def-797b1d0b07ea/public_url',
     },
     {
       id: 'cr-cisco-hardware',
