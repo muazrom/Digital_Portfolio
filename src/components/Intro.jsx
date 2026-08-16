@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useData } from '../context/DataContext'
+import { publishedWriteups } from '../content/writeups'
 
 function CountUp({ to, delay = 0, duration = 850 }) {
   const [value, setValue] = useState(0)
@@ -37,9 +38,11 @@ export default function Intro({ onDone }) {
   const [visible, setVisible] = useState(false)
   const [fading, setFading] = useState(false)
 
+  // The three counts a visitor can go and verify for themselves further down
+  // the page: the Credentials rack, the Field Notes list, and Projects.
+  const moduleCount = data.credentials.length
+  const writeupCount = publishedWriteups().length
   const projectCount = data.projects.length
-  const toolCount = data.skills.reduce((sum, s) => sum + s.tools.length, 0)
-  const roleCount = data.experience.length
 
   const finish = () => {
     setFading(true)
@@ -91,9 +94,9 @@ export default function Intro({ onDone }) {
           display: 'flex', gap: 'clamp(28px, 8vw, 64px)',
           marginTop: 28, marginBottom: 28,
         }}>
-          <Stat label="Projects" value={projectCount} delay={200} />
-          <Stat label="Tools" value={toolCount} delay={350} />
-          <Stat label="Roles Led" value={roleCount} delay={500} />
+          <Stat label="Learning Modules" value={moduleCount} delay={200} />
+          <Stat label="Write-ups" value={writeupCount} delay={350} />
+          <Stat label="Projects" value={projectCount} delay={500} />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
