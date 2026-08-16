@@ -36,12 +36,12 @@ export default function CustomCursor() {
         if (hovering.current) {
           ringRef.current.style.width = '44px'
           ringRef.current.style.height = '44px'
-          ringRef.current.style.borderColor = 'rgba(var(--accent-rgb), 0.9)'
-          ringRef.current.style.backgroundColor = 'rgba(var(--accent-rgb), 0.08)'
+          ringRef.current.style.borderColor = 'rgba(37,99,235,0.9)'
+          ringRef.current.style.backgroundColor = 'rgba(37,99,235,0.08)'
         } else {
           ringRef.current.style.width = '30px'
           ringRef.current.style.height = '30px'
-          ringRef.current.style.borderColor = 'rgba(var(--accent-rgb), 0.55)'
+          ringRef.current.style.borderColor = 'rgba(37,99,235,0.55)'
           ringRef.current.style.backgroundColor = 'transparent'
         }
       }
@@ -68,8 +68,8 @@ export default function CustomCursor() {
           top: 0, left: 0,
           width: 5, height: 5,
           borderRadius: '50%',
-          background: 'var(--accent)',
-          boxShadow: '0 0 6px rgba(var(--accent-rgb), 0.9)',
+          background: '#2563eb',
+          boxShadow: '0 0 6px rgba(37,99,235,0.9)',
           transform: 'translate(-100px, -100px)',
           marginLeft: -2.5, marginTop: -2.5,
           pointerEvents: 'none',
@@ -86,7 +86,7 @@ export default function CustomCursor() {
           top: 0, left: 0,
           width: 30, height: 30,
           borderRadius: '50%',
-          border: '1px solid rgba(var(--accent-rgb), 0.55)',
+          border: '1px solid rgba(37,99,235,0.55)',
           transform: 'translate(-100px, -100px)',
           marginLeft: -15, marginTop: -15,
           pointerEvents: 'none',

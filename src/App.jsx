@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { DataProvider } from './context/DataContext'
-import { ThemeProvider } from './context/ThemeContext'
 import Intro from './components/Intro'
 import ParticleBackground from './components/ParticleBackground'
 import CustomCursor from './components/CustomCursor'
@@ -68,36 +67,34 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider>
-      <DataProvider>
-        <CustomCursor />
-        {booting && <Intro onDone={() => setBooting(false)} />}
-        {view === 'admin' ? (
-          authed
-            ? <AdminDashboard onLogout={handleLogout} />
-            : <AdminLogin onSuccess={() => setAuthed(true)} />
-        ) : (
-          <div className="bg-bg text-strong min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
-            <ParticleBackground />
-            <Navbar />
-            {view === 'writeups' || view === 'writeup' ? (
-              <main>
-                <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
-              </main>
-            ) : (
-              <main>
-                <Hero />
-                {sections.map(({ id, label, icon, Component }, i) => (
-                  <Section key={id} index={i + 2} label={label} icon={icon}>
-                    <Component id={id} num={sectionNumber(i)} icon={icon} />
-                  </Section>
-                ))}
-              </main>
-            )}
-            <Footer />
-          </div>
-        )}
-      </DataProvider>
-    </ThemeProvider>
+    <DataProvider>
+      <CustomCursor />
+      {booting && <Intro onDone={() => setBooting(false)} />}
+      {view === 'admin' ? (
+        authed
+          ? <AdminDashboard onLogout={handleLogout} />
+          : <AdminLogin onSuccess={() => setAuthed(true)} />
+      ) : (
+        <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
+          <ParticleBackground />
+          <Navbar />
+          {view === 'writeups' || view === 'writeup' ? (
+            <main>
+              <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
+            </main>
+          ) : (
+            <main>
+              <Hero />
+              {sections.map(({ id, label, icon, Component }, i) => (
+                <Section key={id} index={i + 2} label={label} icon={icon}>
+                  <Component id={id} num={sectionNumber(i)} icon={icon} />
+                </Section>
+              ))}
+            </main>
+          )}
+          <Footer />
+        </div>
+      )}
+    </DataProvider>
   )
 }

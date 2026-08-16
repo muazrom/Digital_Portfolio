@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useData } from '../../context/DataContext'
 
 const levelLabel = { 1: 'Basic', 2: 'Proficient', 3: 'Strong' }
-const levelColor = { 1: 'var(--text-faint)', 2: 'rgba(var(--accent-rgb), 0.7)', 3: 'var(--accent)' }
+const levelColor = { 1: '#555', 2: 'rgba(37,99,235,0.7)', 3: '#2563eb' }
 
 export default function SkillsEditor() {
   const { data, addStation, updateStation, removeStation, addTool, removeTool, updateToolLevel } = useData()
@@ -13,22 +13,22 @@ export default function SkillsEditor() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       {data.skills.map((station) => (
         <div key={station.id} style={{
-          background: 'var(--surface-sunken)', border: '1px solid var(--border-subtle)',
+          background: '#0d0d0d', border: '1px solid #1e1e1e',
           borderRadius: 8, padding: 20,
         }}>
           {/* Station header */}
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 16 }}>
             <span style={{
-              fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--accent)',
-              background: 'rgba(var(--accent-rgb), 0.08)', border: '1px solid rgba(var(--accent-rgb), 0.2)',
+              fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb',
+              background: 'rgba(37,99,235,0.08)', border: '1px solid rgba(37,99,235,0.2)',
               padding: '2px 7px', borderRadius: 3,
             }}>{station.id}</span>
             <input
               value={station.label}
               onChange={e => updateStation(station.id, 'label', e.target.value)}
               style={{
-                background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)',
-                color: 'var(--text)', fontSize: 14, fontWeight: 600, outline: 'none', flex: 1,
+                background: 'transparent', border: 'none', borderBottom: '1px solid #2a2a2a',
+                color: '#fff', fontSize: 14, fontWeight: 600, outline: 'none', flex: 1,
                 padding: '2px 4px',
               }}
             />
@@ -37,13 +37,13 @@ export default function SkillsEditor() {
               onChange={e => updateStation(station.id, 'desc', e.target.value)}
               placeholder="description"
               style={{
-                background: 'transparent', border: 'none', borderBottom: '1px solid var(--border)',
-                color: 'var(--text-faint)', fontSize: 11, fontFamily: 'JetBrains Mono', outline: 'none',
+                background: 'transparent', border: 'none', borderBottom: '1px solid #2a2a2a',
+                color: '#555', fontSize: 11, fontFamily: 'JetBrains Mono', outline: 'none',
                 width: 140, padding: '2px 4px',
               }}
             />
             <button onClick={() => removeStation(station.id)} style={{
-              background: 'none', border: '1px solid var(--border)', color: 'var(--text-faint)',
+              background: 'none', border: '1px solid #2a2a2a', color: '#555',
               borderRadius: 4, padding: '3px 10px', cursor: 'pointer', fontSize: 11,
               fontFamily: 'JetBrains Mono',
             }}>remove</button>
@@ -53,10 +53,10 @@ export default function SkillsEditor() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
             {station.tools.map(tool => (
               <div key={tool.name} style={{
-                background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 6,
+                background: '#111', border: '1px solid #2a2a2a', borderRadius: 6,
                 padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 10,
               }}>
-                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--text-bright)' }}>
+                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#ccc' }}>
                   {tool.name}
                 </span>
                 {/* Level selector */}
@@ -66,14 +66,14 @@ export default function SkillsEditor() {
                       title={levelLabel[l]}
                       style={{
                         width: 10, height: 10, borderRadius: '50%', border: 'none', cursor: 'pointer',
-                        background: l <= tool.level ? levelColor[tool.level] : 'var(--border-subtle)',
+                        background: l <= tool.level ? levelColor[tool.level] : '#222',
                         padding: 0,
                       }}
                     />
                   ))}
                 </div>
                 <button onClick={() => removeTool(station.id, tool.name)} style={{
-                  background: 'none', border: 'none', color: 'var(--border-strong)', cursor: 'pointer',
+                  background: 'none', border: 'none', color: '#333', cursor: 'pointer',
                   fontSize: 14, lineHeight: 1, padding: 0,
                 }}>×</button>
               </div>
@@ -93,8 +93,8 @@ export default function SkillsEditor() {
               }}
               placeholder="Add tool… (Enter)"
               style={{
-                background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 4,
-                padding: '7px 12px', color: 'var(--text)', fontSize: 12,
+                background: '#111', border: '1px solid #2a2a2a', borderRadius: 4,
+                padding: '7px 12px', color: '#fff', fontSize: 12,
                 fontFamily: 'JetBrains Mono', outline: 'none', flex: 1,
               }}
             />
@@ -106,8 +106,8 @@ export default function SkillsEditor() {
                 }
               }}
               style={{
-                background: 'rgba(var(--accent-rgb), 0.15)', border: '1px solid rgba(var(--accent-rgb), 0.3)',
-                color: 'var(--accent)', borderRadius: 4, padding: '7px 14px',
+                background: 'rgba(37,99,235,0.15)', border: '1px solid rgba(37,99,235,0.3)',
+                color: '#2563eb', borderRadius: 4, padding: '7px 14px',
                 cursor: 'pointer', fontSize: 12, fontFamily: 'JetBrains Mono',
               }}
             >+ Add</button>
@@ -122,8 +122,8 @@ export default function SkillsEditor() {
           onChange={e => setNewStationLabel(e.target.value)}
           placeholder="New station name…"
           style={{
-            background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 4,
-            padding: '9px 14px', color: 'var(--text)', fontSize: 13,
+            background: '#111', border: '1px solid #2a2a2a', borderRadius: 4,
+            padding: '9px 14px', color: '#fff', fontSize: 13,
             fontFamily: 'JetBrains Mono', outline: 'none', flex: 1,
           }}
         />
@@ -135,7 +135,7 @@ export default function SkillsEditor() {
             }
           }}
           style={{
-            background: 'var(--accent)', color: 'var(--text)', border: 'none', borderRadius: 4,
+            background: '#2563eb', color: '#fff', border: 'none', borderRadius: 4,
             padding: '9px 18px', cursor: 'pointer', fontFamily: 'JetBrains Mono', fontSize: 12,
           }}
         >+ Station</button>

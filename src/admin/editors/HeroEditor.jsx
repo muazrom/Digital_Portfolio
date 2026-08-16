@@ -2,13 +2,13 @@ import { useData } from '../../context/DataContext'
 
 function Field({ label, value, onChange, multiline }) {
   const base = {
-    width: '100%', background: 'var(--bg)', border: '1px solid var(--border)',
-    borderRadius: 4, padding: '9px 12px', color: 'var(--text)', fontSize: 13,
+    width: '100%', background: '#0a0a0a', border: '1px solid #2a2a2a',
+    borderRadius: 4, padding: '9px 12px', color: '#fff', fontSize: 13,
     fontFamily: 'inherit', outline: 'none', resize: multiline ? 'vertical' : 'none',
   }
   return (
     <div style={{ marginBottom: 16 }}>
-      <label style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--text-faint)', display: 'block', marginBottom: 6 }}>
+      <label style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555', display: 'block', marginBottom: 6 }}>
         {label}
       </label>
       {multiline

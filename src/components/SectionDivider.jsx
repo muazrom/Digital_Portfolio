@@ -33,33 +33,33 @@ export default function SectionDivider({ index, label, icon }) {
       {/* Left line — blue fades in from pill outward to transparent */}
       <div className="divider-line-left" style={{
         flex: 1, height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.6))',
-        boxShadow: '0 0 6px rgba(var(--accent-rgb), 0.25)',
+        background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.6))',
+        boxShadow: '0 0 6px rgba(37,99,235,0.25)',
       }} />
 
       {/* Center pill */}
       <div className="divider-pill divider-scan" style={{
         display: 'flex', alignItems: 'center', gap: 10,
-        border: '1px solid rgba(var(--accent-rgb), 0.45)',
+        border: '1px solid rgba(37,99,235,0.45)',
         borderRadius: 4,
         padding: '5px 14px',
-        background: 'var(--surface-sunken)',
+        background: '#0d0d0d',
         flexShrink: 0,
         position: 'relative',
         overflow: 'hidden',
-        boxShadow: '0 0 14px rgba(var(--accent-rgb), 0.18)',
+        boxShadow: '0 0 14px rgba(37,99,235,0.18)',
       }}>
         <span style={{
           fontFamily: 'JetBrains Mono', fontSize: 8,
-          color: 'var(--accent)', letterSpacing: '0.15em',
+          color: '#2563eb', letterSpacing: '0.15em',
         }}>
           {String(index).padStart(2, '0')}
         </span>
-        <span style={{ width: 1, height: 10, background: 'rgba(var(--accent-rgb), 0.3)' }} />
-        {icon && <Icon name={icon} size={11} style={{ color: 'var(--accent)' }} />}
+        <span style={{ width: 1, height: 10, background: 'rgba(37,99,235,0.3)' }} />
+        {icon && <Icon name={icon} size={11} style={{ color: '#2563eb' }} />}
         <span style={{
           fontFamily: 'JetBrains Mono', fontSize: 8,
-          color: 'var(--text-body)', letterSpacing: '0.12em',
+          color: '#aaa', letterSpacing: '0.12em',
           textTransform: 'uppercase',
         }}>
           {label}
@@ -69,8 +69,8 @@ export default function SectionDivider({ index, label, icon }) {
       {/* Right line — blue fades out from pill to transparent */}
       <div className="divider-line-right" style={{
         flex: 1, height: 1,
-        background: 'linear-gradient(90deg, rgba(var(--accent-rgb), 0.6), transparent)',
-        boxShadow: '0 0 6px rgba(var(--accent-rgb), 0.25)',
+        background: 'linear-gradient(90deg, rgba(37,99,235,0.6), transparent)',
+        boxShadow: '0 0 6px rgba(37,99,235,0.25)',
       }} />
     </div>
   )

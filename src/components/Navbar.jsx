@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { sections } from '../sections'
-import { useTheme } from '../context/ThemeContext'
-import Icon from './Icon'
 
 // Labels and anchors both come from the section list, so a rename can't
 // silently desync the nav href from the section's id.
@@ -9,28 +7,10 @@ const links = sections.map(({ id, label }) => ({ id, label }))
 const SECRET = '#admin'
 
 const GLASS = {
-  background: 'var(--glass)',
+  background: 'linear-gradient(135deg, rgba(37,99,235,0.22), rgba(37,99,235,0.06))',
   backdropFilter: 'blur(20px) saturate(180%)',
   WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-  boxShadow: 'var(--glass-shadow)',
-}
-
-// Shows where the toggle will take you, not where you are — the icon is the
-// button's action. Labelled, because on its own that reading is ambiguous.
-function ThemeToggle({ className = '' }) {
-  const { theme, toggleTheme } = useTheme()
-  const next = theme === 'dark' ? 'light' : 'dark'
-  return (
-    <button
-      type="button"
-      onClick={toggleTheme}
-      aria-label={`Switch to ${next} theme`}
-      title={`Switch to ${next} theme`}
-      className={`flex items-center justify-center w-9 h-9 rounded-full text-muted hover:text-strong hover:bg-overlay/10 transition-colors duration-200 ${className}`}
-    >
-      <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={15} />
-    </button>
-  )
+  boxShadow: '0 8px 32px rgba(37,99,235,0.25), inset 0 1px 0 rgba(255,255,255,0.15)',
 }
 
 export default function Navbar() {
@@ -94,7 +74,7 @@ export default function Navbar() {
         >
           <span className="font-mono text-sm tracking-tight flex items-center gap-1 shrink-0 pl-[60px] pr-9">
             <span className="text-muted">muaz</span>
-            <span className="text-strong font-semibold">rom</span>
+            <span className="text-white font-semibold">rom</span>
             <span className="text-accent font-semibold">.my</span>
           </span>
 
@@ -108,7 +88,7 @@ export default function Navbar() {
                     href={`#${id}`}
                     style={{ whiteSpace: 'nowrap' }}
                     className={`block font-mono text-xs tracking-wide px-6 py-2.5 rounded-full transition-colors duration-200 ${
-                      isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-strong hover:bg-overlay/10'
+                      isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {label}
@@ -118,17 +98,13 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* One toggle for both layouts: it lands after the links on desktop
-              and beside the hamburger on mobile, which is where a thumb is. */}
-          <ThemeToggle className="mr-2 md:mr-3" />
-
           {/* Hamburger — mobile only */}
           <button
             type="button"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden flex flex-col items-center justify-center gap-[5px] w-10 h-10 mr-2 rounded-full hover:bg-overlay/10 transition-colors duration-200"
+            className="md:hidden flex flex-col items-center justify-center gap-[5px] w-10 h-10 mr-2 rounded-full hover:bg-white/10 transition-colors duration-200"
           >
             <span style={barStyle(open, 0)} />
             <span style={barStyle(open, 1)} />
@@ -158,7 +134,7 @@ export default function Navbar() {
                     href={`#${id}`}
                     onClick={() => setOpen(false)}
                     className={`block font-mono text-sm px-4 py-3 rounded-2xl transition-colors duration-200 ${
-                      isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-strong hover:bg-overlay/10'
+                      isActive ? 'bg-accent/25 text-accent' : 'text-muted hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {label}
@@ -179,7 +155,7 @@ function barStyle(open, i) {
     display: 'block',
     width: 18,
     height: 1.5,
-    background: 'var(--text)',
+    background: '#fff',
     borderRadius: 2,
     transition: 'transform 0.25s ease, opacity 0.25s ease',
   }

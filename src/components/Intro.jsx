@@ -23,10 +23,10 @@ function CountUp({ to, delay = 0, duration = 850 }) {
 function Stat({ label, value, delay }) {
   return (
     <div style={{ textAlign: 'center' }}>
-      <div className="font-display" style={{ fontSize: 'clamp(32px, 6vw, 48px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1 }}>
+      <div className="font-display" style={{ fontSize: 'clamp(32px, 6vw, 48px)', fontWeight: 700, color: '#fff', lineHeight: 1 }}>
         <CountUp to={value} delay={delay} />
       </div>
-      <div className="font-mono" style={{ fontSize: 10, color: 'var(--text-dim)', letterSpacing: '0.15em', marginTop: 8, textTransform: 'uppercase' }}>
+      <div className="font-mono" style={{ fontSize: 10, color: '#777', letterSpacing: '0.15em', marginTop: 8, textTransform: 'uppercase' }}>
         {label}
       </div>
     </div>
@@ -60,7 +60,7 @@ export default function Intro({ onDone }) {
       onClick={finish}
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'var(--bg-deep)',
+        background: '#030303',
         cursor: 'pointer',
         opacity: fading ? 0 : 1,
         transition: 'opacity 0.5s ease',
@@ -73,7 +73,7 @@ export default function Intro({ onDone }) {
           position: 'absolute', top: '50%', left: '50%',
           transform: 'translate(-50%, -50%)',
           width: 900, height: 900, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(var(--accent-rgb), 0.18) 0%, rgba(var(--accent-rgb), 0.06) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(37,99,235,0.18) 0%, rgba(37,99,235,0.06) 40%, transparent 70%)',
         }} />
       </div>
 
@@ -84,7 +84,7 @@ export default function Intro({ onDone }) {
         transition: 'opacity 0.6s ease, transform 0.6s ease',
       }}>
         <span className="font-mono" style={{
-          fontSize: 11, color: 'var(--accent)', letterSpacing: '0.25em',
+          fontSize: 11, color: '#2563eb', letterSpacing: '0.25em',
           textTransform: 'uppercase',
         }}>
           Portfolio Snapshot
@@ -102,10 +102,10 @@ export default function Intro({ onDone }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
           <span style={{
             width: 6, height: 6, borderRadius: '50%',
-            background: 'var(--ok)', boxShadow: '0 0 8px rgba(74,222,128,0.8)',
+            background: '#4ade80', boxShadow: '0 0 8px rgba(74,222,128,0.8)',
             animation: 'pulse 2s ease-in-out infinite',
           }} />
-          <span className="font-mono" style={{ fontSize: 12, color: 'var(--text-body)' }}>
+          <span className="font-mono" style={{ fontSize: 12, color: '#b8b8b8' }}>
             {data.hero.status}
           </span>
         </div>

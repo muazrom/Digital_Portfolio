@@ -17,10 +17,10 @@ export default function FieldNotes({ id, num, icon }) {
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: 'var(--accent)' }} /><h2 className="section-title">Field Notes</h2></div>
+          <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Field Notes</h2></div>
           {all.length > PREVIEW_COUNT && (
             <a href="#/writeups" style={{
-              fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--accent-text)', textDecoration: 'none',
+              fontFamily: 'JetBrains Mono', fontSize: 11, color: '#93b4ff', textDecoration: 'none',
             }}>
               All {all.length} →
             </a>
@@ -34,29 +34,29 @@ export default function FieldNotes({ id, num, icon }) {
           {recent.map(w => (
             <a key={w.slug} href={`#/writeups/${w.slug}`} style={{
               display: 'block', textDecoration: 'none',
-              background: 'var(--surface-sunken)', border: '1px solid var(--border-subtle)', borderRadius: 10,
+              background: '#0f0f0f', border: '1px solid #232323', borderRadius: 10,
               padding: '16px 18px', transition: 'border-color 0.2s',
             }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb), 0.5)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-subtle)' }}>
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.5)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#232323' }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 5 }}>
-                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: 'var(--text-dim)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#666', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
                   <Icon name="calendar" size={11} />{formatDate(w.date)}
                 </span>
                 {w.source?.platform && (
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: 'var(--text-faintest)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#4a4a4a', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
                     <Icon name="flask" size={11} />{w.source.platform}
                   </span>
                 )}
               </div>
               <h3 style={{
                 fontFamily: 'Space Grotesk, sans-serif', fontSize: 15.5, fontWeight: 600,
-                color: 'var(--text-strong)', marginBottom: 5, lineHeight: 1.35,
+                color: '#eaeaea', marginBottom: 5, lineHeight: 1.35,
               }}>
                 {w.title}
               </h3>
               <p style={{
-                fontFamily: 'Inter, sans-serif', fontSize: 12.5, lineHeight: 1.6, color: 'var(--text-muted)',
+                fontFamily: 'Inter, sans-serif', fontSize: 12.5, lineHeight: 1.6, color: '#8a8a8a',
               }}>
                 {w.summary}
               </p>

@@ -3,17 +3,6 @@ import { useEffect, useRef } from 'react'
 const SPEED = 0.3
 const CONNECT_DIST = 170
 
-// Canvas paints with real colour strings — ctx.fillStyle does not resolve CSS
-// variables — so the theme tokens have to be read off the document and turned
-// into concrete rgba() here, then re-read whenever the theme flips.
-const readPalette = () => {
-  const s = getComputedStyle(document.documentElement)
-  const rgb = s.getPropertyValue('--accent-rgb').trim() || '37, 99, 235'
-  const dot = parseFloat(s.getPropertyValue('--particle-dot-alpha')) || 0.65
-  const line = parseFloat(s.getPropertyValue('--particle-line-alpha')) || 0.5
-  return { rgb, dot, line }
-}
-
 export default function ParticleBackground() {
   const canvasRef = useRef(null)
 
@@ -22,15 +11,6 @@ export default function ParticleBackground() {
     const ctx = canvas.getContext('2d')
     let raf
     let pts = []
-    let palette = readPalette()
-
-    // data-theme is swapped on <html> by the theme toggle; the particles are
-    // far too loud at dark-mode alpha once the page behind them turns white.
-    const themeObserver = new MutationObserver(() => { palette = readPalette() })
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    })
 
     const init = () => {
       const W = window.innerWidth
@@ -73,11 +53,11 @@ export default function ParticleBackground() {
           const dy = pts[i].y - pts[j].y
           const d = Math.sqrt(dx * dx + dy * dy)
           if (d < CONNECT_DIST) {
-            const alpha = (1 - d / CONNECT_DIST) * palette.line
+            const alpha = (1 - d / CONNECT_DIST) * 0.5
             ctx.beginPath()
             ctx.moveTo(pts[i].x, pts[i].y)
             ctx.lineTo(pts[j].x, pts[j].y)
-            ctx.strokeStyle = `rgba(${palette.rgb}, ${alpha.toFixed(3)})`
+            ctx.strokeStyle = `rgba(37,99,235,${alpha.toFixed(3)})`
             ctx.lineWidth = 0.8
             ctx.stroke()
           }
@@ -88,7 +68,7 @@ export default function ParticleBackground() {
       for (const p of pts) {
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${palette.rgb}, ${palette.dot})`
+        ctx.fillStyle = 'rgba(37,99,235,0.65)'
         ctx.fill()
       }
 
@@ -98,7 +78,6 @@ export default function ParticleBackground() {
     tick()
 
     return () => {
-      themeObserver.disconnect()
       clearTimeout(initTimer)
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', init)
