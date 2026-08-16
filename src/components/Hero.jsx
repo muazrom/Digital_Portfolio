@@ -10,7 +10,7 @@ const BRACKET_POS = [
 
 function TerminalButton({ href, children, primary, external }) {
   const [hover, setHover] = useState(false)
-  const bracketColor = hover ? 'rgba(96,165,250,1)' : 'rgba(37,99,235,0.35)'
+  const bracketColor = hover ? 'rgba(var(--accent-rgb), 1)' : 'rgba(var(--accent-rgb), 0.35)'
 
   return (
     <a
@@ -23,14 +23,14 @@ function TerminalButton({ href, children, primary, external }) {
       style={{
         letterSpacing: '0.1em',
         padding: '13px 26px',
-        color: primary ? '#fff' : (hover ? '#fff' : '#999'),
+        color: primary ? 'var(--text)' : (hover ? 'var(--text)' : 'var(--text-muted)'),
         background: primary
-          ? `linear-gradient(135deg, rgba(37,99,235,${hover ? 1 : 0.85}), rgba(37,99,235,${hover ? 0.85 : 0.6}))`
-          : (hover ? 'rgba(37,99,235,0.08)' : 'rgba(255,255,255,0.015)'),
-        border: `1px solid ${primary ? 'rgba(96,165,250,0.6)' : (hover ? 'rgba(37,99,235,0.5)' : 'rgba(255,255,255,0.1)')}`,
+          ? `linear-gradient(135deg, rgba(var(--accent-rgb), ${hover ? 1 : 0.85}), rgba(var(--accent-rgb), ${hover ? 0.85 : 0.6}))`
+          : (hover ? 'rgba(var(--accent-rgb), 0.08)' : 'rgba(var(--overlay-rgb), 0.015)'),
+        border: `1px solid ${primary ? 'rgba(var(--accent-rgb), 0.6)' : (hover ? 'rgba(var(--accent-rgb), 0.5)' : 'rgba(var(--overlay-rgb), 0.1)')}`,
         boxShadow: primary
-          ? `0 0 ${hover ? 32 : 20}px rgba(37,99,235,${hover ? 0.5 : 0.3})`
-          : (hover ? '0 0 16px rgba(37,99,235,0.15)' : 'none'),
+          ? `0 0 ${hover ? 32 : 20}px rgba(var(--accent-rgb), ${hover ? 0.5 : 0.3})`
+          : (hover ? '0 0 16px rgba(var(--accent-rgb), 0.15)' : 'none'),
         transition: 'color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s',
       }}
     >
@@ -113,7 +113,7 @@ export default function Hero() {
       {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.10) 35%, rgba(37,99,235,0.03) 60%, transparent 75%)' }} />
+          style={{ background: 'radial-gradient(circle, rgba(var(--accent-rgb), 0.22) 0%, rgba(var(--accent-rgb), 0.10) 35%, rgba(var(--accent-rgb), 0.03) 60%, transparent 75%)' }} />
       </div>
 
       <div className="relative z-10 text-center px-6 w-full max-w-3xl mx-auto" style={{ transform: 'translateY(-5vh)' }}>
@@ -121,21 +121,21 @@ export default function Hero() {
         {/* Label — parallax layer: mid */}
         <div ref={midRef} style={{ willChange: 'transform' }}>
           <div className="flex items-center gap-0 mb-10 fade-up fade-up-delay-1" style={{ width: '100%' }}>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(37,99,235,0.55))' }} />
+            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.55))' }} />
             <span style={{
               fontFamily: 'JetBrains Mono', fontSize: 11,
-              color: '#777', letterSpacing: '0.18em',
+              color: 'var(--text-dim)', letterSpacing: '0.18em',
               textTransform: 'uppercase',
               padding: '6px 18px',
-              border: '1px solid rgba(37,99,235,0.25)',
+              border: '1px solid rgba(var(--accent-rgb), 0.25)',
               borderRadius: 3,
-              background: '#0a0a0a',
-              boxShadow: '0 0 10px rgba(37,99,235,0.12)',
+              background: 'var(--bg)',
+              boxShadow: '0 0 10px rgba(var(--accent-rgb), 0.12)',
               flexShrink: 0,
             }}>
               Personal Digital Portfolio
             </span>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(37,99,235,0.55), transparent)' }} />
+            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(var(--accent-rgb), 0.55), transparent)' }} />
           </div>
 
           {/* Name — parallax layer: front (moves the most) */}
@@ -145,7 +145,7 @@ export default function Hero() {
                 fontSize: 'clamp(56px, 11vw, 112px)',
                 lineHeight: 1.05,
                 letterSpacing: '-0.04em',
-                background: 'linear-gradient(135deg, #ffffff 0%, #c0d0ff 40%, #4d7fff 100%)',
+                background: 'linear-gradient(135deg, var(--text) 0%, var(--accent-text) 40%, var(--accent-bright) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -156,18 +156,18 @@ export default function Hero() {
 
           {/* Divider dot */}
           <div className="flex items-center justify-center gap-4 mb-6 fade-up fade-up-delay-3">
-            <div style={{ height: 1, width: 48, background: '#2a2a2a' }} />
-            <span style={{ width: 4, height: 4, borderRadius: '50%', background: '#2563eb', boxShadow: '0 0 8px rgba(37,99,235,0.9)', display: 'inline-block' }} />
-            <div style={{ height: 1, width: 48, background: '#2a2a2a' }} />
+            <div style={{ height: 1, width: 48, background: 'var(--border)' }} />
+            <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 8px rgba(var(--accent-rgb), 0.9)', display: 'inline-block' }} />
+            <div style={{ height: 1, width: 48, background: 'var(--border)' }} />
           </div>
 
           {/* Title */}
           <p className="font-mono mb-8 fade-up fade-up-delay-3" style={{ fontSize: 15, letterSpacing: '0.02em' }}>
             {h.title.split(' · ').map((part, i, arr) => (
               <span key={i}>
-                <span style={{ color: '#e8e8e8', fontWeight: 600 }}>{part}</span>
+                <span style={{ color: 'var(--text-strong)', fontWeight: 600 }}>{part}</span>
                 {i < arr.length - 1 && (
-                  <span style={{ color: '#2563eb', margin: '0 10px', textShadow: '0 0 8px rgba(37,99,235,0.6)' }}>·</span>
+                  <span style={{ color: 'var(--accent)', margin: '0 10px', textShadow: '0 0 8px rgba(var(--accent-rgb), 0.6)' }}>·</span>
                 )}
               </span>
             ))}
@@ -175,7 +175,7 @@ export default function Hero() {
 
           {/* Bio */}
           <p className="leading-relaxed max-w-xl mx-auto mb-10 fade-up fade-up-delay-4"
-            style={{ fontSize: 18, color: '#b8b8b8' }}>
+            style={{ fontSize: 18, color: 'var(--text-body)' }}>
             {h.bio}
           </p>
 
@@ -193,18 +193,18 @@ export default function Hero() {
         <div ref={pillsRef} style={{ willChange: 'transform' }}>
           <div className="flex items-center justify-center flex-wrap gap-3 fade-up fade-up-delay-5" style={{ paddingBottom: 'clamp(3rem, 8vh, 5rem)' }}>
             {[
-              { label: 'STATUS', value: h.status, dot: '#4ade80' },
+              { label: 'STATUS', value: h.status, dot: 'var(--ok)' },
               { label: 'LOCATION', value: h.location, dot: null },
               { label: 'UNIVERSITY', value: h.university, dot: null },
             ].map((item, i) => (
               <div key={item.label}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
-                  background: 'linear-gradient(135deg, rgba(37,99,235,0.16), rgba(255,255,255,0.04))',
+                  background: 'linear-gradient(135deg, rgba(var(--accent-rgb), 0.16), rgba(var(--overlay-rgb), 0.04))',
                   backdropFilter: 'blur(16px) saturate(180%)',
                   WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-                  boxShadow: '0 8px 24px rgba(37,99,235,0.12), inset 0 1px 0 rgba(255,255,255,0.12)',
-                  border: '1px solid rgba(255,255,255,0.12)',
+                  boxShadow: '0 8px 24px rgba(var(--accent-rgb), 0.12), inset 0 1px 0 rgba(var(--overlay-rgb), 0.12)',
+                  border: '1px solid rgba(var(--overlay-rgb), 0.12)',
                   borderRadius: 999,
                   padding: '8px 18px',
                   cursor: 'default',
@@ -220,10 +220,10 @@ export default function Hero() {
                     animation: 'pulse 2s ease-in-out infinite', flexShrink: 0,
                   }} />
                 )}
-                <span className="font-mono" style={{ fontSize: 9, color: '#888', letterSpacing: '0.12em', marginRight: 4 }}>
+                <span className="font-mono" style={{ fontSize: 9, color: 'var(--text-muted)', letterSpacing: '0.12em', marginRight: 4 }}>
                   {item.label}
                 </span>
-                <span className="font-mono" style={{ fontSize: 12, color: '#e0e0e0' }}>
+                <span className="font-mono" style={{ fontSize: 12, color: 'var(--text-strong)' }}>
                   {item.value}
                 </span>
               </div>
@@ -236,8 +236,8 @@ export default function Hero() {
       {/* Scroll hint — desktop only */}
       <div className="hidden md:flex absolute flex-col items-center gap-2 fade-up fade-up-delay-5 pointer-events-none"
         style={{ bottom: 'clamp(1rem, 3vh, 2rem)', left: '50%', transform: 'translateX(-50%)' }}>
-        <span className="font-mono" style={{ color: '#555', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
-        <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, #2563eb, transparent)' }} />
+        <span className="font-mono" style={{ color: 'var(--text-faint)', letterSpacing: '0.2em', fontSize: 9 }}>SCROLL</span>
+        <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
       </div>
 
       {/* Corner markers */}
@@ -247,7 +247,7 @@ export default function Hero() {
       ].map((pos, i) => (
         <div key={i} style={{
           position: 'absolute', width: 10, height: 10,
-          borderColor: 'rgba(37,99,235,0.25)', borderStyle: 'solid',
+          borderColor: 'rgba(var(--accent-rgb), 0.25)', borderStyle: 'solid',
           borderWidth: i === 0 ? '1px 0 0 1px' : i === 1 ? '1px 1px 0 0' : i === 2 ? '0 0 1px 1px' : '0 1px 1px 0',
           ...pos,
         }} />

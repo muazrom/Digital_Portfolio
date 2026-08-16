@@ -54,6 +54,10 @@ const paths = {
   mail: <><rect x="3" y="5.4" width="18" height="13.2" rx="1.6" /><path d="m3.6 6.6 8.4 6 8.4-6" /></>,
   external: <><path d="M14 4.6h5.4V10M19.4 4.6 11 13M17 14v4.4a1.4 1.4 0 0 1-1.4 1.4H5.6a1.4 1.4 0 0 1-1.4-1.4V8.4A1.4 1.4 0 0 1 5.6 7H10" /></>,
   spreadsheet: <><rect x="3.6" y="4.4" width="16.8" height="15.2" rx="1.6" /><path d="M3.6 9.6h16.8M9.4 9.6v10M3.6 14.6h16.8" /></>,
+
+  // — theme toggle
+  sun: <><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.4M12 19v2.4M21.4 12H19M5 12H2.6M18.6 5.4l-1.7 1.7M7.1 16.9l-1.7 1.7M18.6 18.6l-1.7-1.7M7.1 7.1 5.4 5.4" /></>,
+  moon: <><path d="M20 14.2A8.4 8.4 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z" /></>,
 }
 
 export const iconNames = Object.keys(paths)

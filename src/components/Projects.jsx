@@ -4,22 +4,22 @@ import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
 
 const statusColor = {
-  Live: '#4ade80', 'In Development': '#facc15', Ongoing: '#60a5fa', Completed: '#888',
+  Live: 'var(--ok)', 'In Development': 'var(--warn)', Ongoing: 'var(--accent-bright)', Completed: 'var(--text-muted)',
 }
 
-const csLabel = { fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.12em', color: '#2563eb', textTransform: 'uppercase' }
-const csSubLabel = { fontFamily: 'JetBrains Mono', fontSize: 9.5, letterSpacing: '0.08em', color: '#666', textTransform: 'uppercase', marginBottom: 6 }
+const csLabel = { fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.12em', color: 'var(--accent)', textTransform: 'uppercase' }
+const csSubLabel = { fontFamily: 'JetBrains Mono', fontSize: 9.5, letterSpacing: '0.08em', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: 6 }
 const csList = { margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 7 }
-const csListItem = { fontSize: 12, color: '#999', lineHeight: 1.55, paddingLeft: 14, position: 'relative' }
-const csBullet = { position: 'absolute', left: 0, color: '#2563eb' }
+const csListItem = { fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.55, paddingLeft: 14, position: 'relative' }
+const csBullet = { position: 'absolute', left: 0, color: 'var(--accent)' }
 
 // Case study body — accepts either the legacy plain-string format or the structured
 // { problem, idea, scope, constraints, workflow, concepts, finished } object. `twoColumn`
 // splits scope/constraints/workflow (left) from idea/concepts (right) on desktop; mobile
 // always stacks single-column since there isn't room for two.
 function CaseStudyContent({ caseStudy, twoColumn }) {
-  if (!caseStudy) return <p style={{ fontSize: 13, color: '#999', lineHeight: 1.7 }}>Case study coming soon.</p>
-  if (typeof caseStudy === 'string') return <p style={{ fontSize: 13, color: '#999', lineHeight: 1.7 }}>{caseStudy}</p>
+  if (!caseStudy) return <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.7 }}>Case study coming soon.</p>
+  if (typeof caseStudy === 'string') return <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.7 }}>{caseStudy}</p>
 
   const { problem, idea, scope, constraints, workflow, concepts, finished } = caseStudy
 
@@ -41,7 +41,7 @@ function CaseStudyContent({ caseStudy, twoColumn }) {
               <div style={{ flex: '1 1 160px' }}>
                 <p style={csSubLabel}>Constraints</p>
                 <ul style={csList}>
-                  {constraints.map((c, i) => <li key={i} style={csListItem}><span style={{ ...csBullet, color: '#666' }}>▹</span>{c}</li>)}
+                  {constraints.map((c, i) => <li key={i} style={csListItem}><span style={{ ...csBullet, color: 'var(--text-dim)' }}>▹</span>{c}</li>)}
                 </ul>
               </div>
             )}
@@ -56,13 +56,13 @@ function CaseStudyContent({ caseStudy, twoColumn }) {
               <div key={i} style={{ display: 'flex', gap: 10 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
                   <span style={{
-                    width: 16, height: 16, borderRadius: '50%', border: '1px solid rgba(37,99,235,0.5)',
+                    width: 16, height: 16, borderRadius: '50%', border: '1px solid rgba(var(--accent-rgb), 0.5)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'JetBrains Mono', fontSize: 8.5, color: '#2563eb', flexShrink: 0,
+                    fontFamily: 'JetBrains Mono', fontSize: 8.5, color: 'var(--accent)', flexShrink: 0,
                   }}>{i + 1}</span>
-                  {i < workflow.length - 1 && <span style={{ width: 1, flex: 1, background: '#242424', marginTop: 2, marginBottom: 2 }} />}
+                  {i < workflow.length - 1 && <span style={{ width: 1, flex: 1, background: 'var(--border-subtle)', marginTop: 2, marginBottom: 2 }} />}
                 </div>
-                <p style={{ fontSize: 12, color: '#999', lineHeight: 1.55, paddingBottom: 14 }}>{step}</p>
+                <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.55, paddingBottom: 14 }}>{step}</p>
               </div>
             ))}
           </div>
@@ -76,7 +76,7 @@ function CaseStudyContent({ caseStudy, twoColumn }) {
       {idea && (
         <div>
           <p style={csLabel}>The Idea</p>
-          <p style={{ fontSize: 12.5, color: '#bbb', lineHeight: 1.75, marginTop: 10 }}>{idea}</p>
+          <p style={{ fontSize: 12.5, color: 'var(--text-body)', lineHeight: 1.75, marginTop: 10 }}>{idea}</p>
         </div>
       )}
       {concepts && (
@@ -85,8 +85,8 @@ function CaseStudyContent({ caseStudy, twoColumn }) {
           <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 14 }}>
             {concepts.map((c, i) => (
               <div key={i}>
-                <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#93b4ff', marginBottom: 4 }}>{c.name}</p>
-                <p style={{ fontSize: 12, color: '#999', lineHeight: 1.65 }}>{c.description}</p>
+                <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--accent-text)', marginBottom: 4 }}>{c.name}</p>
+                <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.65 }}>{c.description}</p>
               </div>
             ))}
           </div>
@@ -98,15 +98,15 @@ function CaseStudyContent({ caseStudy, twoColumn }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       {finished && (
-        <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10.5, color: '#666' }}>
-          <span style={{ color: '#4ade80' }}>●</span>&nbsp; {finished}
+        <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10.5, color: 'var(--text-dim)' }}>
+          <span style={{ color: 'var(--ok)' }}>●</span>&nbsp; {finished}
         </p>
       )}
       {problem && (
         <blockquote style={{
-          margin: 0, borderLeft: '2px solid #2563eb', paddingLeft: 16,
+          margin: 0, borderLeft: '2px solid var(--accent)', paddingLeft: 16,
           fontFamily: 'Space Grotesk, sans-serif', fontSize: 14.5, fontStyle: 'italic',
-          color: '#ddd', lineHeight: 1.55,
+          color: 'var(--text-strong)', lineHeight: 1.55,
         }}>
           {problem}
         </blockquote>
@@ -193,7 +193,7 @@ export default function Projects({ id, num, icon }) {
         <div className="max-w-5xl mx-auto px-6 mb-10">
           <p className="section-number mb-2">// {num}</p>
           <div className="flex items-end justify-between">
-            <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Projects</h2></div>
+            <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: 'var(--accent)' }} /><h2 className="section-title">Projects</h2></div>
             <span className="font-mono text-xs text-muted">{String(total).padStart(2, '0')} total</span>
           </div>
           <p className="font-mono text-xs text-muted mt-3">
@@ -203,8 +203,8 @@ export default function Projects({ id, num, icon }) {
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {projects.map((proj) => (
             <div key={proj.id} style={{
-              background: 'linear-gradient(160deg, #161616 0%, #111 100%)',
-              border: '1px solid #1a1a1a', borderRadius: 12, padding: 18,
+              background: 'linear-gradient(160deg, var(--surface) 0%, var(--surface) 100%)',
+              border: '1px solid var(--surface-raised)', borderRadius: 12, padding: 18,
               display: 'flex', flexDirection: 'column', gap: 10,
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -212,20 +212,20 @@ export default function Projects({ id, num, icon }) {
                 <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
               </div>
               <div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 6, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
-                <p style={{ fontSize: 12.5, color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 6, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
+                <p style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.6 }}>{proj.description}</p>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                 {proj.stack.map(tech => (
-                  <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#777', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
+                  <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(var(--accent-rgb), 0.07)', border: '1px solid rgba(var(--accent-rgb), 0.15)', color: 'var(--text-dim)', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
                 ))}
               </div>
-              <div style={{ display: 'flex', gap: 16, alignItems: 'center', paddingTop: 10, marginTop: 'auto', borderTop: '1px solid #1e1e1e' }}>
-                <button onClick={() => setModalProj(proj)} style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+              <div style={{ display: 'flex', gap: 16, alignItems: 'center', paddingTop: 10, marginTop: 'auto', borderTop: '1px solid var(--border-subtle)' }}>
+                <button onClick={() => setModalProj(proj)} style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--accent)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   ⤢ Case study
                 </button>
-                {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>Screenshot ↗</a>}
-                {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#888' }}>Live demo ↗</a>}
+                {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--text-muted)' }}>Screenshot ↗</a>}
+                {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--text-muted)' }}>Live demo ↗</a>}
               </div>
             </div>
           ))}
@@ -233,23 +233,23 @@ export default function Projects({ id, num, icon }) {
 
         {modalProj && (
           <div onClick={() => setModalProj(null)} style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)',
+            position: 'fixed', inset: 0, background: 'var(--scrim)', backdropFilter: 'blur(4px)',
             zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
           }}>
             <div onClick={e => e.stopPropagation()} style={{
               width: '100%', maxWidth: 480, maxHeight: '85vh', overflowY: 'auto',
-              background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 14,
+              background: 'var(--surface)', border: '1px solid rgba(var(--accent-rgb), 0.5)', borderRadius: 14,
               padding: 20, display: 'flex', flexDirection: 'column', gap: 14,
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: '#fff' }}>{modalProj.name}</h3>
-                <button onClick={() => setModalProj(null)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 18, cursor: 'pointer', lineHeight: 1 }}>✕</button>
+                <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{modalProj.name}</h3>
+                <button onClick={() => setModalProj(null)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer', lineHeight: 1 }}>✕</button>
               </div>
               <CaseStudyContent caseStudy={modalProj.caseStudy} />
-              <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
-                {modalProj.image && <a href={modalProj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#888' }}>Screenshot ↗</a>}
-                {modalProj.github && <a href={modalProj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#888' }}>GitHub ↗</a>}
-                {modalProj.live && <a href={modalProj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb' }}>Live demo ↗</a>}
+              <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid var(--border-subtle)' }}>
+                {modalProj.image && <a href={modalProj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--text-muted)' }}>Screenshot ↗</a>}
+                {modalProj.github && <a href={modalProj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--text-muted)' }}>GitHub ↗</a>}
+                {modalProj.live && <a href={modalProj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--accent)' }}>Live demo ↗</a>}
               </div>
             </div>
           </div>
@@ -265,7 +265,7 @@ export default function Projects({ id, num, icon }) {
       <div className="max-w-5xl mx-auto px-6 mb-14">
         <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Projects</h2></div>
+          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: 'var(--accent)' }} /><h2 className="section-title">Projects</h2></div>
           <span className="font-mono text-xs text-muted">
             {String(safeIndex + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
           </span>
@@ -306,31 +306,31 @@ export default function Projects({ id, num, icon }) {
                 {/* FRONT */}
                 <div style={{
                   position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-                  background: isActive ? 'linear-gradient(160deg, #161616 0%, #111 100%)' : '#0f0f0f',
-                  border: `1px solid ${isActive ? 'rgba(37,99,235,0.5)' : '#1a1a1a'}`,
+                  background: isActive ? 'linear-gradient(160deg, var(--surface) 0%, var(--surface) 100%)' : 'var(--surface-sunken)',
+                  border: `1px solid ${isActive ? 'rgba(var(--accent-rgb), 0.5)' : 'var(--surface-raised)'}`,
                   borderRadius: 12, padding: Math.round(CARD_W * 0.08),
                   display: 'flex', flexDirection: 'column', gap: Math.round(CARD_W * 0.04),
-                  boxShadow: isActive ? '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)' : '0 8px 24px rgba(0,0,0,0.5)',
+                  boxShadow: isActive ? '0 0 40px rgba(var(--accent-rgb), 0.15), 0 24px 64px var(--shadow-3)' : '0 8px 24px var(--shadow-2)',
                   overflow: 'hidden',
                 }}>
-                  {isActive && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #2563eb, transparent)' }} />}
+                  {isActive && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }} />}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor[proj.status], boxShadow: `0 0 6px ${statusColor[proj.status]}`, flexShrink: 0 }} />
                     <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: statusColor[proj.status] }}>{proj.status}</span>
                   </div>
                   <div style={{ flex: 1, overflow: 'hidden' }}>
-                    <h3 style={{ fontSize: Math.round(CARD_W * 0.078), fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
-                    <p style={{ fontSize: Math.round(CARD_W * 0.044), color: '#999', lineHeight: 1.6 }}>{proj.description}</p>
+                    <h3 style={{ fontSize: Math.round(CARD_W * 0.078), fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 8, fontFamily: 'Space Grotesk, sans-serif' }}>{proj.name}</h3>
+                    <p style={{ fontSize: Math.round(CARD_W * 0.044), color: 'var(--text-muted)', lineHeight: 1.6 }}>{proj.description}</p>
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
                     {proj.stack.map(tech => (
-                      <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)', color: '#777', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
+                      <span key={tech} style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(var(--accent-rgb), 0.07)', border: '1px solid rgba(var(--accent-rgb), 0.15)', color: 'var(--text-dim)', padding: '2px 6px', borderRadius: 3 }}>{tech}</span>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
-                    <button onClick={e => { e.stopPropagation(); if (!isActive) setIndex(i); setOpen(true) }} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#60a5fa'} onMouseLeave={e => e.currentTarget.style.color = '#2563eb'}>⤢ Case study</button>
-                    {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Screenshot ↗</a>}
-                    {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#555' }} onMouseEnter={e => e.currentTarget.style.color = '#2563eb'} onMouseLeave={e => e.currentTarget.style.color = '#555'}>Live demo ↗</a>}
+                  <div style={{ display: 'flex', gap: 16, paddingTop: 10, borderTop: '1px solid var(--border-subtle)' }}>
+                    <button onClick={e => { e.stopPropagation(); if (!isActive) setIndex(i); setOpen(true) }} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--accent)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-bright)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--accent)'}>⤢ Case study</button>
+                    {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--text-faint)' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-faint)'}>Screenshot ↗</a>}
+                    {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--text-faint)' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-faint)'}>Live demo ↗</a>}
                   </div>
                 </div>
 
@@ -338,22 +338,22 @@ export default function Projects({ id, num, icon }) {
                 <div style={{
                   position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
                   transform: 'rotateY(180deg)',
-                  background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 12,
+                  background: 'var(--surface)', border: '1px solid rgba(var(--accent-rgb), 0.5)', borderRadius: 12,
                   display: 'flex', justifyContent: 'center', overflow: 'hidden',
-                  boxShadow: '0 0 40px rgba(37,99,235,0.15), 0 24px 64px rgba(0,0,0,0.7)',
+                  boxShadow: '0 0 40px rgba(var(--accent-rgb), 0.15), 0 24px 64px var(--shadow-3)',
                 }}>
                   <div style={{ width: '100%', maxWidth: typeof proj.caseStudy === 'object' ? 'none' : 640, display: 'flex', flexDirection: 'column', padding: '36px 40px', overflowY: 'auto' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 22, fontWeight: 700, color: '#fff' }}>Case Study</h4>
-                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#555', cursor: 'pointer', fontSize: 16, lineHeight: 1, padding: 0 }}>✕</button>
+                      <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 22, fontWeight: 700, color: 'var(--text)' }}>Case Study</h4>
+                      <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--text-faint)', cursor: 'pointer', fontSize: 16, lineHeight: 1, padding: 0 }}>✕</button>
                     </div>
                     <div style={{ flex: 1 }}>
                       <CaseStudyContent caseStudy={proj.caseStudy} twoColumn />
                     </div>
-                    <div style={{ display: 'flex', gap: 16, paddingTop: 16, marginTop: 16, borderTop: '1px solid #1e1e1e' }}>
-                      {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#555' }}>Screenshot ↗</a>}
-                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#555' }}>GitHub ↗</a>}
-                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb' }}>Live demo ↗</a>}
+                    <div style={{ display: 'flex', gap: 16, paddingTop: 16, marginTop: 16, borderTop: '1px solid var(--border-subtle)' }}>
+                      {proj.image && <a href={proj.image} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--text-faint)' }}>Screenshot ↗</a>}
+                      {proj.github && <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--text-faint)' }}>GitHub ↗</a>}
+                      {proj.live && <a href={proj.live} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--accent)' }}>Live demo ↗</a>}
                     </div>
                   </div>
                 </div>
@@ -367,7 +367,7 @@ export default function Projects({ id, num, icon }) {
         <button onClick={prev} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">←</button>
         <div className="flex items-center gap-2">
           {projects.map((_, i) => (
-            <button key={i} onClick={() => { setOpen(false); setIndex(i) }} style={{ height: 5, width: safeIndex === i ? 20 : 5, borderRadius: safeIndex === i ? 3 : '50%', background: safeIndex === i ? '#2563eb' : '#2a2a2a', transition: 'all 0.25s ease' }} />
+            <button key={i} onClick={() => { setOpen(false); setIndex(i) }} style={{ height: 5, width: safeIndex === i ? 20 : 5, borderRadius: safeIndex === i ? 3 : '50%', background: safeIndex === i ? 'var(--accent)' : 'var(--border)', transition: 'all 0.25s ease' }} />
           ))}
         </div>
         <button onClick={next} className="w-8 h-8 border border-border flex items-center justify-center text-muted hover:border-accent hover:text-accent transition-all duration-200 font-mono text-xs">→</button>

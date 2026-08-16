@@ -78,20 +78,20 @@ function ChannelCard({ ch }) {
       <div className="flex items-center justify-between mb-5">
         <div style={{
           width: 34, height: 34, borderRadius: 8,
-          background: 'rgba(37,99,235,0.08)', border: '1px solid rgba(37,99,235,0.25)',
+          background: 'rgba(var(--accent-rgb), 0.08)', border: '1px solid rgba(var(--accent-rgb), 0.25)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#2563eb',
+          color: 'var(--accent)',
         }}>
           <ChannelIcon width={16} height={16} />
         </div>
         <ArrowIcon width={14} height={14} className="text-muted group-hover:text-accent" style={{ transition: 'color 0.2s' }} />
       </div>
 
-      <p className="font-mono mb-1.5" style={{ fontSize: 10, color: '#2563eb', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+      <p className="font-mono mb-1.5" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
         {ch.label}
       </p>
       <div className="flex items-center justify-between gap-2">
-        <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, color: '#e0e0e0', fontWeight: 500, wordBreak: 'break-all' }}>
+        <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 14, color: 'var(--text-strong)', fontWeight: 500, wordBreak: 'break-all' }}>
           {ch.value}
         </p>
         {ch.copyable && (
@@ -100,9 +100,9 @@ function ChannelCard({ ch }) {
             title="Copy email"
             style={{
               flexShrink: 0, width: 26, height: 26, borderRadius: 6,
-              border: '1px solid #333', background: '#181818',
+              border: '1px solid var(--border-strong)', background: 'var(--surface-raised)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: copied ? '#4ade80' : '#888', cursor: 'pointer',
+              color: copied ? 'var(--ok)' : 'var(--text-muted)', cursor: 'pointer',
               transition: 'color 0.2s, border-color 0.2s',
             }}
           >
@@ -119,9 +119,9 @@ export default function Contact({ id, num, icon }) {
     <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
-        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Contact</h2></div>
+        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: 'var(--accent)' }} /><h2 className="section-title">Contact</h2></div>
         <p className="font-mono text-xs text-muted mb-10">
-          Graduating early 2028 · looking toward <span className="text-white">network &amp; security engineering</span> · open to conversations now
+          Graduating early 2028 · looking toward <span className="text-strong">network &amp; security engineering</span> · open to conversations now
         </p>
         <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', maxWidth: 720 }}>
           {channels.map(ch => <ChannelCard key={ch.key} ch={ch} />)}

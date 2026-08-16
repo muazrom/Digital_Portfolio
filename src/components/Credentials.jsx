@@ -8,10 +8,10 @@ import { useWindowSize } from '../hooks/useWindowSize'
 // untangle. 'certification' is reserved for exam-based certs; when CCNA lands it
 // renders in accent blue, visibly distinct from a course badge.
 const kindMeta = {
-  certification: { label: 'CERT',   icon: 'award',  main: '#2563eb', light: '#93b4ff' },
-  path:          { label: 'PATH',   icon: 'book',   main: '#22c55e', light: '#86efac' },
-  course:        { label: 'COURSE', icon: 'notes',  main: '#22c55e', light: '#86efac' },
-  module:        { label: 'MODULE', icon: 'chip',   main: '#9ca3af', light: '#d4d8df' },
+  certification: { label: 'CERT',   icon: 'award',  main: 'var(--accent)', light: 'var(--accent-text)' },
+  path:          { label: 'PATH',   icon: 'book',   main: 'var(--ok-strong)', light: 'var(--ok-soft)' },
+  course:        { label: 'COURSE', icon: 'notes',  main: 'var(--ok-strong)', light: 'var(--ok-soft)' },
+  module:        { label: 'MODULE', icon: 'chip',   main: 'var(--neutral)', light: 'var(--neutral-soft)' },
 }
 const metaOf = (kind) => kindMeta[kind] || kindMeta.course
 
@@ -33,14 +33,14 @@ function Rail({ units }) {
     <div
       aria-hidden="true"
       style={{
-        width: 12, flexShrink: 0, background: '#141414',
-        border: '1px solid #2e2e2e', borderRadius: 3,
+        width: 12, flexShrink: 0, background: 'var(--surface)',
+        border: '1px solid var(--border)', borderRadius: 3,
         display: 'flex', flexDirection: 'column',
         justifyContent: 'space-around', alignItems: 'center', padding: '8px 0',
       }}
     >
       {Array.from({ length: Math.max(4, units * 2) }, (_, i) => (
-        <span key={i} style={{ width: 3, height: 3, borderRadius: '50%', background: '#333' }} />
+        <span key={i} style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--border-strong)' }} />
       ))}
     </div>
   )
@@ -60,8 +60,8 @@ function Unit({ item, onOpen, compact }) {
       aria-haspopup="dialog"
       style={{
         width: '100%', textAlign: 'left', cursor: 'pointer',
-        background: hover ? '#181818' : '#141414',
-        border: `1px solid ${hover ? 'rgba(37,99,235,0.45)' : '#2e2e2e'}`,
+        background: hover ? 'var(--surface-raised)' : 'var(--surface)',
+        border: `1px solid ${hover ? 'rgba(var(--accent-rgb), 0.45)' : 'var(--border)'}`,
         borderRadius: 3, padding: compact ? '11px 12px' : '12px 14px',
         display: 'flex', alignItems: 'center', gap: compact ? 10 : 14,
         flexWrap: compact ? 'wrap' : 'nowrap',
@@ -73,7 +73,7 @@ function Unit({ item, onOpen, compact }) {
         title={verifiable ? 'Independently verifiable' : 'No public verification link'}
         style={{
           width: 5, height: 5, borderRadius: '50%', flexShrink: 0,
-          background: verifiable ? '#22c55e' : '#4a4a4a',
+          background: verifiable ? 'var(--ok-strong)' : 'var(--text-faintest)',
           boxShadow: verifiable ? '0 0 6px rgba(34,197,94,0.7)' : 'none',
         }}
       />
@@ -89,7 +89,7 @@ function Unit({ item, onOpen, compact }) {
 
       <span style={{
         fontFamily: 'Space Grotesk, sans-serif', fontSize: compact ? 13 : 14,
-        fontWeight: 500, color: '#eaeaea',
+        fontWeight: 500, color: 'var(--text-strong)',
         flex: compact ? '1 1 100%' : 1, minWidth: 0,
         order: compact ? 3 : 0,
       }}>
@@ -97,14 +97,14 @@ function Unit({ item, onOpen, compact }) {
       </span>
 
       <span style={{
-        fontSize: 9.5, color: '#666', flexShrink: 0,
+        fontSize: 9.5, color: 'var(--text-dim)', flexShrink: 0,
         order: compact ? 4 : 0,
       }}>
         {item.issuer} · {formatDate(item.date)}
       </span>
 
       <span aria-hidden="true" style={{
-        fontSize: 10, color: hover ? '#93b4ff' : '#3f3f3f', flexShrink: 0,
+        fontSize: 10, color: hover ? 'var(--accent-text)' : 'var(--border-strong)', flexShrink: 0,
         transition: 'color 0.18s',
       }}>
         ⤢
@@ -132,26 +132,26 @@ function DetailPanel({ item, onClose }) {
       aria-modal="true"
       aria-label={item.name}
       style={{
-        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)',
+        position: 'fixed', inset: 0, background: 'var(--scrim)', backdropFilter: 'blur(4px)',
         zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
       }}
     >
       <div onClick={e => e.stopPropagation()} style={{
         width: '100%', maxWidth: 420, maxHeight: '85vh', overflowY: 'auto',
-        background: '#111', border: '1px solid rgba(37,99,235,0.5)', borderRadius: 14,
+        background: 'var(--surface)', border: '1px solid rgba(var(--accent-rgb), 0.5)', borderRadius: 14,
         padding: 20, display: 'flex', flexDirection: 'column', gap: 14,
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
           <div style={{ minWidth: 0 }}>
-            <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: '#fff', lineHeight: 1.25 }}>
+            <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: 'var(--text)', lineHeight: 1.25 }}>
               {item.name}
             </h3>
-            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#888', marginTop: 5 }}>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--text-muted)', marginTop: 5 }}>
               {item.issuer}
             </p>
           </div>
           <button onClick={onClose} aria-label="Close"
-            style={{ background: 'none', border: 'none', color: '#888', fontSize: 18, cursor: 'pointer', lineHeight: 1, flexShrink: 0 }}>
+            style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer', lineHeight: 1, flexShrink: 0 }}>
             ✕
           </button>
         </div>
@@ -166,7 +166,7 @@ function DetailPanel({ item, onClose }) {
           </span>
           <span style={{
             fontFamily: 'JetBrains Mono', fontSize: 8.5, letterSpacing: '0.1em',
-            color: '#777', border: '1px solid #2a2a2a', padding: '3px 9px', borderRadius: 99,
+            color: 'var(--text-dim)', border: '1px solid var(--border)', padding: '3px 9px', borderRadius: 99,
             display: 'inline-flex', alignItems: 'center', gap: 5,
           }}>
             <Icon name="calendar" size={11} /> {formatDate(item.date)}
@@ -176,7 +176,7 @@ function DetailPanel({ item, onClose }) {
         {/* Badge art varies wildly in size and aspect (192px square through to a
             1354x959 landscape certificate), so contain it and never upscale. */}
         <div style={{
-          background: '#0a0a0a', border: '1px solid #1e1e1e', borderRadius: 8,
+          background: 'var(--bg)', border: '1px solid var(--border-subtle)', borderRadius: 8,
           minHeight: 140, padding: 16,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
@@ -191,20 +191,20 @@ function DetailPanel({ item, onClose }) {
               }}
             />
           ) : (
-            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: '#555' }}>
+            <p style={{ fontFamily: 'JetBrains Mono', fontSize: 9.5, color: 'var(--text-faint)' }}>
               No image available
             </p>
           )}
         </div>
 
-        <div style={{ paddingTop: 10, borderTop: '1px solid #1e1e1e' }}>
+        <div style={{ paddingTop: 10, borderTop: '1px solid var(--border-subtle)' }}>
           {item.credential ? (
             <a href={item.credential} target="_blank" rel="noopener noreferrer"
-              style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: '#2563eb', textDecoration: 'none' }}>
+              style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: 'var(--accent)', textDecoration: 'none' }}>
               Verify credential ↗
             </a>
           ) : (
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555' }}>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'var(--text-faint)' }}>
               No public verification link
             </span>
           )}
@@ -233,7 +233,7 @@ export default function Credentials({ id, num, icon }) {
     <section id={id} className="py-24 relative">
       <div className="max-w-5xl mx-auto px-6">
         <p className="section-number mb-2">// {num}</p>
-        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Learning &amp; Credentials</h2></div>
+        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: 'var(--accent)' }} /><h2 className="section-title">Learning &amp; Credentials</h2></div>
         <p className="font-mono text-xs text-muted mb-12">
           RACK_01 // {sorted.length} unit{sorted.length === 1 ? '' : 's'} · select a unit for details
         </p>
