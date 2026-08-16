@@ -94,7 +94,7 @@ export default function Intro({ onDone }) {
           display: 'flex', gap: 'clamp(28px, 8vw, 64px)',
           marginTop: 28, marginBottom: 28,
         }}>
-          <Stat label="Learning Modules" value={moduleCount} delay={200} />
+          <Stat label="Modules" value={moduleCount} delay={200} />
           <Stat label="Write-ups" value={writeupCount} delay={350} />
           <Stat label="Projects" value={projectCount} delay={500} />
         </div>
