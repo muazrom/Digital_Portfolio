@@ -1,14 +1,14 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 13
+export const CONTENT_VERSION = 14
 
 export const defaultData = {
   hero: {
     name: "Mu'az Arief",
     // NOTE: Hero.jsx splits this on the literal ' · ' — keep exactly three segments.
     title: 'CS Student · Networking & Security · University Malaya',
-    bio: "I'm heading for network security — the infrastructure layer everything else quietly sits on, and the one nobody looks at until it breaks. Right now that means desktop support at iFast, studying toward CCNA, and publishing what I learn as I go.",
-    status: 'Desktop Support Intern · iFast',
+    bio: "I'm heading for network security — the infrastructure layer everything else quietly sits on, and the one nobody looks at until it breaks. Right now that means IT infrastructure support at iFast, studying toward CCNA, and publishing what I learn as I go.",
+    status: 'IT Infrastructure Intern · iFast',
     location: 'Kajang, Selangor',
     university: 'University Malaya',
   },
@@ -38,9 +38,8 @@ export const defaultData = {
       id: 'S01', label: 'Networking', icon: 'network', desc: 'Packets & paths',
       tools: [
         { name: 'Subnetting & IP Addressing', icon: 'network', level: 2 }, { name: 'DNS & DHCP', icon: 'globe', level: 2 },
-        { name: 'NAT', icon: 'router', level: 2 }, { name: 'ARP & Broadcast Domains', icon: 'switch', level: 2 },
-        { name: 'TCP/IP', icon: 'network', level: 1 }, { name: 'Routing & Switching', icon: 'router', level: 1 },
-      ],
+        { name: 'ARP & Broadcast Domains', icon: 'switch', level: 2 },
+        { name: 'TCP/IP', icon: 'network', level: 1 }, ],
     },
     {
       id: 'S02', label: 'Labs & Diagnostics', icon: 'flask', desc: 'Proving it works',
@@ -53,14 +52,12 @@ export const defaultData = {
       id: 'S03', label: 'Systems & Infrastructure', icon: 'server', desc: 'The layer underneath',
       tools: [
         { name: 'Windows / Active Directory', icon: 'windows', level: 2 }, { name: 'Endpoint Support', icon: 'monitor', level: 2 },
-        { name: 'Hardware Troubleshooting', icon: 'chip', level: 2 }, { name: 'Linux', icon: 'terminal', level: 1 },
-      ],
+        { name: 'Hardware Troubleshooting', icon: 'chip', level: 2 }, ],
     },
     {
       id: 'S04', label: 'Security', icon: 'shield', desc: 'Security bench',
       tools: [
-        { name: 'Secure Auth', icon: 'key', level: 2 }, { name: 'Encryption Fundamentals', icon: 'lock', level: 2 },
-        { name: 'SSH vs Telnet', icon: 'shield', level: 2 }, { name: 'Network Segmentation', icon: 'switch', level: 1 },
+        { name: 'SSH vs Telnet', icon: 'shield', level: 2 }, { name: 'AAA', icon: 'key', level: 1 }, { name: 'Network Segmentation', icon: 'switch', level: 1 },
         { name: 'Threat Fundamentals', icon: 'shield', level: 1 },
       ],
     },
@@ -68,7 +65,6 @@ export const defaultData = {
       id: 'S05', label: 'Development & Automation', icon: 'code', desc: 'Making it repeatable',
       tools: [
         { name: 'Python', icon: 'code', level: 2 }, { name: 'JavaScript', icon: 'code', level: 2 },
-        { name: 'React', icon: 'code', level: 2 }, { name: 'API Integration', icon: 'external', level: 2 },
         { name: 'Bash', icon: 'terminal', level: 1 },
       ],
     },
@@ -76,7 +72,7 @@ export const defaultData = {
       id: 'S06', label: 'Tools & Platforms', icon: 'wrench', desc: 'Workshop gear',
       tools: [
         { name: 'Git / GitHub', icon: 'gitBranch', level: 2 }, { name: 'Cloudflare', icon: 'cloud', level: 1 },
-        { name: 'Figma', icon: 'palette', level: 2 }, { name: 'Excel', icon: 'spreadsheet', level: 2 },
+        { name: 'Excel', icon: 'spreadsheet', level: 2 },
       ],
     },
   ],
@@ -355,7 +351,7 @@ export const defaultData = {
   experience: [
     {
       id: 'e8', track: 'technical',
-      role: 'Desktop Support Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
+      role: 'IT Infrastructure Intern', org: 'iFast Global Hub AI Sdn Bhd', period: 'Jul 2026 – Present',
       // Deliberately generic. No client names, no topology detail, no ticket
       // specifics, no internal tooling names.
       summary: 'First-line IT support for internal users: endpoint provisioning and troubleshooting, hardware and software faults, account and access issues, and escalation to the infrastructure teams who own the network and server layer. My first sustained look at how a production environment is actually held together.',

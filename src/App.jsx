@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { DataProvider } from './context/DataContext'
 import Intro from './components/Intro'
 import ParticleBackground from './components/ParticleBackground'
-import CustomCursor from './components/CustomCursor'
 import { isAuthenticated, setAuthenticated } from './admin/auth'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
@@ -58,7 +57,6 @@ export default function App() {
   if (view === 'admin') {
     return (
       <DataProvider>
-        <CustomCursor />
         {authed
           ? <AdminDashboard onLogout={handleLogout} />
           : <AdminLogin onSuccess={() => setAuthed(true)} />}
@@ -70,7 +68,6 @@ export default function App() {
 
   return (
     <DataProvider>
-      <CustomCursor />
       {booting && <Intro onDone={() => setBooting(false)} />}
       <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
         <ParticleBackground />

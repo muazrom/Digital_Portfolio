@@ -15,12 +15,9 @@ export const kindMeta = {
 }
 const metaOf = (kind) => kindMeta[kind] || kindMeta.course
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const formatDate = (iso) => {
-  if (!iso) return ''
-  const [y, m] = String(iso).split('-')
-  return m ? `${MONTHS[Number(m) - 1]} ${y}` : y
-}
+// Year only. The dates are stored as ISO 'YYYY-MM', but the month adds nothing
+// to a credential — what matters is which year it was earned.
+const formatDate = (iso) => (iso ? String(iso).split('-')[0] : '')
 
 // A public verification URL is the only thing that makes a credential checkable
 // by someone else, so the LED reports that fact rather than decorating the row.

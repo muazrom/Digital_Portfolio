@@ -29,6 +29,115 @@ export function loadBody(slug) {
 }
 
 export const writeups = [
+  // ── Network Support and Security ──
+  {
+    slug: 'site-to-site-vs-remote-access-vpn',
+    title: 'Site-to-site vs remote access VPN, and the overlap that breaks both',
+    date: '2026-08-19',
+    updated: null,
+    summary:
+      'Working out what each VPN type actually connects — network-to-network vs host-to-network — then the routing-table mechanics underneath, including why two LANs using the same subnet can never be tunnelled together.',
+    tags: ['vpn', 'ipsec', 'routing', 'subnetting'],
+    source: { platform: 'Cisco NetAcad', name: 'Network Support and Security — Concepts', url: null },
+    minutes: 5,
+    status: 'published',
+    relatedCredential: null,
+  },
+  {
+    slug: 'verify-address-with-a-subnet-calculator',
+    title: 'Checking a subnet calculator against the host that produced the address',
+    date: '2026-08-19',
+    updated: null,
+    summary:
+      "Reading a device's own IPv4 address and mask, then deriving the network address, host range and broadcast with a calculator — and confirming the device actually falls inside the range the tool returned.",
+    tags: ['subnetting', 'ipv4', 'cidr', 'addressing'],
+    source: { platform: 'Cisco NetAcad', name: 'Network Support and Security — Lab', url: null },
+    minutes: 4,
+    status: 'published',
+    relatedCredential: null,
+  },
+  {
+    slug: 'use-cdp-to-map-a-network',
+    title: 'Mapping a branch office with CDP, which was switched off on purpose',
+    date: '2026-08-18',
+    updated: null,
+    summary:
+      'Chaining SSH sessions hop by hop to map a remote branch and find a switch with no IP address — using a Layer 2 discovery protocol that had been left disabled, correctly, on a router facing the ISP.',
+    tags: ['cdp', 'ssh', 'discovery', 'layer-2'],
+    source: { platform: 'Cisco NetAcad', name: 'Network Support and Security — Packet Tracer', url: null },
+    minutes: 6,
+    status: 'published',
+    relatedCredential: null,
+  },
+  {
+    slug: 'connect-a-network-based-on-a-network-diagram',
+    title: "When the guide's own prose and its port table disagreed",
+    date: '2026-08-18',
+    updated: null,
+    summary:
+      'Cabling a physical topology from a logical diagram — Layer 1 only, no protocols — and deciding which source to trust when the instructions and the reference table named different ports for the same link.',
+    tags: ['cabling', 'layer-1', 'topology', 'documentation'],
+    source: { platform: 'Cisco NetAcad', name: 'Network Support and Security — Packet Tracer', url: null },
+    minutes: 5,
+    status: 'published',
+    relatedCredential: null,
+  },
+
+  // ── Networking Devices and Initial Configuration ──
+  {
+    slug: 'troubleshoot-default-gateway-issues',
+    title: 'Four broken devices, four unrelated causes, one variable at a time',
+    date: '2026-08-09',
+    updated: null,
+    summary:
+      'A two-LAN network that looked broadly broken turned out to be four independent mistakes — a wrong IP, a missing gateway, a missing address and a wrong mask — separated only by testing one thing at a time.',
+    tags: ['troubleshooting', 'default-gateway', 'subnet-mask', 'routing'],
+    source: { platform: 'Cisco NetAcad', name: 'Networking Devices and Initial Configuration — Packet Tracer', url: null },
+    minutes: 5,
+    status: 'published',
+    relatedCredential: 'cr-cisco-netdevices',
+  },
+  {
+    slug: 'configure-ssh',
+    title: "RSA keys won't generate until the router has a domain name",
+    date: '2026-08-09',
+    updated: null,
+    summary:
+      'Replacing Telnet with SSH on a switch — encrypting stored passwords, building a local user database, and finding out that key generation silently depends on a prerequisite nobody mentions first.',
+    tags: ['ssh', 'rsa', 'hardening', 'telnet'],
+    source: { platform: 'Cisco NetAcad', name: 'Networking Devices and Initial Configuration — Packet Tracer', url: null },
+    minutes: 4,
+    status: 'published',
+    relatedCredential: 'cr-cisco-netdevices',
+  },
+  {
+    slug: 'configure-initial-router-settings',
+    title: 'The console port is the one way in that needs no network at all',
+    date: '2026-08-09',
+    updated: null,
+    summary:
+      "Hardening a router over a rollover console cable rather than the simulator's CLI shortcut, and confirming that nothing survives a reload until it is copied out of RAM into NVRAM.",
+    tags: ['console', 'ios', 'hardening', 'nvram'],
+    source: { platform: 'Cisco NetAcad', name: 'Networking Devices and Initial Configuration — Packet Tracer', url: null },
+    minutes: 5,
+    status: 'published',
+    relatedCredential: 'cr-cisco-netdevices',
+  },
+  {
+    slug: 'implement-basic-connectivity',
+    title: "A switch doesn't need an IP to switch — so what is VLAN 1 for?",
+    date: '2026-08-09',
+    updated: null,
+    summary:
+      'Addressing two switches and two PCs on one flat subnet, and separating what a switch needs to forward frames from what it needs to be managed remotely.',
+    tags: ['svi', 'vlan', 'addressing', 'ping'],
+    source: { platform: 'Cisco NetAcad', name: 'Networking Devices and Initial Configuration — Packet Tracer', url: null },
+    minutes: 4,
+    status: 'published',
+    relatedCredential: 'cr-cisco-netdevices',
+  },
+
+  // ── Networking Basics ──
   {
     slug: 'use-telnet-and-ssh',
     title: 'Telnet and SSH, and why one of them is the standard',

@@ -113,6 +113,79 @@ function ChannelCard({ ch }) {
   )
 }
 
+// There is no backend to POST to, and there won't be — the whole site is static.
+// So "Message me" composes the mail locally and hands it to whatever mail client
+// the visitor already uses. Nothing is transmitted from this page, and the button
+// is a plain link, so it degrades to a normal mailto if JS never runs.
+function Compose() {
+  const [subject, setSubject] = useState('')
+  const [body, setBody] = useState('')
+
+  const href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  const ready = subject.trim().length > 0 || body.trim().length > 0
+
+  const field = {
+    width: '100%', background: '#0b0b0b', border: '1px solid #232323', borderRadius: 5,
+    padding: '9px 11px', color: '#dcdcdc', fontFamily: 'JetBrains Mono, monospace',
+    fontSize: 11.5, outline: 'none', resize: 'vertical',
+  }
+
+  return (
+    <div style={{
+      background: '#0c0c0c', border: '1px solid #1e1e1e', borderRadius: 6,
+      padding: '15px 16px', display: 'flex', flexDirection: 'column', gap: 10,
+    }}>
+      <div className="font-mono" style={{ fontSize: 9, color: '#5c5c5c', letterSpacing: '0.14em' }}>
+        MESSAGE ME
+      </div>
+
+      <label className="font-mono" style={{ fontSize: 9, color: '#5c5c5c', letterSpacing: '0.1em' }}>
+        SUBJECT
+        <input
+          type="text"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          placeholder="What's this about?"
+          style={{ ...field, marginTop: 5 }}
+        />
+      </label>
+
+      <label className="font-mono" style={{ fontSize: 9, color: '#5c5c5c', letterSpacing: '0.1em' }}>
+        MESSAGE
+        <textarea
+          rows={5}
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+          placeholder="Type your message here."
+          style={{ ...field, marginTop: 5, lineHeight: 1.6 }}
+        />
+      </label>
+
+      <a
+        href={href}
+        className="font-mono"
+        style={{
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+          padding: '10px 16px', borderRadius: 5, textDecoration: 'none',
+          fontSize: 10.5, letterSpacing: '0.1em',
+          color: ready ? '#fff' : '#8d8d8d',
+          background: ready ? 'linear-gradient(135deg, rgba(37,99,235,0.9), rgba(37,99,235,0.65))' : 'rgba(255,255,255,0.02)',
+          border: `1px solid ${ready ? 'rgba(96,165,250,0.55)' : '#242424'}`,
+          transition: 'background 0.2s, color 0.2s, border-color 0.2s',
+        }}
+      >
+        <MailIcon width={13} height={13} />
+        OPEN IN MAIL APP
+      </a>
+
+      <p className="font-mono" style={{ fontSize: 9, color: '#4f4f4f', lineHeight: 1.6 }}>
+        This opens your own mail client with the message ready to send. Nothing is
+        submitted to this site — it has no server to submit to.
+      </p>
+    </div>
+  )
+}
+
 export default function Contact() {
   return (
     <section className="relative">
@@ -120,8 +193,11 @@ export default function Contact() {
         <p className="font-mono text-xs text-muted mb-10">
           Graduating early 2028 · looking toward <span className="text-white">network &amp; security engineering</span> · open to conversations now
         </p>
-        <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', maxWidth: 720 }}>
-          {channels.map(ch => <ChannelCard key={ch.key} ch={ch} />)}
+        <div className="console-contact-grid">
+          <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', alignContent: 'start' }}>
+            {channels.map(ch => <ChannelCard key={ch.key} ch={ch} />)}
+          </div>
+          <Compose />
         </div>
       </div>
     </section>

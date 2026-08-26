@@ -83,42 +83,6 @@ export function StackBar({ segments, height = 6 }) {
   )
 }
 
-/**
- * Bar sparkline over a series of counts. Scales to its container via viewBox so
- * the month labels underneath can share the same grid and stay aligned with
- * their bars at any width.
- */
-export function Sparkline({ series, height = 34, color = SEV.link }) {
-  const max = Math.max(1, ...series)
-  const n = series.length || 1
-  const slot = 10
-  const gap = 2.4
-  return (
-    <svg
-      viewBox={`0 0 ${n * slot} ${height}`}
-      preserveAspectRatio="none"
-      height={height}
-      aria-hidden="true"
-      style={{ display: 'block', width: '100%' }}
-    >
-      {series.map((v, i) => {
-        const h = Math.max(1.2, (v / max) * height)
-        return (
-          <rect
-            key={i}
-            x={i * slot + gap / 2}
-            y={height - h}
-            width={slot - gap}
-            height={h}
-            fill={v === 0 ? '#242424' : color}
-            opacity={v === 0 ? 1 : 0.55 + 0.45 * (v / max)}
-          />
-        )
-      })}
-    </svg>
-  )
-}
-
 /** Mono key/value line for device-facts style tables. */
 export function Field({ label, value, color = '#c4c4c4' }) {
   return (

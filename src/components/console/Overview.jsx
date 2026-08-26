@@ -2,16 +2,14 @@ import { useData } from '../../context/DataContext'
 import { kindMeta } from '../Credentials'
 import {
   credentialStats, skillStats, projectStats, experienceStats,
-  writeupActivity, KIND_ORDER,
+  writeupActivity, writeupsByCourse, KIND_ORDER,
 } from '../../lib/metrics'
-import { Metric, StackBar, Sparkline, Chip, SeverityDot, SEV } from './widgets'
+import { Metric, StackBar, Meter, Chip, SeverityDot, SEV } from './widgets'
 import TerminalButton from './TerminalButton'
 
 // The console's home screen: who this is, then the four numbers that summarise
 // the site, then two readouts breaking those numbers down. Every figure here is
 // a count of something a visitor can scroll down and verify — see lib/metrics.js.
-
-const MONTH_INITIALS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 
 function Card({ title, children, right }) {
   return (
@@ -37,7 +35,8 @@ export default function Overview() {
   const skills = skillStats(data.skills)
   const projects = projectStats(data.projects)
   const exp = experienceStats(data.experience)
-  const notes = writeupActivity(12)
+  const notes = writeupActivity()
+  const courses = writeupsByCourse()
 
   // The name carries the visual weight the old Hero monolith did, at a size that
   // still leaves room for a dashboard underneath it.
@@ -46,8 +45,6 @@ export default function Overview() {
   const segments = KIND_ORDER
     .filter(k => creds.byKind[k] > 0)
     .map(k => ({ value: creds.byKind[k], color: kindMeta[k].main, label: kindMeta[k].label }))
-
-  const sparkLabels = notes.labels.map((k) => MONTH_INITIALS[Number(k.slice(5)) - 1])
 
   return (
     <section id="overview" className="console-panel console-overview">
@@ -137,19 +134,25 @@ export default function Overview() {
             </p>
           </Card>
 
-          <Card title="WRITE-UP ACTIVITY" right="last 12 months">
-            <Sparkline series={notes.series} height={34} />
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: `repeat(${sparkLabels.length}, 1fr)`,
-              marginTop: -4,
-            }}>
-              {sparkLabels.map((l, i) => (
-                <span key={i} className="font-mono" style={{ fontSize: 8, color: '#3f3f3f', textAlign: 'center' }}>{l}</span>
+          <Card title="WRITE-UPS BY COURSE" right={`${notes.total} published`}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+              {courses.map((c) => (
+                <div key={c.course} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
+                    <span className="font-mono" style={{
+                      fontSize: 9.5, color: '#9a9a9a', flex: 1, minWidth: 0,
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                    }}>
+                      {c.course}
+                    </span>
+                    <span className="font-mono" style={{ fontSize: 9.5, color: '#dcdcdc' }}>{c.count}</span>
+                  </div>
+                  <Meter value={c.share} height={3} />
+                </div>
               ))}
             </div>
             <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', lineHeight: 1.6 }}>
-              {notes.total} published · latest {notes.latest || '—'}
+              Latest {notes.latest || '—'}.
             </p>
           </Card>
         </div>

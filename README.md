@@ -30,20 +30,20 @@ The shell is `src/components/console/`:
 | `NavRail` | Section tree with count badges; scroll-spy + the `#admin` keystroke. Becomes a bottom tab bar under 900px |
 | `Panel` | The one chassis every section renders inside — owns the anchor id, number, icon, title, and meta readout |
 | `Overview` | Panel 01 — identity, KPI row, credential and write-up breakdowns |
-| `widgets.jsx` | `Metric`, `Meter`, `StackBar`, `Sparkline`, `SeverityDot`, `Chip`, `Field` |
+| `widgets.jsx` | `Metric`, `Meter`, `StackBar`, `SeverityDot`, `Chip`, `Field` |
 
 Panel order, numbering, anchors, labels, and icons all come from `src/sections.js` — the single place to change them.
 
 | # | Panel | Design |
 |---|---|---|
-| 01 | **Overview** | Identity block, five KPIs, credentials-by-kind bar, write-up sparkline |
+| 01 | **Overview** | Identity block, five KPIs, credentials-by-kind bar, write-ups by course |
 | 02 | **About** | Terminal / blueprint panel with shell commands and sysinfo table |
 | 03 | **Skills** | Pegboard — tools hang from pegs with proficiency dots |
 | 04 | **Credentials** | Rack units — lanyard seal, category tag, verification LED |
 | 05 | **Field Notes** | Event log — dated rows, newest first, source and read time |
 | 06 | **Experience** | Two timeline rails, technical and leadership |
 | 07 | **Projects** | Inventory table with status chips; case study expands inline |
-| 08 | **Contact** | Transmission panel — frequency channels + compose console |
+| 08 | **Contact** | Channel cards + a compose panel that hands off to the visitor's mail client |
 
 ## Admin Panel
 

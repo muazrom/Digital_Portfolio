@@ -53,29 +53,32 @@ export function experienceStats(experience = []) {
   return { total: experience.length, technical, leadership: experience.length - technical }
 }
 
-/**
- * Write-ups per month over the trailing `months` window, oldest first.
- * Returns { series, labels, total, latest } — `latest` is the most recent ISO date.
- */
-export function writeupActivity(months = 12) {
+/** Totals for the write-up archive. */
+export function writeupActivity() {
   const all = publishedWriteups()
-  const now = new Date()
-  const keys = []
-  for (let i = months - 1; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
-    keys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`)
-  }
-  const counts = Object.fromEntries(keys.map(k => [k, 0]))
-  for (const w of all) {
-    const k = String(w.date).slice(0, 7)
-    if (k in counts) counts[k] += 1
-  }
   return {
-    series: keys.map(k => counts[k]),
-    labels: keys,
     total: all.length,
+    // publishedWriteups() sorts newest first.
     latest: all.length ? all[0].date : null,
   }
+}
+
+/**
+ * Write-ups grouped by the course they came from, largest first.
+ * `source.name` carries a module suffix ('… — Packet Tracer', '… — Concepts')
+ * that splits one course across several rows, so the course name is everything
+ * before the em dash.
+ */
+export function writeupsByCourse() {
+  const counts = new Map()
+  for (const w of publishedWriteups()) {
+    const course = String(w.source?.name || 'Self-directed').split(' — ')[0]
+    counts.set(course, (counts.get(course) || 0) + 1)
+  }
+  const total = publishedWriteups().length || 1
+  return [...counts.entries()]
+    .map(([course, count]) => ({ course, count, share: count / total }))
+    .sort((a, b) => b.count - a.count)
 }
 
 /** Per-section counts for the nav rail badges. Keys are section ids. */
