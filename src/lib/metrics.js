@@ -99,8 +99,12 @@ export function stage1Readiness(data) {
 
   return [
     { label: 'CCNA', detail: 'studying', done: false },
+    // The one piece of cloud that belongs before graduation: foundational, and
+    // it sits under the SAA-C03 that Stage 2 actually gates on. 'planned'
+    // rather than 'studying' — CCNA is the one being studied for right now.
+    { label: 'AWS Cloud Practitioner', code: 'CLF-C02', detail: 'planned', done: false },
     { label: 'Write-ups published', held: notes, target: 50, done: notes >= 50 },
-    { label: 'Completion badges', held: badges, target: 8, done: badges >= 8 },
+    { label: 'Completion badges', held: badges, target: 15, done: badges >= 15 },
     { label: 'Infrastructure internship', detail: 'in progress', done: false },
     { label: 'B.CS degree (UM)', detail: STAGE1_TARGET, done: false },
   ]

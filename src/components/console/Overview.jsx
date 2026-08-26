@@ -173,6 +173,13 @@ export default function Overview() {
                       {r.target ? `${r.held}/${r.target}` : r.detail}
                     </span>
                   </div>
+                  {/* Exam code on its own line — appended to the label it
+                      overruns the column and truncates mid-word. */}
+                  {r.code && (
+                    <span className="font-mono" style={{ fontSize: 8.5, color: '#4f4f4f', paddingLeft: 13 }}>
+                      {r.code}
+                    </span>
+                  )}
                   {r.target && <Meter value={r.held / r.target} height={3} />}
                 </div>
               ))}
