@@ -1,6 +1,6 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 14
+export const CONTENT_VERSION = 15
 
 export const defaultData = {
   hero: {
@@ -208,35 +208,39 @@ export const defaultData = {
     },
     {
       id: 'p4', name: 'Digital Portfolio', status: 'Live',
-      description: 'This site — a personal dashboard-style portfolio themed as a digital workshop. Built with React + Vite, deployed on Cloudflare Pages with a custom domain.',
+      description: 'This site — a portfolio presented as a network operations console: status bar, device tree, panel grid. React + Vite, deployed on Cloudflare Pages with a custom domain.',
       stack: ['React', 'Vite', 'Tailwind CSS', 'Cloudflare'],
       github: 'https://github.com/muazrom/Digital_Portfolio', live: 'https://muazrom.my',
       image: null,
       caseStudy: {
         problem:
-          "A portfolio you dread editing goes stale. If updating a project means rewriting JSX, the updates stop happening — and a stale portfolio is worse than none.",
+          "A portfolio you dread editing goes stale, and a stale portfolio is worse than none. A portfolio for infrastructure work that looks like every other portfolio is arguing against itself before anyone reads a word.",
 
         idea:
-          "This site. It began as a static single-page resume and was rebuilt into a React + Vite app where every section — hero, about, skills, projects, badges, experience, including the case study you're reading — renders from a single content module. An in-browser admin editor layers edits on top via localStorage, and a version gate makes sure content shipped in code always beats a stale local snapshot. Content is data, so an update is an edit, not a rewrite.",
+          "This site, rebuilt twice. The first rebuild solved the editing problem: it went from a static single-page resume to a React + Vite app where every section renders from one content module, with an in-browser admin editor layering edits on top via localStorage and a version gate making sure content shipped in code always beats a stale local snapshot. The second rebuild solved the second problem. Each section had been borrowing infrastructure vocabulary on its own — a rack for credentials, a terminal for about, a pegboard for skills — but seven separate metaphors read as seven props rather than one instrument. So the frame became the metaphor: a status bar, a device tree, and a grid of panels, with every section rendering inside the same chassis. The constraint that makes it work is that a console displays telemetry and a portfolio has none, so nothing is invented — every number on the page is a count of something you can scroll down and verify.",
 
         scope: [
-          "Fully data-driven sections rendered from one content file through a shared context",
-          "A structured case-study format (this layout) alongside simple text ones",
+          "Fully data-driven panels rendered from one content file through a shared context",
+          "Panel order, numbering, anchors, labels and icons all defined in one section list",
+          "Every displayed figure derived from real content by a single metrics module",
           "In-browser admin editing persisted to localStorage, merged field-by-field over defaults",
+          "Write-ups authored in git, deliberately outside the editable content layer",
           "Static deploy: push to main, Cloudflare Pages builds and ships to muazrom.my",
         ],
 
         constraints: [
+          "No fabricated telemetry — no traffic graphs, alert feeds, or event streams, because none of it would be true",
           "Admin edits live in that browser's localStorage — device-local by design, not a CMS",
           "Bumping the content version discards stored snapshots; a deliberate trade so shipped content always wins",
-          "Fully static — no backend, so contact is direct channels rather than a form",
+          "Fully static — no backend, so the contact panel composes a mailto rather than posting to a server",
         ],
 
         workflow: [
-          "All content lives in one defaults module with a version number",
+          "All editable content lives in one defaults module with a version number",
           "On load, the data context checks the stored version — a stale snapshot is discarded instead of shadowing new content",
           "Surviving stored edits merge over defaults field-by-field, so new fields added in code aren't erased by old snapshots",
-          "Every section renders purely from context — no component owns any copy",
+          "The section list gives each panel its identity; the metrics module turns the same content into the counts the panel headers and nav badges report",
+          "Every panel renders purely from context — no component owns any copy",
           "A push to main triggers the Cloudflare Pages build and deploy",
         ],
 
@@ -244,12 +248,22 @@ export const defaultData = {
           {
             name: "One content module, presentational components",
             description:
-              "Every word on this site lives in a single data file; components only decide how things look. Updating a project, adding a badge, or rewriting the bio never touches a component. The rejected alternative was the original version of this site — copy hardcoded in markup, where every content change was a code change and therefore didn't happen.",
+              "Every word on this site lives in a single data file; components only decide how things look. Updating a project, adding a credential, or rewriting the bio never touches a component. The rejected alternative was the original version of this site — copy hardcoded in markup, where every content change was a code change and therefore didn't happen.",
           },
           {
             name: "Field-level merge behind a version gate",
             description:
               "Stored edits merge over defaults per-field, so a snapshot saved before a new field existed can't erase it. The version gate handles the harder case: when shipped content genuinely changes, the bump invalidates old snapshots entirely. That gate exists because of a real bug — stale localStorage silently shadowing content updates shipped in code.",
+          },
+          {
+            name: "One chassis, one source of panel identity",
+            description:
+              "A single Panel component owns each section's anchor, number, icon, title and header readout, and reads all of them from one section list. Before this, every section repeated its own header block, which meant the navigation and the section itself could disagree about what a section was called. Making that structurally impossible was worth more than the markup it saved. The rejected alternative was a full single-viewport console, which would have meant rewriting every section to fit a fixed height and would have left the long-form write-ups with nowhere to live.",
+          },
+          {
+            name: "Derived metrics, not decorative ones",
+            description:
+              "The KPI row, the nav badges, and each panel's header readout all call the same functions over the same content, so a header can't claim a count the rows beneath it don't back up. This is the rule the whole console design had to survive: a real SIEM shows live traffic and this site has none, and a fake \"threats blocked\" counter would undercut the honesty the rest of the content depends on — the skills board already refuses to list anything that wouldn't survive two minutes of interview questioning. Liveness comes only from things that genuinely are live: the visitor's clock and how long the session has been open.",
           },
           {
             name: "localStorage admin instead of a CMS",
@@ -259,7 +273,7 @@ export const defaultData = {
         ],
 
         finished:
-          "Live at muazrom.my — continuously updated; this structured case-study format was the latest addition.",
+          "Live at muazrom.my — continuously updated; the console rebuild was the latest change.",
       },
     },
   ],
