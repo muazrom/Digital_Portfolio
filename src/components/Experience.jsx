@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
 
-export default function Experience({ id, num, icon }) {
+export default function Experience() {
   const { data } = useData()
   const experiences = data.experience
   // Split by track so one technical internship isn't buried among six event roles.
@@ -84,10 +84,8 @@ export default function Experience({ id, num, icon }) {
   // Mobile: the rotating ring is fiddly on touch — show all roles as a scannable list.
   if (isMobile) {
     return (
-      <section id={id} className="py-24 relative">
+      <section className="relative">
         <div className="max-w-5xl mx-auto px-6 mb-8">
-          <p className="section-number mb-2">// {num}</p>
-          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Experience &amp; Activities</h2></div>
         </div>
         <div className="max-w-5xl mx-auto px-6">
           <GroupLabel title="Technical" icon="chip" note={`${technical.length} roles`} />
@@ -108,11 +106,9 @@ export default function Experience({ id, num, icon }) {
   }
 
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
       <div className="max-w-5xl mx-auto px-6 mb-8">
-        <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Experience &amp; Activities</h2></div>
           <span className="font-mono text-xs text-muted">{String(safeActive + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
         </div>
       </div>

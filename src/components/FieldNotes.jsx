@@ -4,7 +4,7 @@ import { formatDate } from '../pages/WriteupsPage'
 
 const PREVIEW_COUNT = 3
 
-export default function FieldNotes({ id, num, icon }) {
+export default function FieldNotes() {
   const all = publishedWriteups()
   // Nothing published yet? Render nothing. An empty section with a promise in it
   // is weaker than no section at all.
@@ -13,11 +13,9 @@ export default function FieldNotes({ id, num, icon }) {
   const recent = all.slice(0, PREVIEW_COUNT)
 
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Field Notes</h2></div>
           {all.length > PREVIEW_COUNT && (
             <a href="#/writeups" style={{
               fontFamily: 'JetBrains Mono', fontSize: 11, color: '#93b4ff', textDecoration: 'none',

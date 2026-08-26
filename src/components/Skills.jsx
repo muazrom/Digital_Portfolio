@@ -48,14 +48,12 @@ function ToolTag({ name, level, icon }) {
   )
 }
 
-export default function Skills({ id, num, icon }) {
+export default function Skills() {
   const { data } = useData()
 
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// {num}</p>
-        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Skills &amp; Tools</h2></div>
         <p className="font-mono text-xs text-muted mb-14">WORKSHOP_INVENTORY // tools available at each station</p>
 
         <div style={{

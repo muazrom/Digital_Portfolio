@@ -1,4 +1,3 @@
-import Icon from './Icon'
 import { useData } from '../context/DataContext'
 
 // Blueprint corner bracket
@@ -39,16 +38,14 @@ function TerminalLine({ cmd, output, delay = 0 }) {
   )
 }
 
-export default function About({ id, num, icon }) {
+export default function About() {
   const { data } = useData()
   const a = data.about
 
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
 
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// {num}</p>
-        <div className="flex items-center gap-2.5 mb-10"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">About Me</h2></div>
 
         {/* Blueprint terminal window */}
         <div style={{ position: 'relative', padding: 2 }}>

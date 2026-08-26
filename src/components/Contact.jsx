@@ -1,4 +1,3 @@
-import Icon from './Icon'
 import { useState } from 'react'
 
 // Base64-encoded so the address never appears as a plaintext string in the built bundle (avoids naive scrapers).
@@ -114,12 +113,10 @@ function ChannelCard({ ch }) {
   )
 }
 
-export default function Contact({ id, num, icon }) {
+export default function Contact() {
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// {num}</p>
-        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Contact</h2></div>
         <p className="font-mono text-xs text-muted mb-10">
           Graduating early 2028 · looking toward <span className="text-white">network &amp; security engineering</span> · open to conversations now
         </p>

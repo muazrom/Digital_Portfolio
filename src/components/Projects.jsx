@@ -1,4 +1,3 @@
-import Icon from './Icon'
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
@@ -129,7 +128,7 @@ function getCardStyle(rel, offset, farOffset) {
   return { transform: `translateX(${sign * farOffset * 1.3}px) rotateY(${sign * -55}deg) scale(0.5)`, opacity: 0, zIndex: 1, pointerEvents: 'none' }
 }
 
-export default function Projects({ id, num, icon }) {
+export default function Projects() {
   const { data } = useData()
   const projects = data.projects
   const [index, setIndex] = useState(0)
@@ -189,11 +188,9 @@ export default function Projects({ id, num, icon }) {
 
   if (isMobile) {
     return (
-      <section id={id} className="py-24 relative">
+      <section className="relative">
         <div className="max-w-5xl mx-auto px-6 mb-10">
-          <p className="section-number mb-2">// {num}</p>
           <div className="flex items-end justify-between">
-            <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Projects</h2></div>
             <span className="font-mono text-xs text-muted">{String(total).padStart(2, '0')} total</span>
           </div>
           <p className="font-mono text-xs text-muted mt-3">
@@ -261,11 +258,9 @@ export default function Projects({ id, num, icon }) {
   const flipEase = 'cubic-bezier(0.4, 0, 0.2, 1)'
 
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
       <div className="max-w-5xl mx-auto px-6 mb-14">
-        <p className="section-number mb-2">// {num}</p>
         <div className="flex items-end justify-between">
-          <div className="flex items-center gap-2.5"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Projects</h2></div>
           <span className="font-mono text-xs text-muted">
             {String(safeIndex + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(total).padStart(2, '0')}
           </span>

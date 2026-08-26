@@ -6,28 +6,15 @@ import CustomCursor from './components/CustomCursor'
 import { isAuthenticated, setAuthenticated } from './admin/auth'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
-import Navbar from './components/Navbar'
+import ConsoleShell from './components/console/ConsoleShell'
+import Panel from './components/console/Panel'
 import Hero from './components/Hero'
 import Footer from './components/Footer'
-import SectionDivider from './components/SectionDivider'
 import WriteupsPage from './pages/WriteupsPage'
-import { sections, sectionNumber } from './sections'
-import { useScrollReveal } from './hooks/useScrollReveal'
+import { sections } from './sections'
 
-function Section({ index, label, icon, children }) {
-  const ref = useScrollReveal()
-  return (
-    <>
-      <SectionDivider index={index} label={label} icon={icon} />
-      <div ref={ref} className="reveal">
-        {children}
-      </div>
-    </>
-  )
-}
-
-// Routes live under '#/'. Anything else — '#about', '#certifications', '' — is the
-// one-pager, so native anchor scrolling keeps working untouched.
+// Routes live under '#/'. Anything else — '#about', '#credentials', '' — is the
+// console view, so native anchor scrolling keeps working untouched.
 function getRoute() {
   const hash = window.location.hash
   if (hash.startsWith('#admin')) return { view: 'admin' }
@@ -51,7 +38,7 @@ export default function App() {
         setAuthenticated(false)
         setAuthed(false)
       }
-      // Leaving the one-pager should land at the top of the new view, not wherever
+      // Leaving the console should land at the top of the new view, not wherever
       // the reader happened to be scrolled to.
       if (next.view === 'writeups' || next.view === 'writeup') window.scrollTo(0, 0)
       setRoute(next)
@@ -66,35 +53,41 @@ export default function App() {
     window.location.hash = ''
   }
 
+  if (view === 'admin') {
+    return (
+      <DataProvider>
+        <CustomCursor />
+        {authed
+          ? <AdminDashboard onLogout={handleLogout} />
+          : <AdminLogin onSuccess={() => setAuthed(true)} />}
+      </DataProvider>
+    )
+  }
+
+  const isArchive = view === 'writeups' || view === 'writeup'
+
   return (
     <DataProvider>
       <CustomCursor />
       {booting && <Intro onDone={() => setBooting(false)} />}
-      {view === 'admin' ? (
-        authed
-          ? <AdminDashboard onLogout={handleLogout} />
-          : <AdminLogin onSuccess={() => setAuthed(true)} />
-      ) : (
-        <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
-          <ParticleBackground />
-          <Navbar />
-          {view === 'writeups' || view === 'writeup' ? (
-            <main>
-              <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
-            </main>
+      <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
+        <ParticleBackground />
+        <ConsoleShell>
+          {isArchive ? (
+            <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
           ) : (
-            <main>
+            <>
               <Hero />
               {sections.map(({ id, label, icon, Component }, i) => (
-                <Section key={id} index={i + 2} label={label} icon={icon}>
-                  <Component id={id} num={sectionNumber(i)} icon={icon} />
-                </Section>
+                <Panel key={id} id={id} index={i + 2} label={label} icon={icon}>
+                  <Component />
+                </Panel>
               ))}
-            </main>
+            </>
           )}
           <Footer />
-        </div>
-      )}
+        </ConsoleShell>
+      </div>
     </DataProvider>
   )
 }

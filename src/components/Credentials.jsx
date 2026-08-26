@@ -216,7 +216,7 @@ function DetailPanel({ item, onClose }) {
 
 /* ─────────────────────────── section ─────────────────────────── */
 
-export default function Credentials({ id, num, icon }) {
+export default function Credentials() {
   const { data } = useData()
   const [open, setOpen] = useState(null)
   // Same hook Projects.jsx uses, rather than a second hand-rolled resize listener.
@@ -230,10 +230,8 @@ export default function Credentials({ id, num, icon }) {
   const sorted = [...items].sort((a, b) => String(b.date).localeCompare(String(a.date)))
 
   return (
-    <section id={id} className="py-24 relative">
+    <section className="relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="section-number mb-2">// {num}</p>
-        <div className="flex items-center gap-2.5 mb-2"><Icon name={icon} size={18} style={{ color: '#2563eb' }} /><h2 className="section-title">Learning &amp; Credentials</h2></div>
         <p className="font-mono text-xs text-muted mb-12">
           RACK_01 // {sorted.length} unit{sorted.length === 1 ? '' : 's'} · select a unit for details
         </p>
