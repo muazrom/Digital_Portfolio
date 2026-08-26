@@ -83,23 +83,33 @@ export function StackBar({ segments, height = 6 }) {
   )
 }
 
-/** Bar sparkline over a series of counts. Flat-zero series render as a baseline. */
-export function Sparkline({ series, width = 160, height = 30, color = SEV.link }) {
+/**
+ * Bar sparkline over a series of counts. Scales to its container via viewBox so
+ * the month labels underneath can share the same grid and stay aligned with
+ * their bars at any width.
+ */
+export function Sparkline({ series, height = 34, color = SEV.link }) {
   const max = Math.max(1, ...series)
-  const gap = 2
-  const barW = series.length ? (width - gap * (series.length - 1)) / series.length : 0
+  const n = series.length || 1
+  const slot = 10
+  const gap = 2.4
   return (
-    <svg width={width} height={height} aria-hidden="true" style={{ display: 'block', overflow: 'visible' }}>
+    <svg
+      viewBox={`0 0 ${n * slot} ${height}`}
+      preserveAspectRatio="none"
+      height={height}
+      aria-hidden="true"
+      style={{ display: 'block', width: '100%' }}
+    >
       {series.map((v, i) => {
-        const h = Math.max(1, (v / max) * height)
+        const h = Math.max(1.2, (v / max) * height)
         return (
           <rect
             key={i}
-            x={i * (barW + gap)}
+            x={i * slot + gap / 2}
             y={height - h}
-            width={Math.max(1, barW)}
+            width={slot - gap}
             height={h}
-            rx={1}
             fill={v === 0 ? '#242424' : color}
             opacity={v === 0 ? 1 : 0.55 + 0.45 * (v / max)}
           />

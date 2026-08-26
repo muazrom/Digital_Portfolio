@@ -649,3 +649,35 @@
   0%, 100% { opacity: 1; }
   50%      { opacity: 0.45; }
 }
+
+/* ── overview panel ── */
+.console-overview .console-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.console-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.console-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .console-kpi-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 12px;
+  }
+  .console-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -7,7 +7,7 @@ import { useWindowSize } from '../hooks/useWindowSize'
 // which mixed credential rigor with artifact type and needed a sort shim to
 // untangle. 'certification' is reserved for exam-based certs; when CCNA lands it
 // renders in accent blue, visibly distinct from a course badge.
-const kindMeta = {
+export const kindMeta = {
   certification: { label: 'CERT',   icon: 'award',  main: '#2563eb', light: '#93b4ff' },
   path:          { label: 'PATH',   icon: 'book',   main: '#22c55e', light: '#86efac' },
   course:        { label: 'COURSE', icon: 'notes',  main: '#22c55e', light: '#86efac' },

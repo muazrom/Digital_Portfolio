@@ -1,24 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useData } from '../context/DataContext'
-import { publishedWriteups } from '../content/writeups'
-
-function CountUp({ to, delay = 0, duration = 850 }) {
-  const [value, setValue] = useState(0)
-  useEffect(() => {
-    let raf
-    const start = setTimeout(() => {
-      const t0 = performance.now()
-      const tick = (now) => {
-        const progress = Math.min((now - t0) / duration, 1)
-        setValue(Math.round(progress * to))
-        if (progress < 1) raf = requestAnimationFrame(tick)
-      }
-      raf = requestAnimationFrame(tick)
-    }, delay)
-    return () => { clearTimeout(start); cancelAnimationFrame(raf) }
-  }, [to, delay, duration])
-  return <>{value}</>
-}
+import CountUp from './CountUp'
+import { writeupActivity } from '../lib/metrics'
 
 function Stat({ label, value, delay }) {
   return (
@@ -41,7 +24,7 @@ export default function Intro({ onDone }) {
   // The three counts a visitor can go and verify for themselves further down
   // the page: the Credentials rack, the Field Notes list, and Projects.
   const moduleCount = data.credentials.length
-  const writeupCount = publishedWriteups().length
+  const writeupCount = writeupActivity().total
   const projectCount = data.projects.length
 
   const finish = () => {

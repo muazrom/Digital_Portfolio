@@ -8,7 +8,7 @@ import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
 import ConsoleShell from './components/console/ConsoleShell'
 import Panel from './components/console/Panel'
-import Hero from './components/Hero'
+import Overview from './components/console/Overview'
 import Footer from './components/Footer'
 import WriteupsPage from './pages/WriteupsPage'
 import { sections } from './sections'
@@ -77,7 +77,7 @@ export default function App() {
             <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
           ) : (
             <>
-              <Hero />
+              <Overview />
               {sections.map(({ id, label, icon, Component }, i) => (
                 <Panel key={id} id={id} index={i + 2} label={label} icon={icon}>
                   <Component />
