@@ -65,9 +65,12 @@ function CredentialRow({ item, onUpdate, onRemove }) {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-        <Field label="IMAGE PATH" hint="optional">
+        {/* The badge image ships from content/credentials/, where Vite hashes
+            it into the build. Overriding it here only makes sense for a remote
+            URL — a bare filename won't resolve. */}
+        <Field label="IMAGE URL" hint="from content/credentials/">
           <input value={item.image || ''} onChange={e => onUpdate('image', e.target.value || null)}
-            placeholder="/badges/name.png" style={monoInput} />
+            placeholder="https://..." style={monoInput} />
         </Field>
         <Field label="CREDENTIAL URL" hint="optional">
           <input value={item.credential || ''} onChange={e => onUpdate('credential', e.target.value || null)}

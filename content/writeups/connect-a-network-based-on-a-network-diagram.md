@@ -1,3 +1,15 @@
+---
+title: When the guide's own prose and its port table disagreed
+date: 2026-08-18
+summary: >
+  Cabling a physical topology from a logical diagram — Layer 1 only, no
+  protocols — and deciding which source to trust when the instructions and the
+  reference table named different ports for the same link.
+tags: [cabling, layer-1, topology, documentation]
+platform: Cisco NetAcad
+course: Network Support and Security — Packet Tracer
+---
+
 ## Objective
 
 Complete a physical topology in Packet Tracer's Physical Mode based on a provided logical network diagram, and confirm that every device in the wiring closet and on the table is cabled exactly as the diagram specifies. This tests Layer 1 (physical) connectivity only — it confirms cables are run to the correct ports, not that any protocol or addressing is working. Getting this step right matters because every later layer (Layer 2 switching, Layer 3 routing) depends on the physical topology being correct first; troubleshooting starts here.

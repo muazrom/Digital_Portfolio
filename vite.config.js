@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import content from './vite/content.js'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), content()],
   publicDir: 'assets',
   // Stamped into the bundle so every deploy produces a new content hash, and
   // therefore an asset URL that has never been requested before.

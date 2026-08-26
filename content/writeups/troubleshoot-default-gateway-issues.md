@@ -1,3 +1,16 @@
+---
+title: Four broken devices, four unrelated causes, one variable at a time
+date: 2026-08-09
+summary: >
+  A two-LAN network that looked broadly broken turned out to be four
+  independent mistakes — a wrong IP, a missing gateway, a missing address and
+  a wrong mask — separated only by testing one thing at a time.
+tags: [troubleshooting, default-gateway, subnet-mask, routing]
+platform: Cisco NetAcad
+course: Networking Devices and Initial Configuration — Packet Tracer
+credential: cr-cisco-netdevices
+---
+
 ## Objective
 
 Complete the network documentation for a two-LAN topology (R1, S1, S2, PC1–PC4), then use a systematic connectivity-testing method to isolate and fix devices that could not communicate. The activity is meant to confirm end-to-end (Layer 3) reachability across both subnets by verifying, one variable at a time, that every device's IP address, subnet mask, and default gateway match the network documentation before trusting cross-subnet ping results.

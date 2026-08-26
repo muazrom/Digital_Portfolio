@@ -1,3 +1,15 @@
+---
+title: FTP opens two connections, and "Transfer complete" is not proof
+date: 2026-08-02
+summary: >
+  Uploading and downloading against an FTP server, confirming each step with a
+  directory listing instead of trusting the success message — output can read
+  as successful while a file lands somewhere else.
+tags: [ftp, application-layer, ports]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 Verify that a client (PC-A) can both upload and download files to/from an FTP server (`ftp.pka`, 209.165.200.226) using the standard FTP client command set. The activity confirms functional file transfer at the Application layer while also demonstrating FTP's two-channel design — a control connection (port 21) for authentication and commands, and a data connection (port 20) for the actual file bytes.

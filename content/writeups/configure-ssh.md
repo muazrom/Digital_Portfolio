@@ -1,3 +1,16 @@
+---
+title: RSA keys won't generate until the router has a domain name
+date: 2026-08-09
+summary: >
+  Replacing Telnet with SSH on a switch — encrypting stored passwords,
+  building a local user database, and finding out that key generation silently
+  depends on a prerequisite nobody mentions first.
+tags: [ssh, rsa, hardening, telnet]
+platform: Cisco NetAcad
+course: Networking Devices and Initial Configuration — Packet Tracer
+credential: cr-cisco-netdevices
+---
+
 ## Objective
 
 Replace Telnet with SSH for remote management of a Cisco switch. This confirms three things: that locally stored passwords can be encrypted so they aren't sitting in plain text in the running config, that SSH can be enabled by generating RSA keys and creating a local user database, and that Telnet access can be fully disabled on the VTY lines in favor of SSH. Telnet sends all traffic — including passwords — in plain text, so this activity demonstrates why SSH is the standard for any real remote-management connection.

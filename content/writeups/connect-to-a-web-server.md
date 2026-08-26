@@ -1,3 +1,15 @@
+---
+title: Verifying a web server at Layer 3 before trusting the browser
+date: 2026-07-27
+summary: >
+  Confirming reachability by ping first and loading the page second — so that
+  a browser failure can be attributed to the application rather than the
+  network path.
+tags: [http, icmp, troubleshooting]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 Confirm that a client PC can reach a web server across the network — first at the IP layer, then at the application layer — by testing basic connectivity and then successfully loading the server's web page. This involved two parts: verifying reachability using ping, and confirming that the web browser could actually retrieve content from the server.

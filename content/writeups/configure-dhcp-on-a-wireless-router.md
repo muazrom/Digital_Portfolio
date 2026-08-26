@@ -1,3 +1,14 @@
+---
+title: Moving a router off its default address and repointing the DHCP scope
+date: 2026-08-01
+summary: >
+  Changing a wireless router's default IP and address pool, then confirming
+  three clients pick up leases from the new range instead of the old one.
+tags: [dhcp, addressing, wireless]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 Configure a wireless router so that three connected PCs automatically obtain their IP addresses via DHCP — including changing the router's default IP address and DHCP address pool — and confirm all three clients receive valid addresses and can communicate with each other and the router.

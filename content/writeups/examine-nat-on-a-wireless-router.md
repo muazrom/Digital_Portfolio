@@ -1,3 +1,15 @@
+---
+title: Watching NAT rewrite a source address at the router
+date: 2026-08-01
+summary: >
+  Capturing the same packet either side of a home router to confirm the
+  private LAN address is translated to the single public WAN address before
+  anything reaches the internet.
+tags: [nat, dhcp, wan, packet-capture]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 This activity examines how Network Address Translation (NAT) operates on a home wireless router, and verifies that the router's WAN-facing and LAN-facing interfaces sit in genuinely different IP address spaces (public vs. private). Four PCs are connected to the router and assigned addresses via DHCP, after which simulated HTTP traffic is generated from a PC to an external web server. By comparing the packet's Inbound and Outbound header details at the router, the activity confirms that NAT actively rewrites the source IP address — translating a private LAN address into the router's single public WAN address — before the packet is allowed onto the internet.

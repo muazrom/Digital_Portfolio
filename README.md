@@ -59,6 +59,23 @@ All content is editable in-browser. Nothing is stored server-side.
 
 ---
 
+## Adding a write-up or a badge
+
+Drop one file in `content/` — nothing else to edit.
+
+```
+content/
+├── writeups/<slug>.md        # frontmatter + prose. Filename is the URL
+└── credentials/<id>.md       # frontmatter, with its badge image beside it
+```
+
+`vite/content.js` reads both folders at build time and exposes them as
+`virtual:content`, so there is no list to keep in sync with the folder. Read
+time is computed from word count, and adding a credential invalidates a stale
+localStorage snapshot on its own — no version bump to remember.
+
+Each folder has a README with the fields and a template.
+
 ## Local Development
 
 ```bash
@@ -116,7 +133,7 @@ src/
 │   ├── AdminLogin.jsx
 │   ├── AdminDashboard.jsx
 │   └── editors/         # Per-section content editors
-├── content/writeups/    # Git-authored write-ups (outside DataContext)
+├── content/writeups/    # Reads content/ via the virtual:content module
 ├── context/
 │   └── DataContext.jsx  # Global state + localStorage persistence
 ├── data/

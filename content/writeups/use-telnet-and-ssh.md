@@ -1,3 +1,15 @@
+---
+title: Telnet and SSH, and why one of them is the standard
+date: 2026-08-02
+summary: >
+  Remote-managing a router over both protocols — and verifying Layer 3
+  reachability first, because a failed remote-access attempt and a plain
+  connectivity problem look identical until you rule one out.
+tags: [ssh, telnet, remote-access, security]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 This activity confirms that a remote device can be managed over the network using two different remote-access protocols, Telnet and SSH, and demonstrates why SSH is the secure standard over Telnet. Before attempting any remote access, IP connectivity between the PC and the target router has to be verified at Layer 3 — otherwise a failed remote-access attempt can't be distinguished from a simple reachability problem.

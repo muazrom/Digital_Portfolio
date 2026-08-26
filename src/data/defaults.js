@@ -1,6 +1,14 @@
+import { credentials, credentialsHash } from 'virtual:content'
+
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 16
+const HAND_EDITED_VERSION = 17
+
+// Credentials live in content/credentials/ now, so their hash is folded in:
+// dropping a badge in that folder invalidates a stale snapshot by itself,
+// rather than depending on remembering to bump the number above. The point of
+// the folder is that adding something takes no second step.
+export const CONTENT_VERSION = `${HAND_EDITED_VERSION}-${credentialsHash}`
 
 export const defaultData = {
   hero: {
@@ -282,81 +290,7 @@ export const defaultData = {
     },
   ],
 
-  // Earned credentials only. Anything not yet held belongs in prose — the hero bio
-  // already says "studying toward CCNA" — because a section that mostly lists
-  // intentions reads as a wishlist, not evidence.
-  //
-  // `kind` is the single field driving both the medal design and the card label.
-  // It replaces the old `tier`, which conflated credential rigor with artifact type
-  // and is why the previous renderer needed an orderOf() shim. When CCNA lands it
-  // goes in as kind: 'certification' and renders at top weight automatically,
-  // visibly distinct from a free course badge.
-  //
-  //   kind:  certification | path | course | module
-  //   topic: network | security | systems   (colour accent)
-  //   date:  ISO, sortable
-  credentials: [
-    {
-      id: 'cr-thm-presecurity',
-      name: 'Pre Security Learning Path',
-      issuer: 'TryHackMe',
-      kind: 'path',
-      topic: 'security',
-      date: '2026-06',
-      image: '/badges/tryhackme-pre-security.png',
-      credential: '/badges/tryhackme-pre-security.pdf',
-    },
-    {
-      id: 'cr-cisco-introcyber',
-      name: 'Introduction to Cybersecurity',
-      issuer: 'Cisco Networking Academy',
-      kind: 'course',
-      topic: 'security',
-      date: '2026',
-      image: '/badges/cisco-intro-cybersecurity.png',
-      credential: 'https://www.credly.com/badges/93dd6936-bea6-48ae-9311-30c16399e323/public_url',
-    },
-    {
-      id: 'cr-cisco-netaddressing',
-      name: 'Network Addressing and Basic Troubleshooting',
-      issuer: 'Cisco Networking Academy',
-      kind: 'course',
-      topic: 'network',
-      date: '2026-08',
-      image: '/badges/cisco-network-addressing-troubleshooting.png',
-      credential: 'https://www.credly.com/badges/ddfdb053-2523-4ade-8903-e5619cb2d0cf/public_url',
-    },
-    {
-      id: 'cr-cisco-netdevices',
-      name: 'Networking Devices and Initial Configuration',
-      issuer: 'Cisco Networking Academy',
-      kind: 'course',
-      topic: 'network',
-      date: '2026-08',
-      image: '/badges/cisco-networking-devices-initial-config.png',
-      credential: 'https://www.credly.com/badges/03796fd1-7045-4126-bb5d-1328e24a3313/public_url',
-    },
-    {
-      id: 'cr-cisco-netbasics',
-      name: 'Networking Basics',
-      issuer: 'Cisco Networking Academy',
-      kind: 'course',
-      topic: 'network',
-      date: '2026-08',
-      image: '/badges/cisco-networking-basics.png',
-      credential: 'https://www.credly.com/badges/4581f746-ff2e-4064-8def-797b1d0b07ea/public_url',
-    },
-    {
-      id: 'cr-cisco-hardware',
-      name: 'Computer Hardware Basics',
-      issuer: 'Cisco Networking Academy',
-      kind: 'module',
-      topic: 'systems',
-      date: '2026',
-      image: '/badges/cisco-computer-hardware-basics.png',
-      credential: 'https://www.credly.com/earner/earned/badge/215db823-5346-4b3b-98ed-bcfdd04d5c1c',
-    },
-  ],
+  credentials,
 
   // Split by `track` so one technical internship isn't diluted by six event roles.
   //   technical   — paid or competitive work: the internship, the company role, the

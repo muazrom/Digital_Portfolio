@@ -1,3 +1,15 @@
+---
+title: A switch doesn't need an IP to switch — so what is VLAN 1 for?
+date: 2026-08-09
+summary: >
+  Addressing two switches and two PCs on one flat subnet, and separating what
+  a switch needs to forward frames from what it needs to be managed remotely.
+tags: [svi, vlan, addressing, ping]
+platform: Cisco NetAcad
+course: Networking Devices and Initial Configuration — Packet Tracer
+credential: cr-cisco-netdevices
+---
+
 ## Objective
 
 Verify basic Layer 3 connectivity across a small flat network by configuring management IP addressing on two switches (S1, S2) and IP addressing on two PCs (PC1, PC2), all on the same 192.168.1.0/24 subnet. The activity confirms that switches don't require an IP address to forward frames, but do need one for remote management, and it uses `ping` to test reachability at the network layer between every device pair.

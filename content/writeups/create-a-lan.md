@@ -1,3 +1,14 @@
+---
+title: An APIPA address that looked like DHCP, but was a cable in the wrong port
+date: 2026-08-02
+summary: >
+  Building a branch-office LAN and verifying each layer separately — which is
+  exactly what caught a Layer 1 mistake presenting as a Layer 3 symptom.
+tags: [lan, dhcp, apipa, dns, troubleshooting]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 This activity verifies end-to-end connectivity across the physical, network, and application layers in a small branch-office LAN. It involves physically cabling devices, assigning IPv4 addressing (via DHCP for the PCs, static for the printer), and then confirming reachability using `ping`, a web browser, and the diagnostic commands `ipconfig` and `tracert`. Each layer matters separately: a working cable doesn't guarantee working addressing, and working addressing doesn't guarantee name resolution — each has to be confirmed on its own.

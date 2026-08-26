@@ -1,3 +1,15 @@
+---
+title: Checking a subnet calculator against the host that produced the address
+date: 2026-08-19
+summary: >
+  Reading a device's own IPv4 address and mask, then deriving the network
+  address, host range and broadcast with a calculator — and confirming the
+  device actually falls inside the range the tool returned.
+tags: [subnetting, ipv4, cidr, addressing]
+platform: Cisco NetAcad
+course: Network Support and Security — Lab
+---
+
 ## Objective
 
 To determine a device's own IPv4 address and subnet mask using an OS-level command, then use an online subnet calculator to compute and verify the resulting network address, usable host range, broadcast address, and number of usable hosts. This confirms an understanding of Layer 3 addressing and CIDR-based subnetting — specifically, how a single address/mask pair defines an entire subnet's boundaries, not just one host.

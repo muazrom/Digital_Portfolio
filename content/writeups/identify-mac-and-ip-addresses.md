@@ -1,3 +1,15 @@
+---
+title: MAC addresses get rewritten at every hop. IP addresses do not.
+date: 2026-08-01
+summary: >
+  Inspecting each PDU at every device along a local ping and then a routed
+  one, confirming Layer 2 addressing is only meaningful on a single segment
+  while Layer 3 addressing survives end to end.
+tags: [mac, arp, layer-2, layer-3, packet-capture]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 This activity verifies how Layer 2 (MAC) and Layer 3 (IP) addressing behave differently depending on whether two communicating devices sit on the same local network or on separate networks connected by a router. Using Packet Tracer's Simulation mode, each PDU (frame/packet) was captured and inspected at every device along its path — first for a local ping (same subnet, switch-only path), then for a remote ping (different subnets, router in the path). The goal was to confirm two things: (1) that MAC addresses are only meaningful on a single physical segment and are rewritten by any Layer 3 device the traffic passes through, while (2) IP addresses remain constant from source to final destination regardless of how many hops the traffic takes.

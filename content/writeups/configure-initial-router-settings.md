@@ -1,3 +1,16 @@
+---
+title: The console port is the one way in that needs no network at all
+date: 2026-08-09
+summary: >
+  Hardening a router over a rollover console cable rather than the simulator's
+  CLI shortcut, and confirming that nothing survives a reload until it is
+  copied out of RAM into NVRAM.
+tags: [console, ios, hardening, nvram]
+platform: Cisco NetAcad
+course: Networking Devices and Initial Configuration — Packet Tracer
+credential: cr-cisco-netdevices
+---
+
 ## Objective
 
 This activity confirms basic router configuration and hardening at Layer 1/CLI access level: establishing console access to a router, moving between IOS configuration modes, and configuring a hostname, MOTD banner, and encrypted passwords for both privileged EXEC and console access. It also verifies the distinction between a router's running configuration (in RAM) and startup configuration (in NVRAM), and confirms that changes are only persistent once explicitly saved.

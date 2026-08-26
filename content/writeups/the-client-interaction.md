@@ -1,3 +1,15 @@
+---
+title: A browser cannot reach a hostname — only an IP address
+date: 2026-08-02
+summary: >
+  Tracing a page request in simulation mode to watch the DNS lookup resolve
+  first and the HTTP request follow, because the second step depends entirely
+  on the first.
+tags: [dns, http, application-layer]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 Observe the client-server interaction that occurs when a PC requests a web page from a server offering both DNS and HTTP services. The activity confirms two things: that the browser's request for `www.example.com` is first resolved to an IP address via DNS, and that the actual page content is then retrieved over HTTP. Tracing both layers matters because a working HTTP session depends entirely on a successful DNS lookup happening first — if that step is skipped or fails, the browser has no destination to send its request to.

@@ -1,3 +1,15 @@
+---
+title: Mapping a branch office with CDP, which was switched off on purpose
+date: 2026-08-18
+summary: >
+  Chaining SSH sessions hop by hop to map a remote branch and find a switch
+  with no IP address — using a Layer 2 discovery protocol that had been left
+  disabled, correctly, on a router facing the ISP.
+tags: [cdp, ssh, discovery, layer-2]
+platform: Cisco NetAcad
+course: Network Support and Security — Packet Tracer
+---
+
 ## Objective
 
 Map the topology of a Remote Branch Office network using SSH for remote access and Cisco Discovery Protocol (CDP) for device discovery, in order to record every device's hostname, interfaces, IP addresses, and subnet masks — and specifically locate a recently installed switch that had not yet been assigned an IP address. The activity tests two independent layers: SSH confirms Layer 3/application-level reachability into each device, while CDP operates at Layer 2 and can discover neighbors regardless of whether they have an IP configured at all. Getting from one end of the branch network to the other required chaining SSH sessions device-by-device, using CDP at each hop to find the next device to connect to.

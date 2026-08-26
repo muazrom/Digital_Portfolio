@@ -1,3 +1,15 @@
+---
+title: Site-to-site vs remote access VPN, and the overlap that breaks both
+date: 2026-08-19
+summary: >
+  Working out what each VPN type actually connects — network-to-network vs
+  host-to-network — then the routing-table mechanics underneath, including why
+  two LANs using the same subnet can never be tunnelled together.
+tags: [vpn, ipsec, routing, subnetting]
+platform: Cisco NetAcad
+course: Network Support and Security — Concepts
+---
+
 ## Objective
 
 Understand the structural difference between a site-to-site VPN and a remote access VPN — what each connects, who needs client software, and when each is the right tool. Then go one level deeper: understand *how* a site-to-site VPN actually makes two separate LANs reachable to each other. The goal isn't just naming the two VPN types, but being able to explain the routing-table mechanics behind "device on Network A can reach device on Network B."

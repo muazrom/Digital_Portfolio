@@ -1,3 +1,15 @@
+---
+title: Wiring and securing a home network end to end
+date: 2026-07-25
+summary: >
+  Cabling a modem, wireless router, two wired PCs and a laptop, then
+  configuring the wireless LAN and its security before verifying every client
+  actually reaches the internet.
+tags: [wireless, wlan-security, home-network, dhcp]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 Connect and configure a small home network — including a cable modem, a wireless router, two wired PCs, and a wireless laptop — so that every device on the network has working internet access. This involved three parts: physically wiring the devices, configuring the router (basic settings, wireless LAN, and security), and configuring/verifying IP addressing on each client.

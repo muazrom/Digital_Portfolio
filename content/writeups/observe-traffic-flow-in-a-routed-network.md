@@ -1,3 +1,15 @@
+---
+title: Why a flat 150-host LAN slows down, and what segmentation actually fixes
+date: 2026-08-02
+summary: >
+  Comparing ARP and broadcast behaviour on a flat network against a routed
+  one, then splitting three departments into their own subnets to demonstrate
+  the difference rather than assert it.
+tags: [arp, broadcast-domain, segmentation, routing]
+platform: Cisco NetAcad
+course: Networking Basics — Packet Tracer
+---
+
 ## Objective
 
 To confirm how ARP resolution and broadcast traffic behave differently on a flat (unrouted) network versus a routed network, and to demonstrate why splitting a large LAN into multiple routed subnets improves efficiency. The activity involves Layer 2 (MAC/ARP) and Layer 3 (IP/routing) behavior, and matters because ARP broadcasts consume resources on every device in a broadcast domain — the more hosts sharing one network, the more that overhead scales.
