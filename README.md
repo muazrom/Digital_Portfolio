@@ -1,6 +1,8 @@
 # muazrom.my — Personal Digital Workshop
 
-Personal portfolio site for Mu'az Arief. Built with a dark monochrome + electric blue "workshop" aesthetic. Fully editable through a hidden admin panel — no backend, no database.
+Personal portfolio site for Mu'az Arief, presented as a network operations console — status bar, device tree, panel grid. Fully editable through a hidden admin panel — no backend, no database.
+
+**Every number on the site is derived from real content** (`src/data/defaults.js` and `src/content/writeups/index.js`) via `src/lib/metrics.js`. No invented traffic graphs or alert counts: the nav badges, panel header readouts, and Overview KPIs all call the same functions, so a header can't claim a count the rows underneath don't back up.
 
 ---
 
@@ -17,19 +19,31 @@ Personal portfolio site for Mu'az Arief. Built with a dark monochrome + electric
 
 ---
 
-## Sections
+## Layout
 
-| # | Section | Design |
+The shell is `src/components/console/`:
+
+| Piece | Role |
+|---|---|
+| `ConsoleShell` | Frame — status strip, device tree, panel column |
+| `StatusBar` | Hostname, current status, session uptime, live clock |
+| `NavRail` | Section tree with count badges; scroll-spy + the `#admin` keystroke. Becomes a bottom tab bar under 900px |
+| `Panel` | The one chassis every section renders inside — owns the anchor id, number, icon, title, and meta readout |
+| `Overview` | Panel 01 — identity, KPI row, credential and write-up breakdowns |
+| `widgets.jsx` | `Metric`, `Meter`, `StackBar`, `Sparkline`, `SeverityDot`, `Chip`, `Field` |
+
+Panel order, numbering, anchors, labels, and icons all come from `src/sections.js` — the single place to change them.
+
+| # | Panel | Design |
 |---|---|---|
-| 01 | **Hero** | Centered monolith — gradient name, floating stat pills, rule line |
+| 01 | **Overview** | Identity block, five KPIs, credentials-by-kind bar, write-up sparkline |
 | 02 | **About** | Terminal / blueprint panel with shell commands and sysinfo table |
 | 03 | **Skills** | Pegboard — tools hang from pegs with proficiency dots |
-| 04 | **Projects** | 3D coverflow carousel — scroll, swipe, or arrow keys |
-| 05 | **Experience** | Rotating SVG ring — active node locks to 12 o'clock |
-| 06 | **Badges** | Credential tag cards — lanyard hole, category seal, verified tick |
-| 07 | **Contact** | Transmission panel — frequency channels + compose console |
-
----
+| 04 | **Credentials** | Rack units — lanyard seal, category tag, verification LED |
+| 05 | **Field Notes** | Event log — dated rows, newest first, source and read time |
+| 06 | **Experience** | Two timeline rails, technical and leadership |
+| 07 | **Projects** | Inventory table with status chips; case study expands inline |
+| 08 | **Contact** | Transmission panel — frequency channels + compose console |
 
 ## Admin Panel
 
@@ -39,7 +53,7 @@ All content is editable in-browser. Nothing is stored server-side.
 
 **Default password:** `workshop2026`
 
-**Editable sections:** Hero · Skills · Projects · Experience · Badges & Certs · Settings (password change, reset to defaults)
+**Editable sections:** Hero · Skills · Projects · Experience · Credentials · Settings (password change, reset to defaults)
 
 > To change the password, go to Admin → Settings → Change Password. The hash is stored in `localStorage` under `admin_pw_hash`.
 
@@ -73,22 +87,36 @@ Deployed on **Cloudflare Pages**:
 
 ```
 src/
-├── components/          # All public-facing sections
-│   ├── Hero.jsx
-│   ├── About.jsx
+├── sections.js          # Panel order, numbers, anchors, labels, icons
+├── components/
+│   ├── console/         # The console shell
+│   │   ├── ConsoleShell.jsx
+│   │   ├── StatusBar.jsx
+│   │   ├── NavRail.jsx
+│   │   ├── Panel.jsx
+│   │   ├── Overview.jsx
+│   │   ├── TerminalButton.jsx
+│   │   └── widgets.jsx
+│   ├── About.jsx        # Panel contents
 │   ├── Skills.jsx
-│   ├── Projects.jsx
+│   ├── Credentials.jsx
+│   ├── FieldNotes.jsx
 │   ├── Experience.jsx
-│   ├── Badges.jsx
+│   ├── Projects.jsx
+│   ├── CaseStudy.jsx    # Case study body, opened from the Projects table
 │   ├── Contact.jsx
-│   ├── Navbar.jsx
-│   ├── Footer.jsx
-│   └── SectionDivider.jsx
+│   ├── CountUp.jsx
+│   ├── Icon.jsx
+│   └── Footer.jsx
+├── lib/
+│   ├── metrics.js       # Every displayed number is derived here
+│   └── markdown.js
 ├── admin/               # Admin panel + auth
 │   ├── auth.js          # SHA-256 password hashing
 │   ├── AdminLogin.jsx
 │   ├── AdminDashboard.jsx
 │   └── editors/         # Per-section content editors
+├── content/writeups/    # Git-authored write-ups (outside DataContext)
 ├── context/
 │   └── DataContext.jsx  # Global state + localStorage persistence
 ├── data/
