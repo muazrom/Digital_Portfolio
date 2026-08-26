@@ -191,7 +191,7 @@ export default function Contact() {
     <section className="relative">
       <div className="max-w-5xl mx-auto px-6">
         <p className="font-mono text-xs text-muted mb-10">
-          Graduating early 2028 · looking toward <span className="text-white">network &amp; security engineering</span> · open to conversations now
+          Graduating Feb 2028 · targeting <span className="text-white">junior network engineer / NOC</span> roles, heading toward cloud security · open to conversations now
         </p>
         <div className="console-contact-grid">
           <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', alignContent: 'start' }}>

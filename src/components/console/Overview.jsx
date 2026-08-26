@@ -2,7 +2,7 @@ import { useData } from '../../context/DataContext'
 import { kindMeta } from '../Credentials'
 import {
   credentialStats, skillStats, projectStats, experienceStats,
-  writeupActivity, writeupsByCourse, KIND_ORDER,
+  writeupActivity, writeupsByCourse, stage1Readiness, STAGE1_TARGET, KIND_ORDER,
 } from '../../lib/metrics'
 import { Metric, StackBar, Meter, Chip, SeverityDot, SEV } from './widgets'
 import TerminalButton from './TerminalButton'
@@ -37,6 +37,7 @@ export default function Overview() {
   const exp = experienceStats(data.experience)
   const notes = writeupActivity()
   const courses = writeupsByCourse()
+  const readiness = stage1Readiness(data)
 
   // The name carries the visual weight the old Hero monolith did, at a size that
   // still leaves room for a dashboard underneath it.
@@ -153,6 +154,31 @@ export default function Overview() {
             </div>
             <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', lineHeight: 1.6 }}>
               Latest {notes.latest || '—'}.
+            </p>
+          </Card>
+
+          <Card title="STAGE 1 READINESS" right={STAGE1_TARGET}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {readiness.map((r) => (
+                <div key={r.label} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <SeverityDot sev={r.done ? 'ok' : 'idle'} size={5} steady />
+                    <span className="font-mono" style={{
+                      fontSize: 9.5, color: '#9a9a9a', flex: 1, minWidth: 0,
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                    }}>
+                      {r.label}
+                    </span>
+                    <span className="font-mono" style={{ fontSize: 9.5, color: r.done ? '#dcdcdc' : '#6f6f6f' }}>
+                      {r.target ? `${r.held}/${r.target}` : r.detail}
+                    </span>
+                  </div>
+                  {r.target && <Meter value={r.held / r.target} height={3} />}
+                </div>
+              ))}
+            </div>
+            <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', lineHeight: 1.6 }}>
+              What I want to be holding walking into the first network role.
             </p>
           </Card>
         </div>

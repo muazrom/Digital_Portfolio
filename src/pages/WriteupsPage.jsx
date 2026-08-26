@@ -98,7 +98,7 @@ function WriteupsIndex() {
   const items = publishedWriteups()
   useDocumentTitle(
     `Field Notes — ${SITE_TITLE}`,
-    'Study writeups from working through networking and security material.'
+    'Study writeups from working through networking and security material, on the way to cloud security.'
   )
 
   return (

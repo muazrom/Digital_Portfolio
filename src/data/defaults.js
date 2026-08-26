@@ -1,13 +1,15 @@
 // Bump whenever this file's content changes, so a browser's stale localStorage
 // snapshot (saved by the admin dashboard) gets discarded instead of shadowing it.
-export const CONTENT_VERSION = 15
+export const CONTENT_VERSION = 16
 
 export const defaultData = {
   hero: {
     name: "Mu'az Arief",
-    // NOTE: Hero.jsx splits this on the literal ' · ' — keep exactly three segments.
-    title: 'CS Student · Networking & Security · University Malaya',
-    bio: "I'm heading for network security — the infrastructure layer everything else quietly sits on, and the one nobody looks at until it breaks. Right now that means IT infrastructure support at iFast, studying toward CCNA, and publishing what I learn as I go.",
+    // Overview.jsx splits this on the literal ' · ' and renders one chip per
+    // segment, so the count is free — but each segment has to stand alone as a
+    // label, because that's how it's read.
+    title: 'CS Student · Networking → Cloud Security · University Malaya',
+    bio: "I'm working toward cloud security, and the way in is the network. That means a first job as a junior network engineer — CCNA is what gates it — then adding cloud on top of infrastructure I already understand rather than skipping the layer everything else sits on. Right now: IT infrastructure support at iFast, studying for CCNA, and publishing what I learn as I go. Graduating February 2028.",
     status: 'IT Infrastructure Intern · iFast',
     location: 'Kajang, Selangor',
     university: 'University Malaya',
@@ -15,16 +17,18 @@ export const defaultData = {
 
   about: {
     paragraphs: [
-      "Computer Science student at University Malaya, majoring in Information Systems, working toward a career in network security. I'm drawn to the infrastructure layer — the routing, segmentation, and access control that every application depends on and mostly takes for granted.",
-      "I'm learning in public. That means studying toward CCNA, working through networking and security coursework, and writing up what I actually learn instead of only collecting completion badges. My internship at iFast Global Hub AI is my first real exposure to production infrastructure — endpoints, directory services, and the escalation path to the teams who own the network.",
+      "Computer Science student at University Malaya, majoring in Information Systems, heading for cloud security by way of network engineering. I'm drawn to the infrastructure layer — the routing, segmentation, and access control that every application depends on and mostly takes for granted. Cloud doesn't remove that layer, it moves it, so I'd rather learn it on real switches first.",
+      "I'm learning in public. That means studying toward CCNA, working through networking and security coursework, and writing up what I actually learn instead of only collecting completion badges. My internship at iFast Global Hub AI is my first real exposure to production infrastructure — endpoints, directory services, and the escalation path to the teams who own the network. The near-term target is a junior network engineer or NOC role from February 2028; AWS comes after there is production experience worth putting under it.",
       "Beyond the technical side, I've held multiple Head of Department roles across university events, managing budgets, logistics, and cross-functional coordination for hundreds of participants.",
     ],
-    focus: ['Network Security', 'Infrastructure', 'Firewalls & Segmentation', 'Automation'],
+    focus: ['Routing & Switching', 'Network Security', 'Infrastructure', 'Cloud Security — next'],
     info: [
       { label: 'NAME', value: "Mu'az Arief bin Mohamad Rom" },
       { label: 'STATUS', value: 'Student · Intern' },
+      { label: 'TRACK', value: 'Network Engineering → Cloud Security' },
       { label: 'DEGREE', value: 'B.CS (Information Systems)' },
       { label: 'UNIVERSITY', value: 'University Malaya' },
+      { label: 'GRADUATING', value: 'February 2028' },
       { label: 'LOCATION', value: 'Kajang, Selangor' },
       { label: 'EMAIL', value: atob('emF1bWFyaWVmMDhAZ21haWwuY29t') },
     ],

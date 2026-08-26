@@ -81,6 +81,31 @@ export function writeupsByCourse() {
     .sort((a, b) => b.count - a.count)
 }
 
+/**
+ * Progress toward the first job on the pathway — a junior network engineer role
+ * entered at graduation, February 2028.
+ *
+ * Two of these are real counts and come from the same functions the rest of the
+ * console uses, so they track the content instead of being typed in. The other
+ * three are status rows, and all three are deliberately unfinished: CCNA is
+ * being studied for, not held; the internship is still running; the degree is a
+ * 2028 target. Nothing here may render as done until it actually is.
+ */
+export const STAGE1_TARGET = 'Feb 2028'
+
+export function stage1Readiness(data) {
+  const notes = writeupActivity().total
+  const badges = data.credentials.length
+
+  return [
+    { label: 'CCNA', detail: 'studying', done: false },
+    { label: 'Write-ups published', held: notes, target: 50, done: notes >= 50 },
+    { label: 'Completion badges', held: badges, target: 8, done: badges >= 8 },
+    { label: 'Infrastructure internship', detail: 'in progress', done: false },
+    { label: 'B.CS degree (UM)', detail: STAGE1_TARGET, done: false },
+  ]
+}
+
 /** Per-section counts for the nav rail badges. Keys are section ids. */
 export function sectionCounts(data) {
   return {

@@ -606,9 +606,11 @@
   border-bottom: 1px solid #1a1a1a;
 }
 
+/* auto-fit rather than a fixed count: the cards go 3-up on desktop and stack on
+   a phone without needing the narrow breakpoint below to restate it. */
 .console-overview-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 12px;
 }
 
@@ -616,9 +618,6 @@
   .console-kpi-row {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px 12px;
-  }
-  .console-overview-grid {
-    grid-template-columns: 1fr;
   }
 }
 

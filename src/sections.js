@@ -12,7 +12,7 @@ import { publishedWriteups } from './content/writeups'
 // `id` is the anchor target AND what Navbar's scroll-spy observes — components
 // receive it as a prop rather than hardcoding it, so the two can never disagree.
 //
-// Order is the argument: network security evidence comes before any software
+// Order is the argument: networking and security evidence comes before any software
 // project, so a visitor reaches the credentials and writeups before the React apps.
 //
 // `enabled` is optional. A section whose component would render nothing must be
