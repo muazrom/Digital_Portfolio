@@ -12,6 +12,8 @@ import Overview from './components/console/Overview'
 import Footer from './components/Footer'
 import WriteupsPage from './pages/WriteupsPage'
 import { sections } from './sections'
+import { useData } from './context/DataContext'
+import { panelMeta } from './lib/metrics'
 
 // Routes live under '#/'. Anything else — '#about', '#credentials', '' — is the
 // console view, so native anchor scrolling keeps working untouched.
@@ -73,21 +75,30 @@ export default function App() {
       <div className="bg-bg text-white min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
         <ParticleBackground />
         <ConsoleShell>
-          {isArchive ? (
-            <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
-          ) : (
-            <>
-              <Overview />
-              {sections.map(({ id, label, icon, Component }, i) => (
-                <Panel key={id} id={id} index={i + 2} label={label} icon={icon}>
-                  <Component />
-                </Panel>
-              ))}
-            </>
-          )}
+          {isArchive
+            ? <WriteupsPage slug={view === 'writeup' ? route.slug : null} />
+            : <ConsolePanels />}
           <Footer />
         </ConsoleShell>
       </div>
     </DataProvider>
+  )
+}
+
+// Separate component so it sits inside DataProvider and can read the counts the
+// panel headers report. Same source as the nav rail badges.
+function ConsolePanels() {
+  const { data } = useData()
+  const meta = panelMeta(data)
+
+  return (
+    <>
+      <Overview />
+      {sections.map(({ id, label, icon, Component }, i) => (
+        <Panel key={id} id={id} index={i + 2} label={label} icon={icon} meta={meta[id]}>
+          <Component />
+        </Panel>
+      ))}
+    </>
   )
 }

@@ -90,3 +90,25 @@ export function sectionCounts(data) {
     contact: null,
   }
 }
+
+/**
+ * The right-hand readout in each panel header. Same derivations as the nav rail
+ * badges, so a header can't claim a count the rows underneath don't back up.
+ */
+export function panelMeta(data) {
+  const creds = credentialStats(data.credentials)
+  const skills = skillStats(data.skills)
+  const projects = projectStats(data.projects)
+  const exp = experienceStats(data.experience)
+  const notes = writeupActivity()
+
+  return {
+    about: `${data.about.focus.length} focus areas`,
+    skills: `${skills.groups.length} groups · ${skills.toolCount} tools`,
+    credentials: `${creds.total} earned · ${creds.verifiable} verifiable`,
+    fieldnotes: notes.latest ? `${notes.total} entries · latest ${notes.latest}` : `${notes.total} entries`,
+    experience: `${exp.technical} technical · ${exp.leadership} leadership`,
+    projects: `${projects.total} tracked · ${projects.live} live`,
+    contact: 'open to opportunities',
+  }
+}
