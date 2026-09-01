@@ -153,24 +153,6 @@ export function writeupActivity() {
 }
 
 /**
- * Write-ups grouped by the course they came from, largest first.
- * `source.name` carries a module suffix ('… — Packet Tracer', '… — Concepts')
- * that splits one course across several rows, so the course name is everything
- * before the em dash.
- */
-export function writeupsByCourse() {
-  const counts = new Map()
-  for (const w of publishedWriteups()) {
-    const course = String(w.source?.name || 'Self-directed').split(' — ')[0]
-    counts.set(course, (counts.get(course) || 0) + 1)
-  }
-  const total = publishedWriteups().length || 1
-  return [...counts.entries()]
-    .map(([course, count]) => ({ course, count, share: count / total }))
-    .sort((a, b) => b.count - a.count)
-}
-
-/**
  * Progress toward the first job on the pathway — a junior network engineer role
  * entered at graduation, February 2028.
  *

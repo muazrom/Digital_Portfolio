@@ -2,7 +2,7 @@ import { useData } from '../../context/DataContext'
 import { kindMeta } from '../Credentials'
 import {
   credentialStats, skillStats, projectStats, experienceStats,
-  writeupActivity, writeupsByCourse, stage1Readiness, STAGE1_TARGET, KIND_ORDER,
+  writeupActivity, stage1Readiness, STAGE1_TARGET, KIND_ORDER,
 } from '../../lib/metrics'
 import { Metric, StackBar, Meter, Chip, SeverityDot, SEV } from './widgets'
 import TerminalButton from './TerminalButton'
@@ -36,7 +36,9 @@ export default function Overview() {
   const projects = projectStats(data.projects)
   const exp = experienceStats(data.experience)
   const notes = writeupActivity()
-  const courses = writeupsByCourse()
+  // Strongest group first. skillStats already computes the per-group aggregate;
+  // ordering it is a display decision, so it stays here rather than in metrics.
+  const capability = [...skills.groups].sort((a, b) => b.strength - a.strength)
   const readiness = stage1Readiness(data)
 
   // The name carries the visual weight the old Hero monolith did, at a size that
@@ -135,25 +137,26 @@ export default function Overview() {
             </p>
           </Card>
 
-          <Card title="WRITE-UPS BY COURSE" right={`${notes.total} published`}>
+          <Card title="CAPABILITY" right={`${skills.groups.length} groups · ${skills.toolCount} tools`}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-              {courses.map((c) => (
-                <div key={c.course} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              {capability.map((g) => (
+                <div key={g.id} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
                     <span className="font-mono" style={{
                       fontSize: 9.5, color: '#9a9a9a', flex: 1, minWidth: 0,
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
-                      {c.course}
+                      {g.label}
                     </span>
-                    <span className="font-mono" style={{ fontSize: 9.5, color: '#dcdcdc' }}>{c.count}</span>
+                    <span className="font-mono" style={{ fontSize: 9.5, color: '#dcdcdc' }}>{g.count}</span>
                   </div>
-                  <Meter value={c.share} height={3} />
+                  <Meter value={g.strength} height={3} />
                 </div>
               ))}
             </div>
             <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', lineHeight: 1.6 }}>
-              Latest {notes.latest || '—'}.
+              Bar is the mean tool level in each group, on the same 1–3 scale the
+              Skills panel prints per tool.
             </p>
           </Card>
 
