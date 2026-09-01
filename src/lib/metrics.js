@@ -8,9 +8,22 @@
 // for themselves further down the page.
 
 import { publishedWriteups } from '../content/writeups'
+// Tracks are git-authored structure, not admin-editable content, so they come
+// straight from the build the way writeups do — never through DataContext, and
+// so never into a localStorage snapshot.
+import { tracks } from 'virtual:content'
 
 /** Credentials grouped by `kind`, in the order Credentials.jsx ranks them. */
 export const KIND_ORDER = ['certification', 'path', 'course', 'module']
+
+/** The unit label per kind. Credentials.jsx's kindMeta reads these, so a rack
+ *  header naming a target ("target CERT") can't drift from the badge it means. */
+export const KIND_LABEL = {
+  certification: 'CERT',
+  path: 'PATH',
+  course: 'COURSE',
+  module: 'MODULE',
+}
 
 export function credentialStats(credentials = []) {
   const byKind = Object.fromEntries(KIND_ORDER.map(k => [k, 0]))
@@ -23,6 +36,78 @@ export function credentialStats(credentials = []) {
     if (c.credential) verifiable += 1
   }
   return { total: credentials.length, byKind, verifiable }
+}
+
+const byDateDesc = (a, b) => String(b.date).localeCompare(String(a.date))
+
+/**
+ * The credential rack layout: one rack per track, then everything left over.
+ *
+ * A track's steps are resolved against the credentials that actually exist, so
+ * "earned" is never asserted by hand and this can't drift from the folder. Two
+ * rules come out of that, both of which keep the section evidence-first:
+ *
+ *   A track with nothing earned is skipped entirely — it's a plan, not a
+ *   credential, and it belongs on the Stage 1 card until the first badge lands.
+ *
+ *   A pending step is not a credential and never enters this list as one, so
+ *   nothing here can inflate credentialStats or the panel header.
+ *
+ * Complete tracks lead, running tracks follow, standalone units last — proof
+ * before intent.
+ */
+export function credentialRacks(credentials = []) {
+  const byId = new Map(credentials.map(c => [c.id, c]))
+  const claimed = new Set()
+
+  const built = tracks.map((t) => {
+    const steps = t.steps.map(s => {
+      const credential = s.credential ? byId.get(s.credential) || null : null
+      // The badge's own name wins, so a rack row can't disagree with the thing
+      // it points at; the label is only there for a step not yet earned.
+      return { label: credential ? credential.name : s.label, credential }
+    })
+    const earned = steps.filter(s => s.credential)
+    if (earned.length === 0) return null
+
+    const capstone = t.capstone ? byId.get(t.capstone) || null : null
+    if (capstone) claimed.add(capstone.id)
+    earned.forEach(s => claimed.add(s.credential.id))
+
+    const meta = capstone
+      ? `complete · ${steps.length} courses${t.exam ? ' + exam' : ''}`
+      : `in progress · ${earned.length} of ${steps.length} · target ${KIND_LABEL[t.target?.kind] || 'CERT'}`
+
+    return {
+      id: t.id,
+      title: t.name,
+      meta,
+      complete: Boolean(capstone),
+      capstone,
+      target: capstone ? null : t.target,
+      steps,
+      date: capstone ? capstone.date : earned[0].credential.date,
+    }
+  }).filter(Boolean)
+
+  const complete = built.filter(r => r.complete).sort(byDateDesc)
+  const running = built.filter(r => !r.complete).sort(byDateDesc)
+  const racks = [...complete, ...running]
+
+  const loose = credentials.filter(c => !claimed.has(c.id)).sort(byDateDesc)
+  if (loose.length) {
+    racks.push({
+      id: 'standalone',
+      title: 'Standalone',
+      meta: `${loose.length} unit${loose.length === 1 ? '' : 's'} · not part of a track`,
+      complete: true,
+      capstone: null,
+      target: null,
+      steps: loose.map(c => ({ label: c.name, credential: c })),
+    })
+  }
+
+  return racks
 }
 
 /** Tool counts and a 0..1 aggregate per skill group. level is 1..3. */

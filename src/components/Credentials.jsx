@@ -2,16 +2,22 @@ import Icon from './Icon'
 import { useEffect, useState } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
+import { credentialRacks, KIND_LABEL } from '../lib/metrics'
 
 // `kind` drives the accent and the unit label — one field, not the old `tier`,
 // which mixed credential rigor with artifact type and needed a sort shim to
 // untangle. 'certification' is reserved for exam-based certs; when CCNA lands it
 // renders in accent blue, visibly distinct from a course badge.
+//
+// `path` is teal rather than the green it used to share with `course`. A track
+// rack puts a path capstone directly above the courses that make it up, and two
+// identical greens made the capstone unreadable as the thing containing them —
+// it also flattened Overview's CREDENTIALS BY KIND bar into one green run.
 export const kindMeta = {
-  certification: { label: 'CERT',   icon: 'award',  main: '#2563eb', light: '#93b4ff' },
-  path:          { label: 'PATH',   icon: 'book',   main: '#22c55e', light: '#86efac' },
-  course:        { label: 'COURSE', icon: 'notes',  main: '#22c55e', light: '#86efac' },
-  module:        { label: 'MODULE', icon: 'chip',   main: '#9ca3af', light: '#d4d8df' },
+  certification: { label: KIND_LABEL.certification, icon: 'award',  main: '#2563eb', light: '#93b4ff' },
+  path:          { label: KIND_LABEL.path,          icon: 'book',   main: '#14b8a6', light: '#5eead4' },
+  course:        { label: KIND_LABEL.course,        icon: 'notes',  main: '#22c55e', light: '#86efac' },
+  module:        { label: KIND_LABEL.module,        icon: 'chip',   main: '#9ca3af', light: '#d4d8df' },
 }
 const metaOf = (kind) => kindMeta[kind] || kindMeta.course
 
@@ -43,7 +49,7 @@ function Rail({ units }) {
   )
 }
 
-function Unit({ item, onOpen, compact }) {
+function Unit({ item, onOpen, compact, lead }) {
   const t = metaOf(item.kind)
   const [hover, setHover] = useState(false)
   const verifiable = isVerifiable(item)
@@ -58,7 +64,9 @@ function Unit({ item, onOpen, compact }) {
       style={{
         width: '100%', textAlign: 'left', cursor: 'pointer',
         background: hover ? '#181818' : '#141414',
-        border: `1px solid ${hover ? 'rgba(37,99,235,0.45)' : '#2e2e2e'}`,
+        // A capstone sits above the courses that earn it, so it carries the
+        // track's own accent rather than the shared unit border.
+        border: `1px solid ${hover ? 'rgba(37,99,235,0.45)' : lead ? t.main + '66' : '#2e2e2e'}`,
         borderRadius: 3, padding: compact ? '11px 12px' : '12px 14px',
         display: 'flex', alignItems: 'center', gap: compact ? 10 : 14,
         flexWrap: compact ? 'wrap' : 'nowrap',
@@ -66,6 +74,9 @@ function Unit({ item, onOpen, compact }) {
         fontFamily: 'JetBrains Mono',
       }}
     >
+      {lead && (
+        <span aria-hidden="true" style={{ color: t.main, fontSize: 10, flexShrink: 0, marginRight: -4 }}>▸</span>
+      )}
       <span
         title={verifiable ? 'Independently verifiable' : 'No public verification link'}
         style={{
@@ -107,6 +118,104 @@ function Unit({ item, onOpen, compact }) {
         ⤢
       </span>
     </button>
+  )
+}
+
+// A step named by a track but not yet earned. Deliberately not a button: there
+// is no credential behind it to open, so it stays out of the tab order and can't
+// imply one exists. Dashed, dimmed, a hollow LED and an em dash where the year
+// goes — it has to be unmistakably not-held at a glance.
+function PendingUnit({ label, kind, compact, lead }) {
+  const t = metaOf(kind)
+
+  return (
+    <div
+      style={{
+        width: '100%',
+        background: 'transparent',
+        border: `1px dashed ${lead ? t.main + '4d' : '#242424'}`,
+        borderRadius: 3, padding: compact ? '11px 12px' : '12px 14px',
+        display: 'flex', alignItems: 'center', gap: compact ? 10 : 14,
+        flexWrap: compact ? 'wrap' : 'nowrap',
+        fontFamily: 'JetBrains Mono', opacity: lead ? 0.75 : 0.55,
+      }}
+    >
+      {lead && (
+        <span aria-hidden="true" style={{ color: t.main, fontSize: 10, flexShrink: 0, marginRight: -4 }}>▸</span>
+      )}
+
+      <span
+        title="Not earned yet"
+        style={{
+          width: 5, height: 5, borderRadius: '50%', flexShrink: 0,
+          border: '1px solid #4a4a4a', background: 'transparent',
+        }}
+      />
+
+      <span style={{ color: lead ? t.main : '#4a4a4a', display: 'flex' }}>
+        <Icon name={lead ? t.icon : 'chip'} size={14} />
+      </span>
+
+      <span style={{
+        fontSize: 9, letterSpacing: '0.1em', color: lead ? t.main : '#4a4a4a',
+        width: compact ? 'auto' : 52, flexShrink: 0,
+      }}>
+        {lead ? t.label : '—'}
+      </span>
+
+      <span style={{
+        fontFamily: 'Space Grotesk, sans-serif', fontSize: compact ? 13 : 14,
+        fontWeight: 500, color: '#6f6f6f',
+        flex: compact ? '1 1 100%' : 1, minWidth: 0,
+        order: compact ? 3 : 0,
+      }}>
+        {label}
+      </span>
+
+      <span style={{
+        fontSize: 9.5, color: '#4a4a4a', flexShrink: 0, letterSpacing: '0.08em',
+        order: compact ? 4 : 0,
+      }}>
+        {lead ? 'pending' : 'not started'}
+      </span>
+    </div>
+  )
+}
+
+/* ─────────────────────────── rack ─────────────────────────── */
+
+function Rack({ rack, index, onOpen, compact }) {
+  // Capstone first, then the steps that earn it. A pending step has no
+  // credential behind it, so it renders as a slot rather than a unit.
+  const rows = rack.steps.length + (rack.capstone || rack.target ? 1 : 0)
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div>
+        <p className="font-mono text-xs text-muted">
+          RACK_{String(index + 1).padStart(2, '0')} // {rack.title.toUpperCase()}
+        </p>
+        <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', marginTop: 3 }}>
+          {rack.meta}
+        </p>
+      </div>
+
+      <div style={{ display: 'flex', gap: 8, alignItems: 'stretch' }}>
+        {!compact && <Rail units={rows} />}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+          {rack.capstone && <Unit item={rack.capstone} onOpen={onOpen} compact={compact} lead />}
+          {rack.target && (
+            <PendingUnit label={rack.target.name} kind={rack.target.kind} compact={compact} lead />
+          )}
+          {rack.steps.map((step, i) =>
+            step.credential
+              ? <Unit key={step.credential.id} item={step.credential} onOpen={onOpen} compact={compact} />
+              : <PendingUnit key={`pending-${i}`} label={step.label} compact={compact} />
+          )}
+        </div>
+        {!compact && <Rail units={rows} />}
+      </div>
+    </div>
   )
 }
 
@@ -223,24 +332,21 @@ export default function Credentials() {
   const items = data.credentials || []
   if (items.length === 0) return null
 
-  // Most recent first. No prestige ordering — these are completions, not a ranking.
-  const sorted = [...items].sort((a, b) => String(b.date).localeCompare(String(a.date)))
+  // One rack per track, then whatever isn't part of one. See credentialRacks()
+  // for why a track with nothing earned never appears here.
+  const racks = credentialRacks(items)
 
   return (
     <section className="relative">
       <div className="max-w-5xl mx-auto px-6">
-        <p className="font-mono text-xs text-muted mb-12">
-          RACK_01 // {sorted.length} unit{sorted.length === 1 ? '' : 's'} · select a unit for details
+        <p className="font-mono text-xs text-muted mb-10">
+          {racks.length} rack{racks.length === 1 ? '' : 's'} · select a unit for details
         </p>
 
-        <div style={{ display: 'flex', gap: 8, alignItems: 'stretch' }}>
-          {!compact && <Rail units={sorted.length} />}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
-            {sorted.map(item => (
-              <Unit key={item.id} item={item} onOpen={setOpen} compact={compact} />
-            ))}
-          </div>
-          {!compact && <Rail units={sorted.length} />}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 34 }}>
+          {racks.map((rack, i) => (
+            <Rack key={rack.id} rack={rack} index={i} onOpen={setOpen} compact={compact} />
+          ))}
         </div>
       </div>
 

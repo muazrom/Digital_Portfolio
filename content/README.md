@@ -2,17 +2,18 @@
 
 Drop files here. Nothing else to update.
 
-`vite/content.js` reads both folders at build time and hands the site a
+`vite/content.js` reads these folders at build time and hands the site a
 `virtual:content` module, so there is no second list anywhere to keep in sync
 with what's on disk. Add a file, refresh, it's on the site.
 
 | Folder | One file per | Appears in |
 |---|---|---|
 | `writeups/` | study write-up | Field Notes panel + `#/writeups` archive |
-| `credentials/` | badge or certificate | Credentials rack |
+| `credentials/` | badge or certificate | A rack in the Credentials panel |
+| `tracks/` | series of credentials | Groups those racks — one rack per track |
 
-Both use the same shape: a `---` frontmatter block on top, content underneath.
-See the README inside each folder for its fields.
+All three use the same shape: a `---` frontmatter block on top, content
+underneath. See the README inside each folder for its fields.
 
 ## Why it's built this way
 

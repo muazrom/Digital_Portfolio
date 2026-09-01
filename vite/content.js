@@ -16,6 +16,7 @@ const RESOLVED_ID = '\0' + VIRTUAL_ID
 
 const WRITEUPS_DIR = 'content/writeups'
 const CREDENTIALS_DIR = 'content/credentials'
+const TRACKS_DIR = 'content/tracks'
 
 // Matches the ~195 wpm the ten hand-written entries were calibrated at, so
 // auto-computed read times sit on the same scale as the ones they replace.
@@ -93,10 +94,56 @@ function readCredentials(root, assets) {
   })
 }
 
+// A track is a series of credentials leading to one capstone, and it's the only
+// thing here allowed to name something not yet earned — credentials/ stays
+// earned-only. A step carries `Label | credential-id`, and the id is resolved
+// lazily against that folder: write it before the course is taken and the step
+// flips from pending to earned the day the badge file lands, with nothing to
+// edit here. See content/tracks/README.md.
+function readTracks(root, credentialIds) {
+  const dir = path.join(root, TRACKS_DIR)
+
+  return mdFiles(dir).map((file) => {
+    const id = file.replace(/\.md$/, '')
+    const { data } = parseFrontmatter(fs.readFileSync(path.join(dir, file), 'utf8'))
+    const steps = (Array.isArray(data.steps) ? data.steps : []).map((raw) => {
+      const [label, credential] = String(raw).split('|').map((s) => s.trim())
+      return { label, credential: credential || null }
+    })
+
+    // An unresolved id is the normal state of a course not taken yet, so this
+    // can't warn per step — it would fire on every build and be ignored, and a
+    // typo is indistinguishable from a pending course anyway. One quiet line per
+    // track instead: enough to spot a misspelled id, quiet enough to keep the
+    // signal when a step really is just unearned.
+    const pending = steps.filter((s) => s.credential && !credentialIds.has(s.credential))
+    if (pending.length) {
+      const names = pending.map((s) => s.credential).join(', ')
+      console.info(`[content] ${file}: ${steps.length - pending.length}/${steps.length} steps earned — pending ${names}`)
+    }
+
+    // The capstone is a credential id once earned, and a plain display name
+    // until then — which is exactly how the rack tells complete from running.
+    const capstone = String(data.capstone || '')
+    const earnedCapstone = credentialIds.has(capstone)
+
+    return {
+      id,
+      name: data.name || id,
+      issuer: data.issuer || '',
+      capstone: earnedCapstone ? capstone : null,
+      target: earnedCapstone ? null : { name: capstone, kind: data.capstone_kind || 'certification' },
+      exam: data.exam === true,
+      steps,
+    }
+  })
+}
+
 function buildModule(root) {
   const assets = []
   const writeups = readWriteups(root)
   const credentials = readCredentials(root, assets)
+  const tracks = readTracks(root, new Set(credentials.map((c) => c.id)))
 
   // Only the credential content feeds this hash. Dropping or editing a badge
   // then has to invalidate a stale localStorage snapshot on its own — the whole
@@ -114,6 +161,7 @@ function buildModule(root) {
   return `${imports}
 export const writeups = ${serialise(writeups)}
 export const credentials = ${serialise(credentials)}
+export const tracks = ${serialise(tracks)}
 export const credentialsHash = ${JSON.stringify(credentialsHash)}
 `
 }
@@ -143,7 +191,7 @@ export default function contentPlugin() {
     },
 
     configureServer(server) {
-      for (const dir of [WRITEUPS_DIR, CREDENTIALS_DIR]) {
+      for (const dir of [WRITEUPS_DIR, CREDENTIALS_DIR, TRACKS_DIR]) {
         server.watcher.add(path.join(root, dir))
       }
       // A file appearing or disappearing isn't a change to a module Vite knows

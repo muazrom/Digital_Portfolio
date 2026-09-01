@@ -54,3 +54,10 @@ public URL or a real certificate file counts and nothing else does.
 
 Anything not actually held belongs in the hero bio as prose, or as a target on
 the Stage 1 readiness card — never as a file in here.
+
+A **track** (`../tracks/`) is the one thing allowed to name a credential that
+doesn't exist yet, so it can show a series you're partway through. Those steps
+render explicitly as pending slots and are not credentials: they count toward
+nothing — not the badge total, not "N verifiable", not Stage 1. The step turns
+into a real unit on its own the day you drop the badge file in here, which is
+why it stays a one-file drop.
