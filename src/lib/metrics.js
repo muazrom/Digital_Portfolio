@@ -82,6 +82,9 @@ export function credentialRacks(credentials = []) {
       id: t.id,
       title: t.name,
       meta,
+      // Drives the chassis treatment in Credentials.jsx: a track's units are a
+      // wired series, the standalone rack's are not.
+      track: true,
       complete: Boolean(capstone),
       capstone,
       target: capstone ? null : t.target,
@@ -100,6 +103,7 @@ export function credentialRacks(credentials = []) {
       id: 'standalone',
       title: 'Standalone',
       meta: `${loose.length} unit${loose.length === 1 ? '' : 's'} · not part of a track`,
+      track: false,
       complete: true,
       capstone: null,
       target: null,

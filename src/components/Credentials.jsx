@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useData } from '../context/DataContext'
 import { useWindowSize } from '../hooks/useWindowSize'
 import { credentialRacks, KIND_LABEL } from '../lib/metrics'
+import { SeverityDot, Meter, SEV } from './console/widgets'
 
 // `kind` drives the accent and the unit label — one field, not the old `tier`,
 // which mixed credential rigor with artifact type and needed a sort shim to
@@ -74,9 +75,6 @@ function Unit({ item, onOpen, compact, lead }) {
         fontFamily: 'JetBrains Mono',
       }}
     >
-      {lead && (
-        <span aria-hidden="true" style={{ color: t.main, fontSize: 10, flexShrink: 0, marginRight: -4 }}>▸</span>
-      )}
       <span
         title={verifiable ? 'Independently verifiable' : 'No public verification link'}
         style={{
@@ -140,9 +138,6 @@ function PendingUnit({ label, kind, compact, lead }) {
         fontFamily: 'JetBrains Mono', opacity: lead ? 0.75 : 0.55,
       }}
     >
-      {lead && (
-        <span aria-hidden="true" style={{ color: t.main, fontSize: 10, flexShrink: 0, marginRight: -4 }}>▸</span>
-      )}
 
       <span
         title="Not earned yet"
@@ -184,34 +179,119 @@ function PendingUnit({ label, kind, compact, lead }) {
 
 /* ─────────────────────────── rack ─────────────────────────── */
 
-function Rack({ rack, index, onOpen, compact }) {
-  // Capstone first, then the steps that earn it. A pending step has no
-  // credential behind it, so it renders as a slot rather than a unit.
-  const rows = rack.steps.length + (rack.capstone || rack.target ? 1 : 0)
+// The spine gutter. A track's units are a series — the capstone and the courses
+// that earn it — and a flat stack of rows says nothing about that. This draws
+// the wiring: a line down the gutter joining every unit, broken around each
+// node so the node reads as sitting on it rather than over it.
+function SpineRow({ node, accent, first, last, children }) {
+  const line = { position: 'absolute', left: '50%', width: 1, background: `${accent}33`, transform: 'translateX(-50%)' }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div>
-        <p className="font-mono text-xs text-muted">
-          RACK_{String(index + 1).padStart(2, '0')} // {rack.title.toUpperCase()}
-        </p>
-        <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', marginTop: 3 }}>
+    <div style={{ display: 'flex', alignItems: 'stretch', gap: 9 }}>
+      <div style={{
+        width: 24, flexShrink: 0, position: 'relative',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        {!first && <span aria-hidden="true" style={{ ...line, top: 0, height: 'calc(50% - 9px)' }} />}
+        {!last && <span aria-hidden="true" style={{ ...line, bottom: 0, height: 'calc(50% - 9px)' }} />}
+        <span className="font-mono" style={{
+          position: 'relative', fontSize: 8.5, letterSpacing: '0.06em',
+          color: `${accent}b3`, lineHeight: 1,
+        }}>
+          {node}
+        </span>
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
+    </div>
+  )
+}
+
+// Two rack designs, because they mean different things. A track is a chassis:
+// its units are wired into a series that leads somewhere, so it gets a frame, a
+// status LED, a progress meter while it's running, and the spine joining its
+// units. The standalone rack is the older, plainer treatment — loose units that
+// happen to be held, with nothing connecting them and nothing to be partway
+// through. Keeping it plain is what makes the track chassis read as structure
+// rather than decoration.
+function Rack({ rack, index, onOpen, compact }) {
+  const label = `RACK_${String(index + 1).padStart(2, '0')} // ${rack.title.toUpperCase()}`
+  const rows = rack.steps.length + (rack.capstone || rack.target ? 1 : 0)
+
+  if (!rack.track) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div>
+          <p className="font-mono text-xs text-muted">{label}</p>
+          <p className="font-mono" style={{ fontSize: 9.5, color: '#565656', marginTop: 3 }}>{rack.meta}</p>
+        </div>
+
+        <div style={{ display: 'flex', gap: 8, alignItems: 'stretch' }}>
+          {!compact && <Rail units={rows} />}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+            {rack.steps.map(step => (
+              <Unit key={step.credential.id} item={step.credential} onOpen={onOpen} compact={compact} />
+            ))}
+          </div>
+          {!compact && <Rail units={rows} />}
+        </div>
+      </div>
+    )
+  }
+
+  const accent = metaOf(rack.capstone ? rack.capstone.kind : rack.target.kind).main
+  const earned = rack.steps.filter(s => s.credential).length
+  const last = rack.steps.length - 1
+
+  return (
+    <div style={{
+      border: `1px solid ${accent}2e`, borderRadius: 7, overflow: 'hidden',
+      background: `linear-gradient(180deg, ${accent}0a 0%, transparent 120px)`,
+    }}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap',
+        padding: '9px 13px', background: '#0b0b0b', borderBottom: `1px solid ${accent}24`,
+      }}>
+        {/* Complete is settled, so its LED is steady; a running track pulses
+            amber, the same idle-vs-active language the rest of the console uses. */}
+        <SeverityDot sev={rack.complete ? 'ok' : 'warn'} size={5} steady={rack.complete} />
+        <span className="font-mono" style={{ fontSize: 10, color: '#c8c8c8', letterSpacing: '0.12em' }}>
+          {label}
+        </span>
+        <span className="font-mono" style={{
+          fontSize: 9, color: rack.complete ? '#5f5f5f' : '#a1741f',
+          marginLeft: 'auto', letterSpacing: '0.06em',
+        }}>
           {rack.meta}
-        </p>
+        </span>
       </div>
 
-      <div style={{ display: 'flex', gap: 8, alignItems: 'stretch' }}>
+      {!rack.complete && (
+        <div style={{ padding: '0 13px', marginTop: 10 }}>
+          <Meter value={earned / rack.steps.length} color={SEV.warn} height={3} />
+        </div>
+      )}
+
+      <div style={{ padding: 13, display: 'flex', gap: 8, alignItems: 'stretch' }}>
         {!compact && <Rail units={rows} />}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
-          {rack.capstone && <Unit item={rack.capstone} onOpen={onOpen} compact={compact} lead />}
-          {rack.target && (
-            <PendingUnit label={rack.target.name} kind={rack.target.kind} compact={compact} lead />
-          )}
-          {rack.steps.map((step, i) =>
-            step.credential
-              ? <Unit key={step.credential.id} item={step.credential} onOpen={onOpen} compact={compact} />
-              : <PendingUnit key={`pending-${i}`} label={step.label} compact={compact} />
-          )}
+          <SpineRow node="◆" accent={accent} first>
+            {rack.capstone
+              ? <Unit item={rack.capstone} onOpen={onOpen} compact={compact} lead />
+              : <PendingUnit label={rack.target.name} kind={rack.target.kind} compact={compact} lead />}
+          </SpineRow>
+
+          {rack.steps.map((step, i) => (
+            <SpineRow
+              key={step.credential ? step.credential.id : `pending-${i}`}
+              node={String(i + 1).padStart(2, '0')}
+              accent={accent}
+              last={i === last}
+            >
+              {step.credential
+                ? <Unit item={step.credential} onOpen={onOpen} compact={compact} />
+                : <PendingUnit label={step.label} compact={compact} />}
+            </SpineRow>
+          ))}
         </div>
         {!compact && <Rail units={rows} />}
       </div>

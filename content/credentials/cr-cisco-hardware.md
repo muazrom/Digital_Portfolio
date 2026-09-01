@@ -1,7 +1,7 @@
 ---
 name: Computer Hardware Basics
 issuer: Cisco Networking Academy
-kind: module
+kind: course
 topic: systems
 date: 2026
 image: cisco-computer-hardware-basics.png
